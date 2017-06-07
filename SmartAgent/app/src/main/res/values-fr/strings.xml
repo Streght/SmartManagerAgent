@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smart Manager Agent</string>
+    <string name="title_activity_calendar">Mon calendrier</string>
+    <string name="text_time_slot_button">Configurer les plages horaires</string>
+</resources>
