@@ -1,7 +1,10 @@
 package com.smartmanager.smartagent;
 
+<<<<<<< HEAD
 import android.content.Intent;
+=======
 import android.graphics.drawable.ColorDrawable;
+>>>>>>> 3ef53773cd6fb908e13bafca432fe81e72b63b27
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
