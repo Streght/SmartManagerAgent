@@ -1,4 +1,4 @@
-package ca.uqac.socketsapp;
+package com.smartmanager.smartagent;
 
 import android.os.Message;
 import android.util.Log;
