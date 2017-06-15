@@ -1,6 +1,20 @@
 <resources>
+    <!-- App parameter -->
     <string name="app_name">Smart Manager Agent</string>
+
+    <!-- CalendarActivity -->
     <string name="title_activity_calendar">My calendar</string>
-    <string name="title_meeting_setup_activity">MeetingActivity</string>
     <string name="text_time_slot_button">Configure time slots</string>
+
+    <!-- MeetingsActivity -->
+    <string name="title_activity_meetings">My meetings</string>
+    <string name="modify">Modify</string>
+    <string name="delete">Delete</string>
+
+    <!-- MeetingSetupActivity -->
+    <string name="title_meeting_setup_activity">MeetingActivity</string>
+
+    <!-- Menu -->
+    <string name="about">About us</string>
+    <string name="refresh_display">Refresh display</string>
 </resources>

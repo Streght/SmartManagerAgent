@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,17 +37,23 @@ public class CalendarActivity extends AppCompatActivity {
             caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
             caldroidFragment.setTextColorForDate(R.color.caldroid_white, greenDate);
         }
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_calendar);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        //final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
         // Setup caldroid fragment
         caldroidFragment = new CaldroidFragment();
@@ -82,6 +90,9 @@ public class CalendarActivity extends AppCompatActivity {
 
             @Override
             public void onSelectDate(Date date, View view) {
+                Intent intent = new Intent(CalendarActivity.this, MeetingsActivity.class);
+                intent.putExtra("meetingDate", date.getTime());
+                startActivity(intent);
                 /*Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
             }
@@ -108,7 +119,6 @@ public class CalendarActivity extends AppCompatActivity {
                             .show();*/
                 }
             }
-
         };
 
         // Setup Caldroid
@@ -118,12 +128,13 @@ public class CalendarActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                Intent intent = new Intent(CalendarActivity.this, MeetingSetupActivity.class);
+                startActivity(intent);
             }
         });
 
-       /* ImageButton taskButton = (ImageButton) findViewById(R.id.buttonProjectTasks);
+        /*
+        ImageButton taskButton = (ImageButton) findViewById(R.id.buttonProjectTasks);
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,16 +142,35 @@ public class CalendarActivity extends AppCompatActivity {
                 intentKanban.putExtra("currentProjectID", currentProjectID);
                 startActivity(intentKanban);
             }
-        });*/
+        });
+        */
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_refresh, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.action_about) {
+            Intent AboutPage = new Intent(CalendarActivity.this, AboutActivity.class);
+            startActivity(AboutPage);
+        } else if (item.getItemId() == R.id.refresh) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(savedInstanceState);
 
         if (caldroidFragment != null) {
-            caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+            caldroidFragment.saveStatesToKey(savedInstanceState, "CALDROID_SAVED_STATE");
         }
     }
 
