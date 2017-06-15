@@ -19,11 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AboutActivity" />
-        <activity android:name=".MeetingsActivity"></activity>
-        <activity android:name=".MeetingSetupActivity"
-                  android:label="@string/title_meeting_setup_activity"
-                  android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+        <activity android:name=".MeetingsActivity" />
+        <activity android:name=".WeeklyFreeTime"></activity>
     </application>
 
 </manifest>

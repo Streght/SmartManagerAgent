@@ -84,6 +84,7 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectDate(Date date, View view) {
                 /*Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
+
             }
 
             @Override
@@ -120,6 +121,10 @@ public class CalendarActivity extends AppCompatActivity {
             public void onClick(View view) {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+
+                Intent intentDateActivity = new Intent(CalendarActivity.this, MeetingsActivity.class);
+                //intentKanban.putExtra("currentProjectID", currentProjectID);
+                startActivity(intentDateActivity);
             }
         });
 
