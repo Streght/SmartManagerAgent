@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App parameter -->
+    <string name="app_name">Smart Manager Agent</string>
+
+    <!-- CalendarActivity -->
+    <string name="title_activity_meetings">Mes rendez-vous</string>
+    <string name="title_activity_calendar">Mon calendrier</string>
+    <string name="text_time_slot_button">Configurer les plages horaires</string>
+
+    <!-- MeetingdActivity -->
+    <string name="modify">Modifier</string>
+    <string name="delete">Supprimer</string>
+
+    <!-- MeetingSetupActivity -->
+    <string name="title_meeting_add_activity">Ajouter un rendez-vous</string>
+
+    <!-- Menu -->
+    <string name="about">A propos</string>
+</resources>
