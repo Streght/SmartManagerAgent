@@ -1,5 +1,9 @@
 package com.smartmanager.smartagent;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -47,15 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Server GET request
-        ServerRequest serverRequest = new ServerRequest();
-        serverRequest.execute("http://calendar-matcher.spieldy.com/index.php?username=spieldy");
-        try {
-            JSONObject jsonObject = serverRequest.get();
-            Log.d("MainActivity",jsonObject.toString());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        if (isNetworkAvailable()) {
+            ServerRequest serverRequest = new ServerRequest();
+            serverRequest.execute("http://calendar-matcher.spieldy.com/index.php?username=spieldy");
+            try {
+                JSONObject jsonObject = serverRequest.get();
+                Log.d("MainActivity", jsonObject.toString());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -108,19 +114,26 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(clientThread != null)
-                    clientThread.txMsg(editText2.getText().toString());
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("username", "test");
-                        jsonObject.put("password", "test");
-                        jsonObject.put("ip", "test");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                class Sess extends AsyncTask<String, Integer, Void> {
+                    protected Void doInBackground(String... lines) {
+                        if(clientThread != null)
+                            clientThread.txMsg(lines[0]);
+                        return null;
                     }
+                }
+                new Sess().execute(editText2.getText().toString());
 
+                //Test JSON object
+                /*JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("username", "test");
+                    jsonObject.put("password", "test");
+                    jsonObject.put("ip", "test");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                clientThread.sendJsonMsg(jsonObject);
+                new Sess().execute(jsonObject.toString());*/
             }
         });
 
@@ -176,7 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     View.OnClickListener buttonConnectOnClickListener =
             new View.OnClickListener() {

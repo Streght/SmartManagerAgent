@@ -1,6 +1,7 @@
 package com.smartmanager.smartagent;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class ServerRequest extends AsyncTask<String, Void, JSONObject> {
             jsonString = sb.toString();
 
             System.out.println("JSON: " + jsonString);
+            Log.d("MainActivity",jsonString);
 
             return new JSONObject(jsonString);
         } catch (Exception e) {
