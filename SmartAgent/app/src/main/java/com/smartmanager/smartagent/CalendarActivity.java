@@ -95,6 +95,7 @@ public class CalendarActivity extends AppCompatActivity {
                 startActivity(intent);
                 /*Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
+
             }
 
             @Override
@@ -128,8 +129,17 @@ public class CalendarActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 Intent intent = new Intent(CalendarActivity.this, MeetingSetupActivity.class);
                 startActivity(intent);
+=======
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+
+                Intent intentDateActivity = new Intent(CalendarActivity.this, MeetingsActivity.class);
+                //intentKanban.putExtra("currentProjectID", currentProjectID);
+                startActivity(intentDateActivity);
+>>>>>>> b381c176c342066df997fd2348058f57be9f4837
             }
         });
 
