@@ -14,7 +14,7 @@ import java.net.URL;
  * Created by Nicolas on 14/06/2017.
  */
 
-public class ServerRequest extends AsyncTask<String, Void, JSONObject> {
+public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
 
 
 

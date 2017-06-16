@@ -4,12 +4,18 @@ package com.smartmanageragent.application;
  * Created by Nicolas on 08/06/2017.
  */
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Utils {
@@ -129,4 +135,27 @@ public class Utils {
         return "";
     }
 
+    public static String createQueryStringForParameters(JSONObject jsonObject) throws JSONException, UnsupportedEncodingException {
+        StringBuilder parametersAsQueryString = new StringBuilder();
+        if (jsonObject != null) {
+            boolean firstParameter = true;
+            Iterator<String> iter = jsonObject.keys();
+            while (iter.hasNext()) {
+
+                if (!firstParameter) {
+                    parametersAsQueryString.append('&');
+                }
+
+                String key = iter.next();
+                String value =  jsonObject.get(key).toString();
+                parametersAsQueryString.append(URLEncoder.encode(key, "UTF-8")).append('=');
+                parametersAsQueryString.append(URLEncoder.encode(value, "UTF-8"));
+
+
+
+                firstParameter = false;
+            }
+        }
+        return parametersAsQueryString.toString();
+    }
 }

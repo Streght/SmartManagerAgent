@@ -47,12 +47,35 @@ public class MainActivity extends AppCompatActivity {
         //pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
 
 
+
+        // Server POST request
+/*        if (isNetworkAvailable()) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("username", "banane");
+                jsonObject.put("password", "mdp");
+                jsonObject.put("ip", "12.12.12.12");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("MainActivity", "POST request");
+            ServerPostRequest serverPostRequest = new ServerPostRequest();
+            try {
+                serverPostRequest.execute("http://calendar-matcher.spieldy.com/index.php?all_user=1", Utils.createQueryStringForParameters(jsonObject));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }*/
+
         // Server GET request
         if (isNetworkAvailable()) {
-            ServerRequest serverRequest = new ServerRequest();
-            serverRequest.execute("http://calendar-matcher.spieldy.com/index.php?username=spieldy");
+            Log.d("MainActivity", "GET request");
+            ServerGetRequest serverGetRequest = new ServerGetRequest();
+            serverGetRequest.execute("http://calendar-matcher.spieldy.com/index.php?username=spieldy");
             try {
-                JSONObject jsonObject = serverRequest.get();
+                JSONObject jsonObject = serverGetRequest.get();
                 Log.d("MainActivity", jsonObject.toString());
             } catch (InterruptedException e) {
                 e.printStackTrace();
