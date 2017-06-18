@@ -130,6 +130,7 @@ public class MeetingAddActivity extends AppCompatActivity {
                 calendarDebutPossible.set(Calendar.MINUTE, minutes);
                 updateLabel();
             }
+
         }
     };
 
