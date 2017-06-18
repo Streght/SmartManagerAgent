@@ -3,7 +3,7 @@ package com.smartmanageragent.exteriorCommunication;
 import android.os.Message;
 import android.util.Log;
 
-import com.smartmanageragent.application.testCommunicationActivity;
+import com.smartmanageragent.application.TestComActivity;
 
 import org.json.JSONObject;
 
@@ -22,11 +22,11 @@ import java.net.Socket;
 
 public class ServerThread extends Thread {
     private Socket socket = null;
-    testCommunicationActivity.ClientHandler handler;
+    TestComActivity.ClientHandler handler;
     private PrintWriter printWriter;
     // private final GpioPinDigitalOutput[] pins;
 
-    public ServerThread(Socket socket, testCommunicationActivity.ClientHandler handler/* , GpioPinDigitalOutput[] pins */) {
+    public ServerThread(Socket socket, TestComActivity.ClientHandler handler/* , GpioPinDigitalOutput[] pins */) {
         super("ServerThread");
         this.socket = socket;
         this.handler = handler;
@@ -47,7 +47,7 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
 
-        Log.d("testCommunicationActivity","New client on server");
+        Log.d("TestComActivity","New client on server");
 
         try {
            /* (PrintWriter
@@ -55,7 +55,7 @@ public class ServerThread extends Thread {
 
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(this.socket.getInputStream()));) {*/
-            Log.d("testCommunicationActivity","Server try to read client msg");
+            Log.d("TestComActivity","Server try to read client msg");
             String inputLine;
 
             OutputStream outputStream = socket.getOutputStream();
@@ -69,16 +69,16 @@ public class ServerThread extends Thread {
             final String outputLine;
             printWriter.println("Hello from server");
             while ((inputLine = bufferedReader.readLine()) != null) {
-                Log.d("testCommunicationActivity","Client msg: " + inputLine);
+                Log.d("TestComActivity","Client msg: " + inputLine);
                 handler.sendMessage(
                         Message.obtain(handler,
-                                testCommunicationActivity.ClientHandler.UPDATE_MSG, inputLine));
+                                TestComActivity.ClientHandler.UPDATE_MSG, inputLine));
                 printWriter.println(inputLine); // echo back to sender
             }
-            Log.d("testCommunicationActivity","Close server socket");
+            Log.d("TestComActivity","Close server socket");
             this.socket.close();
         } catch (final IOException e) {
-            Log.d("testCommunicationActivity","Error in server: " + e.toString());
+            Log.d("TestComActivity","Error in server: " + e.toString());
             e.printStackTrace();
         }
     }

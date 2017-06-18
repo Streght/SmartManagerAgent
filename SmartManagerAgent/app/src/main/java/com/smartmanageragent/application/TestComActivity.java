@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutionException;
 
-public class testCommunicationActivity extends AppCompatActivity {
+public class TestComActivity extends AppCompatActivity {
 
     ClientHandler clientHandler;
     ClientThread clientThread;
@@ -63,7 +63,7 @@ public class testCommunicationActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("testCommunicationActivity", "POST request");
+            Log.d("TestComActivity", "POST request");
             ServerPostRequest serverPostRequest = new ServerPostRequest();
             try {
                 serverPostRequest.execute("http://calendar-matcher.spieldy.com/index.php?all_user=1", Utils.createQueryStringForParameters(jsonObject));
@@ -76,12 +76,12 @@ public class testCommunicationActivity extends AppCompatActivity {
 
         // Server GET request
         if (isNetworkAvailable()) {
-            Log.d("testCommunicationActivity", "GET request");
+            Log.d("TestComActivity", "GET request");
             ServerGetRequest serverGetRequest = new ServerGetRequest();
             serverGetRequest.execute("http://calendar-matcher.spieldy.com/index.php?username=spieldy");
             try {
                 JSONObject jsonObject = serverGetRequest.get();
-                Log.d("testCommunicationActivity", jsonObject.toString());
+                Log.d("TestComActivity", jsonObject.toString());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -90,13 +90,13 @@ public class testCommunicationActivity extends AppCompatActivity {
         }
 
 
-        Log.d("testCommunicationActivity","Helloo, create");
+        Log.d("TestComActivity","Helloo, create");
 
         // Creation of the server thread
         Thread t = new Thread(new Runnable() {
             public void run()
             {
-                Log.d("testCommunicationActivity","Create server thread");
+                Log.d("TestComActivity","Create server thread");
                 createServer();
                 // Insert some method call here.
             }
@@ -105,10 +105,10 @@ public class testCommunicationActivity extends AppCompatActivity {
 
         //createServer();
 
-        Log.d("testCommunicationActivity","Client handler");
+        Log.d("TestComActivity","Client handler");
 
         // Creation of the client thread
-        clientHandler = new testCommunicationActivity.ClientHandler(this);
+        clientHandler = new TestComActivity.ClientHandler(this);
         //------Try to connect----
         final Handler handler = new Handler();
         final int delay = 10000; // Try to connect each 10 seconds
@@ -169,7 +169,7 @@ public class testCommunicationActivity extends AppCompatActivity {
         final int portNumber = 8000;
         final boolean listening = true;
 
-        Log.d("testCommunicationActivity","Port: " + portNumber);
+        Log.d("TestComActivity","Port: " + portNumber);
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
@@ -177,7 +177,7 @@ public class testCommunicationActivity extends AppCompatActivity {
                 new ServerThread(serverSocket.accept(), clientHandler).start();
             }
         } catch (final IOException e) {
-            Log.d("testCommunicationActivity","Could not listen on port " + portNumber);
+            Log.d("TestComActivity","Could not listen on port " + portNumber);
             System.exit(-1);
         }
     }
@@ -186,9 +186,9 @@ public class testCommunicationActivity extends AppCompatActivity {
         public static final int UPDATE_STATE = 0;
         public static final int UPDATE_MSG = 1;
         public static final int UPDATE_END = 2;
-        private testCommunicationActivity parent;
+        private TestComActivity parent;
 
-        public ClientHandler(testCommunicationActivity parent) {
+        public ClientHandler(TestComActivity parent) {
             super();
             this.parent = parent;
         }

@@ -3,7 +3,7 @@ package com.smartmanageragent.exteriorCommunication;
 import android.os.Message;
 import android.util.Log;
 
-import com.smartmanageragent.application.testCommunicationActivity;
+import com.smartmanageragent.application.TestComActivity;
 
 import org.json.JSONObject;
 
@@ -26,15 +26,15 @@ public class ClientThread extends Thread{
     String dstAddress;
     int dstPort;
     private boolean running;
-    testCommunicationActivity.ClientHandler handler;
+    TestComActivity.ClientHandler handler;
 
     Socket socket;
     PrintWriter printWriter;
     BufferedReader bufferedReader;
 
-    public ClientThread(String addr, int port, testCommunicationActivity.ClientHandler handler) {
+    public ClientThread(String addr, int port, TestComActivity.ClientHandler handler) {
         super();
-        Log.d("testCommunicationActivity","new client");
+        Log.d("TestComActivity","new client");
         dstAddress = addr;
         dstPort = port;
         this.handler = handler;
@@ -47,7 +47,7 @@ public class ClientThread extends Thread{
     private void sendState(String state){
         handler.sendMessage(
                 Message.obtain(handler,
-                        testCommunicationActivity.ClientHandler.UPDATE_STATE, state));
+                        TestComActivity.ClientHandler.UPDATE_STATE, state));
     }
 
     public void txMsg(String msgToSend){
@@ -62,7 +62,7 @@ public class ClientThread extends Thread{
 
     @Override
     public void run() {
-        Log.d("testCommunicationActivity","connecting...");
+        Log.d("TestComActivity","connecting...");
         sendState("connecting...");
 
         running = true;
@@ -70,7 +70,7 @@ public class ClientThread extends Thread{
         try {
             socket = new Socket(dstAddress, dstPort);
             sendState("connected");
-            Log.d("testCommunicationActivity","client connected to " + dstAddress +": " + dstPort);
+            Log.d("TestComActivity","client connected to " + dstAddress +": " + dstPort);
 
             OutputStream outputStream = socket.getOutputStream();
             printWriter = new PrintWriter(outputStream, true);
@@ -87,7 +87,7 @@ public class ClientThread extends Thread{
                 if(line != null){
                     handler.sendMessage(
                             Message.obtain(handler,
-                                    testCommunicationActivity.ClientHandler.UPDATE_MSG, line));
+                                    TestComActivity.ClientHandler.UPDATE_MSG, line));
                 }
 
             }*/
@@ -95,16 +95,16 @@ public class ClientThread extends Thread{
 
             String line;
 
-            Log.d("testCommunicationActivity","Client try to read msg from server");
+            Log.d("TestComActivity","Client try to read msg from server");
 
             while (running && (line = bufferedReader.readLine()) != null) {
 
-                Log.d("testCommunicationActivity","Server msg: " + line);
+                Log.d("TestComActivity","Server msg: " + line);
                 //printWriter.println(line); // echo back to sender
 
                 //handler.sendMessage(
                 //        Message.obtain(handler,
-                //                testCommunicationActivity.ClientHandler.UPDATE_MSG, line));
+                //                TestComActivity.ClientHandler.UPDATE_MSG, line));
             }
 
         } catch (IOException e) {
@@ -131,6 +131,6 @@ public class ClientThread extends Thread{
             }
         }
 
-        handler.sendEmptyMessage(testCommunicationActivity.ClientHandler.UPDATE_END);
+        handler.sendEmptyMessage(TestComActivity.ClientHandler.UPDATE_END);
     }
 }

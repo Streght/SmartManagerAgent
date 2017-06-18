@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         android:theme="@style/AppTheme">
         <activity android:name="com.smartmanageragent.application.AboutActivity" />
-        <activity android:name="com.smartmanageragent.application.testCommunicationActivity" />
+        <activity android:name="com.smartmanageragent.application.TestComActivity" />
         <activity
             android:name="com.smartmanageragent.application.CalendarActivity"
             android:label="@string/title_activity_calendar"

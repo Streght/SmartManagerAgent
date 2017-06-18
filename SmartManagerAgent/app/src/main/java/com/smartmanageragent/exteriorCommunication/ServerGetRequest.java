@@ -51,7 +51,7 @@ public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
             jsonString = sb.toString();
 
             System.out.println("JSON: " + jsonString);
-            Log.d("testCommunicationActivity",jsonString);
+            Log.d("TestComActivity",jsonString);
 
             return new JSONObject(jsonString);
         } catch (Exception e) {
