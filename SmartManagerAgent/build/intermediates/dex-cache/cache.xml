@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\3935fb40302758b7fed8f152ec5b5234a07af577\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_2c3155e55f76c2bb27c4567d26a5d116cd7d8468.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\ad018ead581d64c0b1d6a68f9a29d0639f67ff4f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_966eb7b6a397942815182e42d0f224113b1fee4b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\66835d74eae939a8112abc9d5cf172971c7ba07e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_892901ca24eed83da8b341e4fcf684a1081a811d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\775fda969263ca081c2d5dd777fcf089755977b2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_75340f3e9561f1a83e2f89bd8772006cd947b4f7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\a7c58f0fa92c9f461c147d05ca7ffec359117671\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_7b3d16e9bc5b943da94155d8c3585c9f3433a941.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\1d4a30c025c81a84926c3fe1043d1a51c05f8d16\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_935f510c249b6096cc7b27d8bcc3f2d30c077a4c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Programmation\AndroidSDK\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_5e5e955061c26db8940518d7f38195bddf2008fe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\ca1da69c34626d486a25397908bbc0cb90aa4b94\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_d0146e7c38423f4643fe9cddf422bf69657f4131.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\5126f3e1eb67c408c9ec1ae5d1f736e46635bf52\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_69b1916c7f59768328e7ddc814a38c1d5975d4af.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\080884b5d733389a1c7ff1f8dcb3c15bede78312\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_f22052cb73460c8ff359f7c27429911b750a45a7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\068f09652e60422784f765cda619fe8247678d81\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_dfd83b3a4c31719885ef4e60d78761305b0cd148.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\c1fefa14ac52b3b0c27047ce1453388e13aae000\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_05806264980ddd0d0359a524fd8f3bb56e3c09c1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\61651cf14e230abc6862e605cc71f697762bbe78\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_3b1db55b086ad555052cb55a8434b22b52a309e6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Maxime\.android\build-cache\b17a35f39bac63fe963bd57309f51829554836b5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_85bbb78469fced1d065a056ec77da067424faf8f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Programmation\AndroidSDK\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="D:\Travail\TravailUQAC\PatronsEtModeles\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_6b0bb70f8d617e9524adbb7fa8df27273fbcea08.jar" />
+    </item>
+
+</items>

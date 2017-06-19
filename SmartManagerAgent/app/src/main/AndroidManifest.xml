@@ -19,10 +19,6 @@
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MeetingsActivity"
@@ -31,7 +27,12 @@
             android:name=".MeetingAddActivity"
             android:label="@string/title_meeting_add_activity" />
         <activity android:name=".WeeklyFreeTimeActivity" />
-        <activity android:name=".TestListIdActivity"/>
+        <activity android:name=".TestListIdActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter> </activity>
+        <service android:name="com.smartmanageragent.exteriorCommunication.ServiceCommunication"/>
     </application>
 
 </manifest>
