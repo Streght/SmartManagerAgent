@@ -1,5 +1,7 @@
 package com.smartmanageragent.smartagent.message;
 
+import android.util.Base64;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-//import java.util.Base64;
+
 
 public class Serializer {
 
@@ -51,9 +53,8 @@ public class Serializer {
 	 * @return encoded
 	 */
 	private static String encode(byte[] byteArray) {
-		//String encoded = Base64.getEncoder().encodeToString(byteArray);
-		// return encoded;
-		return null;
+		String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+	 	return encoded;
 	}
 	
 	/** Decodes a byte array from a String
@@ -61,9 +62,8 @@ public class Serializer {
 	 * @return decoded
 	 */
 	private static byte[] decode(String string) {
-		// byte[] decoded = Base64.getDecoder().decode(string);
-		// return decoded;
-		return null;
+		byte[] decoded = Base64.decode(string, Base64.DEFAULT);
+		return decoded;
 	}
 	
 }
