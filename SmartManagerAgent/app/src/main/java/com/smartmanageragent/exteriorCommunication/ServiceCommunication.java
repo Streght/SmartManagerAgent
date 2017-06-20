@@ -22,6 +22,8 @@ public class ServiceCommunication extends IntentService {
 
     private String TAG = "Service communication: ";
 
+    public String postIp = "POSTIP";
+    public String getTable = "UPDATETABLE";
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -41,10 +43,15 @@ public class ServiceCommunication extends IntentService {
             JSONMessage request = new JSONMessage(dataString);
             if (request.getField(JSONMessage.Fields.ACTIVITY).equals("LOCAL")) {
                 // TODO : Envoyer à l'application
-            } else {
+            } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(postIp)) {
+                postIP2Server(request);
+            } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(getTable)) {
+                updateMap();
+            }
+            else {
                 String sender = request.getField(JSONMessage.Fields.SENDER);
-                if (sender!=null) {
-                    String ipSender =  SingletonRegisterIDIP.getInstance().getIp(sender);
+                if (sender != null) {
+                    String ipSender = SingletonRegisterIDIP.getInstance().getIp(sender);
                     if (ipSender == null) {
                         updateMap();
                     }
@@ -73,6 +80,26 @@ public class ServiceCommunication extends IntentService {
         }
     }
 
+    private void postIP2Server (JSONMessage message) {
+ /*       if (isNetworkAvailable()) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("username", "banane");
+                jsonObject.put("password", "mdp");
+                jsonObject.put("ip", "12.12.12.12");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("TestComActivity", "POST request");
+            ServerPostRequest serverPostRequest = new ServerPostRequest();
+            try {
+                serverPostRequest.execute("http://calendar-matcher.spieldy.com/index.php?all_user=1", Utils.createQueryStringForParameters(jsonObject));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }*/
+    }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
