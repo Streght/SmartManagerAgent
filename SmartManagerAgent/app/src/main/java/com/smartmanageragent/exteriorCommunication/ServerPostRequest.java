@@ -1,4 +1,4 @@
-package com.smartmanageragent.application;
+package com.smartmanageragent.exteriorCommunication;
 
 import android.os.AsyncTask;
 import android.util.Log;
