@@ -24,9 +24,13 @@ public class JSONMessage extends Message<String> {
 		super("");
 		this.jsonObj = new JSONObject();
 		// Initializes all the message fields with default value
-		/*for(Fields field : Fields.values()) {
-			jsonObj.append(field.toString(), defaultValue);
-		}*/
+		try {
+		for(Fields field : Fields.values()) {
+				jsonObj.put(field.toString(), defaultValue);
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
 		this.content = jsonObj.toString();
 	}
 	
