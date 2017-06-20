@@ -22,6 +22,8 @@ public class MeetingAddActivity extends AppCompatActivity {
     private Calendar calendarDebutPossible = Calendar.getInstance();
     private Calendar calendarFinPossible = Calendar.getInstance();
     private CheckBox checkboxAuPlusTot;
+    private EditText editTextToChange;
+    private Calendar calendarToChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,12 @@ public class MeetingAddActivity extends AppCompatActivity {
 //                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                new DatePickerDialog(MeetingAddActivity.this, date, calendarDebutPossible
-                        .get(Calendar.YEAR), calendarDebutPossible.get(Calendar.MONTH),
-                        calendarDebutPossible.get(Calendar.DAY_OF_MONTH)).show();
+                editTextToChange = dateDebutPossible;
+                calendarToChange = calendarDebutPossible;
+
+                new DatePickerDialog(MeetingAddActivity.this, date, calendarToChange
+                        .get(Calendar.YEAR), calendarToChange.get(Calendar.MONTH),
+                        calendarToChange.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -54,11 +59,12 @@ public class MeetingAddActivity extends AppCompatActivity {
 //                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-                new DatePickerDialog(MeetingAddActivity.this, dateFin, calendarFinPossible
-                        .get(Calendar.YEAR), calendarFinPossible.get(Calendar.MONTH),
-                        calendarFinPossible.get(Calendar.DAY_OF_MONTH)).show();
+                editTextToChange = dateFinPossible;
+                calendarToChange = calendarFinPossible;
 
-
+                new DatePickerDialog(MeetingAddActivity.this, date, calendarToChange
+                        .get(Calendar.YEAR), calendarToChange.get(Calendar.MONTH),
+                        calendarToChange.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -94,64 +100,40 @@ public class MeetingAddActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            if (view.isShown()) {
-                calendarDebutPossible.set(Calendar.YEAR, year);
-                calendarDebutPossible.set(Calendar.MONTH, monthOfYear);
-                calendarDebutPossible.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            if ((editTextToChange != null) & (calendarToChange != null)) {
+                calendarToChange.set(Calendar.YEAR, year);
+                calendarToChange.set(Calendar.MONTH, monthOfYear);
+                calendarToChange.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             }
 
 
-            new TimePickerDialog(MeetingAddActivity.this, time, calendarDebutPossible
-                    .get(Calendar.HOUR_OF_DAY), calendarDebutPossible.get(Calendar.MINUTE), true).show();
+            new TimePickerDialog(MeetingAddActivity.this, time, calendarToChange
+                    .get(Calendar.HOUR_OF_DAY), calendarToChange.get(Calendar.MINUTE), true).show();
         }
     };
-
-    // Pareil pour la date de fin
-    DatePickerDialog.OnDateSetListener dateFin = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendarFinPossible.set(Calendar.YEAR, year);
-            calendarFinPossible.set(Calendar.MONTH, monthOfYear);
-            calendarFinPossible.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            new TimePickerDialog(MeetingAddActivity.this, timeFin, calendarFinPossible
-                    .get(Calendar.HOUR_OF_DAY), calendarFinPossible.get(Calendar.MINUTE), true).show();
-        }
-    };
-
 
     // On ecoute le TimePicker cree dans (onDateSet) et on sauvegarde l'heure choisie dans la variable
     // "calendrierDebutPossible", ensuite on met a jour le label pour afficher la date complete
     TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
-            if (view.isShown()) {
-                calendarDebutPossible.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendarDebutPossible.set(Calendar.MINUTE, minutes);
+            if ((editTextToChange != null) & (calendarToChange != null)) {
+                calendarToChange.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarToChange.set(Calendar.MINUTE, minutes);
                 updateLabel();
             }
 
         }
     };
 
-    TimePickerDialog.OnTimeSetListener timeFin = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
-            calendarFinPossible.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            calendarFinPossible.set(Calendar.MINUTE, minutes);
-            updateLabelFin();
-        }
-    };
-
     private void updateLabel() {
         String myFormat = "EEE, d MMM yyyy HH:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        dateDebutPossible.setText(sdf.format(calendarDebutPossible.getTime()));
-    }
+        if ((editTextToChange != null) & (calendarToChange != null)){
+            editTextToChange.setText(sdf.format(calendarToChange.getTime()));
+        }
 
-    private void updateLabelFin() {
-        String myFormat = "EEE, d MMM yyyy HH:mm";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        dateFinPossible.setText(sdf.format(calendarFinPossible.getTime()));
+        editTextToChange = null;
+        calendarToChange = null;
     }
 }
