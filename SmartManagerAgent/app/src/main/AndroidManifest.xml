@@ -17,7 +17,7 @@
         <activity android:name=".TestComActivity" />
         <activity
             android:name=".CalendarActivity"
-            android:label="@string/title_activity_calendar"
+            android:label="@string/title_calendar_activity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".MeetingsActivity"
-            android:label="@string/title_activity_meetings" />
+            android:label="@string/title_meetings_activity" />
         <activity
             android:name=".MeetingAddActivity"
             android:label="@string/title_meeting_add_activity" />

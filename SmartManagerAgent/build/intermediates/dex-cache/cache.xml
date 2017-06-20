@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\d64eaa5e803df2b4d8e63b96747a18c29df7e454\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_89161fd0dc621a5e16fda49274a7dc250e087739.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\2935e4246c9fb5eb1c8a63a4db94f2d5e771b27d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_71f39b38767bfaa0e7e2e3511aa7a31e31efc435.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\975116ca2df06d99913c07e543b8feea4c6d139b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_4c16f6d50f860934bcc60c444de969bb15c65509.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\e40b37c197ffea9aac45a7b13ff17aae12ecc6b9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_a7db7800443cb73d84ff6970e41791733f139cda.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\a43b26c696cddd5a1670ad05d82dd24b60139016\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_8303e3d1fefe918c15d550e7f4aa47ac08066109.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.gradle\caches\modules-2\files-2.1\com.darwinsys\hirondelle-date4j\1.5.1\7b52de513f87ae4d9ff5d17518def0a1e9bc3df0\hirondelle-date4j-1.5.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7b52de513f87ae4d9ff5d17518def0a1e9bc3df0">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\hirondelle-date4j-1.5.1_ba4021016a8dba5fd4ef00e8f7daff95425331d2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\27ae23a3c9d0ee1c24da268c542aa3069f675f9b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_29b7bc8e01ed4b6484759571eb825c7dd8d50999.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\eef1aea68bf02bfb2081c36eaee13937f189c0e6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_df144133f9a438f35e9c225161de63b32e36f1fd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\a2e4e692b7ae72301bb87d758740b8230c477f52\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_026a6182bd788bf72e68fde58f4dce6600805e0e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_d6f22e89cc6aae7cc3f657a8ca034f2f46973d5e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\bbe01463987a8b805349cdacb6ee3606144087b3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_13c13d5441aaf0637dd13e74e6c1d469f30fbaf4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\016930527397a22b1d7c2f67b8649f2fc549e19d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_6f8348d0f6b9c42f456a0f062b69863e0ef34bb6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\10f8f37cdbf68ce42c3aba677a70363ee3ffce25\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_4df7f20085503d468932c741bd0113b05ef86cfb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\67c827c38a6c5f232fea7eb5af789f37b6d5e742\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="fea01abd91186a7148aaaf8c517b823eedaac79a">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_f5dff54ecb031b0bbad36aedbcdf2519c2a551d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\6dec2b70d27686ac3b8c46205afb68f198db463a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_9021f4de6a29384f22fa3f49a7301f10cc42e112.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_ec17984f5f29ce29dff2c4c5e4b223ca6f9fcfd1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\NG\.android\build-cache\4e870c7e39145820f09772e71a652466741e1abe\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\NG\Documents\AndroidStudioProjects\SmartManagerAgent\SmartManagerAgent\app\build\intermediates\pre-dexed\debug\classes_c68bcb9e404a27e47b0dbf27386b7d4684ee04c3.jar" />
+    </item>
+
+</items>

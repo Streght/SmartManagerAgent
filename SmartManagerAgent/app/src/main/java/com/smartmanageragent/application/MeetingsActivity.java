@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,17 +31,19 @@ public class MeetingsActivity extends AppCompatActivity {
         // For testing purpose
         meetingList.clear();
         Map<String, String> am1 = new HashMap<>(2);
-        am1.put("time", "test");
-        am1.put("title", "test2");
+        am1.put("time", "June 19, 2016 at 9:30 - June 19, 2016 at 11:00");
+        am1.put("description", "Patrons et modèles - Présentation projet");
         meetingList.add(am1);
         adapterMeetingListView.notifyDataSetChanged();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meetings);
+
+        SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+        setTitle(format.format(meetingDate));
 
         if (savedInstanceState != null) {
             meetingDate.setTime(savedInstanceState.getLong("meetingDate", -1));
@@ -52,7 +55,7 @@ public class MeetingsActivity extends AppCompatActivity {
         ListView meetingListView = (ListView) findViewById(R.id.meetingList);
         adapterMeetingListView = new SimpleAdapter(this, meetingList,
                 android.R.layout.simple_list_item_2,
-                new String[]{"time", "title"},
+                new String[]{"time", "description"},
                 new int[]{android.R.id.text1,
                         android.R.id.text2});
 
