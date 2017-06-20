@@ -1,4 +1,4 @@
-package com.smartmanageragent.exteriorCommunication;
+package com.smartmanageragent.exteriorcomm;
 
 import android.os.Message;
 import android.util.Log;

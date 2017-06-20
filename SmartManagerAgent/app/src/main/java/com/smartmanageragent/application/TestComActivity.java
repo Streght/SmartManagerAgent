@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorCommunication.ClientThread;
-import com.smartmanageragent.exteriorCommunication.ServerGetRequest;
-import com.smartmanageragent.exteriorCommunication.ServerThread;
-import com.smartmanageragent.exteriorCommunication.Utils;
+import com.smartmanageragent.exteriorcomm.ClientThread;
+import com.smartmanageragent.exteriorcomm.ServerGetRequest;
+import com.smartmanageragent.exteriorcomm.ServerThread;
+import com.smartmanageragent.exteriorcomm.Utils;
 
 import org.json.JSONObject;
 

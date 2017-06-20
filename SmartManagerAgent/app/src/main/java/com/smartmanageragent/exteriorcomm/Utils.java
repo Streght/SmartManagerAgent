@@ -1,4 +1,4 @@
-package com.smartmanageragent.exteriorCommunication;
+package com.smartmanageragent.exteriorcomm;
 
 /**
  * Created by Nicolas on 08/06/2017.

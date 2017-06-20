@@ -1,4 +1,4 @@
-package com.smartmanageragent.exteriorCommunication;
+package com.smartmanageragent.exteriorcomm;
 
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
