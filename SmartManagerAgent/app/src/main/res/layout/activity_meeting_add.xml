@@ -62,5 +62,15 @@
             android:layout_height="wrap_content"
             android:text="Le plus tôt possible" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter des participants"/>
+
+        <EditText
+            android:id="@+id/textParticipants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
