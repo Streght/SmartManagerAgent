@@ -2,8 +2,12 @@ package com.smartmanageragent.application;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,6 +28,7 @@ public class MeetingAddActivity extends AppCompatActivity {
     private CheckBox checkboxAuPlusTot;
     private EditText editTextToChange;
     private Calendar calendarToChange;
+    private EditText title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class MeetingAddActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_meeting_add);
 
+        title = (EditText) findViewById(R.id.meeting_title);
         dateDebutPossible = (EditText) findViewById(R.id.meeting_date_min);
         dateFinPossible = (EditText) findViewById(R.id.meeting_date_max);
         checkboxAuPlusTot = (CheckBox) findViewById(R.id.checkbox_au_plus_tot);
@@ -40,8 +46,8 @@ public class MeetingAddActivity extends AppCompatActivity {
         dateDebutPossible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                // InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                // imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 editTextToChange = dateDebutPossible;
                 calendarToChange = calendarDebutPossible;
@@ -56,8 +62,8 @@ public class MeetingAddActivity extends AppCompatActivity {
         dateFinPossible.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                // InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                // imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 editTextToChange = dateFinPossible;
                 calendarToChange = calendarFinPossible;
@@ -106,7 +112,6 @@ public class MeetingAddActivity extends AppCompatActivity {
                 calendarToChange.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             }
 
-
             new TimePickerDialog(MeetingAddActivity.this, time, calendarToChange
                     .get(Calendar.HOUR_OF_DAY), calendarToChange.get(Calendar.MINUTE), true).show();
         }
@@ -128,12 +133,55 @@ public class MeetingAddActivity extends AppCompatActivity {
 
     private void updateLabel() {
         String myFormat = "EEE, d MMM yyyy HH:mm";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-        if ((editTextToChange != null) & (calendarToChange != null)){
-            editTextToChange.setText(sdf.format(calendarToChange.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        if ((editTextToChange != null) && (calendarToChange != null)) {
+            if ((!dateDebutPossible.getText().toString().equals("")) ||
+                    (!dateFinPossible.getText().toString().equals(""))) {
+                if (calendarDebutPossible.before(calendarFinPossible)) {
+                    editTextToChange.setText(sdf.format(calendarToChange.getTime()));
+                } else {
+                    if (editTextToChange.getId() == R.id.meeting_date_max) {
+                        Snackbar.make(findViewById(R.id.meeting_add_activity), R.string.date_error_after,
+                                Snackbar.LENGTH_LONG)
+                                .show();
+                        calendarFinPossible = Calendar.getInstance();
+                    } else {
+                        if (editTextToChange.getId() == R.id.meeting_date_min) {
+                            Snackbar.make(findViewById(R.id.meeting_add_activity), R.string.date_error_before,
+                                    Snackbar.LENGTH_LONG)
+                                    .show();
+                            calendarDebutPossible = Calendar.getInstance();
+                        }
+                    }
+                }
+            } else {
+                editTextToChange.setText(sdf.format(calendarToChange.getTime()));
+            }
+
         }
 
         editTextToChange = null;
         calendarToChange = null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_validate, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.validate) {
+            if (!title.getText().toString().equals("") &&
+                    (checkboxAuPlusTot.isChecked() || (!dateDebutPossible.getText().toString().equals("") && !dateFinPossible.getText().toString().equals("")))) {
+                // TODO add checking on attendees.
+                // TODO Add envoi commande.
+
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

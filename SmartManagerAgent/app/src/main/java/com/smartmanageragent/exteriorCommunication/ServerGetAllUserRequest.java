@@ -10,11 +10,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Nicolas on 14/06/2017.
- */
 
-public class ServerGetAllUserRequest extends AsyncTask<String, Void, JSONArray> {
+class ServerGetAllUserRequest extends AsyncTask<String, Void, JSONArray> {
 
 
 
@@ -39,7 +36,7 @@ public class ServerGetAllUserRequest extends AsyncTask<String, Void, JSONArray> 
 
             char[] buffer = new char[1024];
 
-            String jsonString = new String();
+            String jsonString;
 
             StringBuilder sb = new StringBuilder();
             String line;

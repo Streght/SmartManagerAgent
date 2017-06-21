@@ -4,16 +4,38 @@
     <string name="app_name">Smart Manager Agent</string>
 
     <!-- CalendarActivity -->
-    <string name="title_activity_meetings">Mes rendez-vous</string>
     <string name="title_activity_calendar">Mon calendrier</string>
     <string name="text_time_slot_button">Configurer les plages horaires</string>
 
-    <!-- MeetingdActivity -->
+    <!-- MeetingsActivity -->
+    <string name="title_activity_meetings">Mes rendez-vous</string>
     <string name="modify">Modifier</string>
     <string name="delete">Supprimer</string>
+    <string name="time_separator">&#160;à&#160;</string>
 
-    <!-- MeetingSetupActivity -->
+    <!-- MeetingAddActivity -->
     <string name="title_meeting_add_activity">Ajouter un rendez-vous</string>
+    <string name="meeting_description">Description du rendez-vous</string>
+    <string name="meeting_description_hint">J\'ai un rendez-vous pour…</string>
+    <string name="meeting_start">Première date de disponibilité</string>
+    <string name="meeting_end">Dernière date de disponibilité</string>
+    <string name="asap">Le plus tôt possible</string>
+    <string name="attendees">Participants au rendez-vous</string>
+    <string name="date_error_after">La date de fin doit être située après la date de début</string>
+    <string name="date_error_before">La date de début doit être située avant la date de fin</string>
+    <string name="field_error">Merci de valider tous les champs avant de valider</string>
+
+    <!-- WeeklyFreeTimeActivity -->
+    <string name="no_meeting">Pas de RDV</string>
+    <string name="beginning">Début</string>
+    <string name="end">Fin</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Jeudi</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="sunday">Dimanche</string>
 
     <!-- Menu -->
     <string name="about">A propos</string>

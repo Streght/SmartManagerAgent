@@ -15,14 +15,10 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Created by Nicolas on 06/06/2017.
- */
-
 
 public class ServerThread extends Thread {
     private Socket socket = null;
-    TestComActivity.ClientHandler handler;
+    private TestComActivity.ClientHandler handler;
     private PrintWriter printWriter;
     // private final GpioPinDigitalOutput[] pins;
 
@@ -34,7 +30,7 @@ public class ServerThread extends Thread {
     }
 
 
-    public void txMsg(String msgToSend){
+    private void txMsg(String msgToSend){
         if(printWriter != null){
             printWriter.println(msgToSend);
         }

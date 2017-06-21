@@ -15,22 +15,15 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Created by Nicolas on 17/11/2016.
- */
-
-
-
 public class ClientThread extends Thread{
 
-    String dstAddress;
-    int dstPort;
+    private String dstAddress;
+    private int dstPort;
     private boolean running;
-    TestComActivity.ClientHandler handler;
-
-    Socket socket;
-    PrintWriter printWriter;
-    BufferedReader bufferedReader;
+    private TestComActivity.ClientHandler handler;
+    private Socket socket;
+    private PrintWriter printWriter;
+    private BufferedReader bufferedReader;
 
     public ClientThread(String addr, int port, TestComActivity.ClientHandler handler) {
         super();

@@ -7,8 +7,8 @@ import com.smartmanageragent.smartagent.message.MessageQueue;
 public class Application<K, T, U> implements Invocator<K, T, U>, Runnable {
 
 	// Messages queues
-	protected MessageQueue<U> receiving;
-	protected MessageQueue<U> sending;
+	private MessageQueue<U> receiving;
+	private MessageQueue<U> sending;
 	
 	public Application(MessageQueue<U> receiving, MessageQueue<U> sending) {
 		this.receiving = receiving;

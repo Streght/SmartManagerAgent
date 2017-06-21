@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 public class SingletonRegisterIDIP {
@@ -26,7 +27,7 @@ public class SingletonRegisterIDIP {
         mapIdIp = new HashMap<String, String>();
     }
 
-    public String getIp (String id) {
+    String getIp (String id) {
         return mapIdIp.get(id);
     }
 
@@ -34,7 +35,7 @@ public class SingletonRegisterIDIP {
      * Update the whole map
      * @param jsonArray
      */
-    public void updateAll(JSONArray jsonArray) {
+     void updateAll(JSONArray jsonArray) {
         mapIdIp.clear();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -53,10 +54,9 @@ public class SingletonRegisterIDIP {
      */
     public ArrayList<String> getListId () {
         final ArrayList<String> listId = new ArrayList<String>();
-        Iterator it = mapIdIp.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            listId.add((String)pair.getKey());
+        for (Object o : mapIdIp.entrySet()) {
+            HashMap.Entry pair = (HashMap.Entry) o;
+            listId.add((String) pair.getKey());
         }
         return listId;
     }

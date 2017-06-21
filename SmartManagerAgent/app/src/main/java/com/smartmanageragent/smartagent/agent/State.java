@@ -16,7 +16,7 @@ public class State<K, T> {
 	// Number of people who accepted/refused a slot for a given activity (name)
 	private HashMap<String, Results> results;
 	
-	public State() {
+	State() {
 		this.timeTable = null;
 		this.waitingForAddition = new HashMap<String, ArrayList<String>>();
 		this.waitingForRemove = new HashMap<String, ArrayList<String>>();
@@ -127,22 +127,22 @@ public class State<K, T> {
 		return false;
 	}
 	
-	protected class Results {
-		protected int expected;
-		protected int acceptances;
-		protected int refusals;
+	private class Results {
+		int expected;
+		int acceptances;
+		int refusals;
 		protected Results(int exp, int acc, int ref) {
 			this.expected = exp;
 			this.acceptances = acc;
 			this.refusals = ref;
 		}
-		protected boolean finished() {
+		boolean finished() {
 			return this.expected == this.acceptances+this.refusals;
 		}
-		protected boolean accepted() {
+		boolean accepted() {
 			return this.finished() && this.acceptances==this.expected;
 		}
-		protected boolean refused() {
+		boolean refused() {
 			return this.finished() && this.refusals>0;
 		}
 	}

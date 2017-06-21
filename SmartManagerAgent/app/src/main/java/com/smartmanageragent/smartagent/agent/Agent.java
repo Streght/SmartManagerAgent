@@ -14,10 +14,10 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 
 	protected String name;
 	// State
-	protected State<K, T> state;
+	State<K, T> state;
 	// Messages queues
-	protected MessageQueue<U> receiving;
-	protected MessageQueue<U> sending;
+	MessageQueue<U> receiving;
+	MessageQueue<U> sending;
 	
 	
 	public Agent(MessageQueue<U> receiving, MessageQueue<U> sending) {
@@ -71,7 +71,7 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 	/** Waits for messages
 	 * @throws InterruptedException 
 	 */
-	public void waitMessages() throws InterruptedException {
+	void waitMessages() throws InterruptedException {
 		synchronized (receiving) {
 			// TODO : think about using wait(timeout)
 			this.receiving.wait();

@@ -10,9 +10,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Nicolas on 14/06/2017.
- */
 
 public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
 
@@ -39,12 +36,12 @@ public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
 
             char[] buffer = new char[1024];
 
-            String jsonString = new String();
+            String jsonString;
 
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line+"\n");
+                sb.append(line).append("\n");
             }
             br.close();
 

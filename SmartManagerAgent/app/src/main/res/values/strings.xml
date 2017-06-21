@@ -6,15 +6,43 @@
     <string name="title_calendar_activity">My calendar</string>
     <string name="text_time_slot_button">Configure time slots</string>
 
-    <!-- MeetingAddActivity -->
+    <!-- MeetingsActivity -->
     <string name="title_meetings_activity">My meetings</string>
     <string name="modify">Modify</string>
     <string name="delete">Delete</string>
+    <string name="time_separator">&#160;at&#160;</string>
 
-    <!-- MeetingSetupActivity -->
+    <!-- MeetingAddActivity -->
     <string name="title_meeting_add_activity">Add a new meeting</string>
+    <string name="meeting_description">Meeting title</string>
+    <string name="meeting_description_hint">I have a meeting in order to…</string>
+    <string name="meeting_start">First day of availability</string>
+    <string name="meeting_end">Last day of availability</string>
+    <string name="asap">As soon as possible</string>
+    <string name="attendees">Meeting attendees</string>
+    <string name="date_error_after">The ending date must be scheduled after the beginning date</string>
+    <string name="date_error_before">The beginning date must be scheduled before the ending date</string>
+    <string name="field_error">Please fill all fields before validate</string>
+
+    <!-- WeeklyFreeTimeActivity -->
+    <string name="no_meeting">No meeting</string>
+    <string name="beginning">Beginning</string>
+    <string name="end">End</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
     <!-- Menu -->
     <string name="about">About us</string>
     <string name="refresh_display">Refresh display</string>
+    <string name="validate">Validate</string>
+
+    <!-- About -->
+    <string name="about_txt">We are 6 French students from the Université du Québec à Chicoutimi...</string>
+    <string name="license_txt">About us</string>
+
 </resources>

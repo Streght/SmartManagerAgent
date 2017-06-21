@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:weightSum="8"
     tools:context="com.smartmanageragent.application.WeeklyFreeTimeActivity">
 
     <LinearLayout
+        android:id="@+id/free_time_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:weightSum="6"
         android:layout_weight="1">
@@ -18,26 +19,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"/>
+            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Pas de RDV"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Début"/>
+            android:layout_weight="0.5"
+            android:text="@string/no_meeting"
+            android:gravity="right"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Fin"/>
+            android:textAlignment="center"
+            android:text="@string/beginning"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_weight="2"
+            android:text="@string/end"/>
 
     </LinearLayout>
 
@@ -51,15 +54,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lundi"
+            android:layout_weight="1.2"
+            android:text="@string/monday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/LundiCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -88,15 +91,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mardi"
+            android:layout_weight="1.2"
+            android:text="@string/tuesday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/MardiCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -125,15 +128,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mercredi"
+            android:layout_weight="1.2"
+            android:text="@string/wednesday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/MercrediCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -162,15 +165,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Jeudi"
+            android:layout_weight="1.2"
+            android:text="@string/thursday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/JeudiCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -199,15 +202,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Vendredi"
+            android:layout_weight="1.2"
+            android:text="@string/friday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/VendrediCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -236,15 +239,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Samedi"
+            android:layout_weight="1.2"
+            android:text="@string/saturday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/SamediCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText
@@ -273,15 +276,15 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Dimanche"
+            android:layout_weight="1.2"
+            android:text="@string/sunday"
             android:gravity="center"/>
 
         <CheckBox
             android:id="@+id/DimancheCheckbox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.8"
             android:gravity="center"/>
 
         <EditText

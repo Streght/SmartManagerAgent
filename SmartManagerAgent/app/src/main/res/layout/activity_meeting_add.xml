@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +7,8 @@
 
     <LinearLayout
         android:id="@+id/meeting_add_activity"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -22,32 +21,32 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titre" />
+            android:text="@string/meeting_description" />
 
         <EditText
             android:id="@+id/meeting_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:text="Entrez le titre de votre rendez-vous" />
+            android:hint="@string/meeting_description_hint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:text="Début des possbilités pour le rdv :" />
+            android:text="@string/meeting_start" />
 
         <EditText
             android:id="@+id/meeting_date_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="date"
             android:ems="10"
             android:focusable="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fin des possibilités pour le rdv :" />
+            android:text="@string/meeting_end" />
 
         <EditText
             android:id="@+id/meeting_date_max"
@@ -60,12 +59,12 @@
             android:id="@+id/checkbox_au_plus_tot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Le plus tôt possible" />
+            android:text="@string/asap" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ajouter des participants"/>
+            android:text="@string/attendees"/>
 
         <EditText
             android:id="@+id/textParticipants"

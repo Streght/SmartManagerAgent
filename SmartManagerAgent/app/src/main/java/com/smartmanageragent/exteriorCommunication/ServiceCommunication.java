@@ -14,9 +14,6 @@ import org.json.JSONException;
 
 import java.util.concurrent.ExecutionException;
 
-/**
- * Created by Maxime on 19/06/2017.
- */
 
 public class ServiceCommunication extends IntentService {
 
@@ -65,9 +62,7 @@ public class ServiceCommunication extends IntentService {
                 JSONArray jsonArray = serverGetRequest.get();
                 Log.d(TAG, jsonArray.toString());
                 SingletonRegisterIDIP.getInstance().updateAll(jsonArray);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }

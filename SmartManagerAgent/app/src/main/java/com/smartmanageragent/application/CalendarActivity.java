@@ -15,13 +15,19 @@ import android.widget.Button;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+import com.smartmanageragent.smartagent.AgentService;
+import com.smartmanageragent.smartagent.message.Serializer;
+import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 public class CalendarActivity extends AppCompatActivity {
 
     private CaldroidFragment caldroidFragment;
+    private TimeTable<Date,Float> timeTable;
+    private static final String START_AGENT = "com.smartmanageragent.smartagent.agent.Agent.START";
 
     private void setCustomResourceForDates() {
         // Code pour mettre en valeur (vert) les jours avec RDV
@@ -49,6 +55,15 @@ public class CalendarActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // TODO uncomment when agent working.
+        /*
+        Intent intentService = new Intent(this, AgentService.class);
+        intentService.setAction(START_AGENT);
+        startService(intentService);
+
+        colorMeetingsDays();
+        */
 
         //final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
@@ -88,7 +103,10 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onSelectDate(Date date, View view) {
                 Intent intent = new Intent(CalendarActivity.this, MeetingsActivity.class);
-                intent.putExtra("meetingDate", date.getTime());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                intent.putExtra("meetingDate", cal.getTimeInMillis());
+                intent.putExtra("timeZone", cal.getTimeZone().getID());
                 startActivity(intent);
                 /*Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();*/
@@ -144,17 +162,19 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void colorMeetingsDays(){
+        //TODO uncomment when timetable reference and service working
         /*
-        ImageButton taskButton = (ImageButton) findViewById(R.id.buttonProjectTasks);
-        taskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentKanban = new Intent(ProjectPresentation.this, Kanban.class);
-                intentKanban.putExtra("currentProjectID", currentProjectID);
-                startActivity(intentKanban);
-            }
-        });
-        */
+        timeTable = AgentService.getAgentTimeTable();
+        Iterator<TimeTable.PosAct<Date, Float>> it = timeTable.activityIterator();
+
+        while (it.hasNext()){
+            ColorDrawable green = new ColorDrawable(ContextCompat.getColor(CalendarActivity.this, R.color.GreenDark));
+            caldroidFragment.setBackgroundDrawableForDate(green, it.next().pos);
+            caldroidFragment.setTextColorForDate(R.color.caldroid_white, it.next().pos);
+        }*/
     }
 
     @Override
@@ -166,10 +186,12 @@ public class CalendarActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        if (item.getItemId() == R.id.action_about) {
+        if (item.getItemId() == R.id.about) {
             Intent AboutPage = new Intent(CalendarActivity.this, AboutActivity.class);
             startActivity(AboutPage);
         } else if (item.getItemId() == R.id.refresh) {
+            // TODO uncomment when agent working.
+            //colorMeetingsDays();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,7 +199,6 @@ public class CalendarActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onSaveInstanceState(savedInstanceState);
 
         if (caldroidFragment != null) {

@@ -10,7 +10,7 @@ public class Activity<T> {
 	private String name;
 	private List<String> attendees;
 	
-	public Activity(T length, int priority, String name) {
+	Activity(T length, int priority, String name) {
 		this.length = length;
 		this.priority = priority;
 		this.name = name;
@@ -27,7 +27,7 @@ public class Activity<T> {
 	/**
 	 * @param length
 	 */
-	public void setLength(T length) {
+	void setLength(T length) {
 		this.length = length;
 	}
 

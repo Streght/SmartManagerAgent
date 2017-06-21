@@ -82,9 +82,7 @@ public class TestComActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = serverGetRequest.get();
                 Log.d("TestComActivity", jsonObject.toString());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
@@ -167,13 +165,12 @@ public class TestComActivity extends AppCompatActivity {
     protected void createServer() {
 
         final int portNumber = 8000;
-        final boolean listening = true;
 
         Log.d("TestComActivity","Port: " + portNumber);
 
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
-            while (listening) {
+            while (true) {
                 new ServerThread(serverSocket.accept(), clientHandler).start();
             }
         } catch (final IOException e) {
@@ -188,7 +185,7 @@ public class TestComActivity extends AppCompatActivity {
         public static final int UPDATE_END = 2;
         private TestComActivity parent;
 
-        public ClientHandler(TestComActivity parent) {
+        ClientHandler(TestComActivity parent) {
             super();
             this.parent = parent;
         }
