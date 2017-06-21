@@ -28,7 +28,6 @@ public class TestListIdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_list_id);
 
-
         textView1 = (TextView) this.findViewById(R.id.textView1);
         button1 = (Button) this.findViewById(R.id.button1);
         final Intent mServiceIntent = new Intent(this, CommunicationService.class);
