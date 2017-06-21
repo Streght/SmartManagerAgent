@@ -1,16 +1,19 @@
 package com.smartmanageragent.smartagent.timeTable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity<T> {
+public class Activity<T> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private T length;
 	private int priority;
 	private String name;
 	private List<String> attendees;
 	
-	Activity(T length, int priority, String name) {
+	public Activity(T length, int priority, String name) {
 		this.length = length;
 		this.priority = priority;
 		this.name = name;
@@ -27,7 +30,7 @@ public class Activity<T> {
 	/**
 	 * @param length
 	 */
-	void setLength(T length) {
+	public void setLength(T length) {
 		this.length = length;
 	}
 
@@ -81,6 +84,16 @@ public class Activity<T> {
 		return this.attendees.remove(att);
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((length == null) ? 0 : length.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + priority;
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		@SuppressWarnings("unchecked")

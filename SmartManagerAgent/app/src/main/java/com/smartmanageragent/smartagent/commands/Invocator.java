@@ -5,6 +5,6 @@ public interface Invocator<K, T, U> {
 	/** Invokes the 'execute' method of a command
 	 * @return success
 	 */
-	boolean invoke(Command<K, T, U> command);
+	public boolean invoke(Command<K, T, U> command);
 	
 }

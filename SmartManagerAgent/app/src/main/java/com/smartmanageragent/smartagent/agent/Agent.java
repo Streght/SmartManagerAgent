@@ -12,15 +12,20 @@ import com.smartmanageragent.smartagent.timeTable.TimeTable;
 // Using abstract class : template method
 public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 
+	// Time before canceling an operation
+	@SuppressWarnings("unused")
+	private static final int timeOut = 60;
+	// Agent name
 	protected String name;
 	// State
-	State<K, T> state;
+	protected State<K, T> state;
 	// Messages queues
-	MessageQueue<U> receiving;
-	MessageQueue<U> sending;
+	protected MessageQueue<U> receiving;
+	protected MessageQueue<U> sending;
 	
 	
-	public Agent(MessageQueue<U> receiving, MessageQueue<U> sending) {
+	public Agent(String name, MessageQueue<U> receiving, MessageQueue<U> sending) {
+		this.name = name;
 		this.state = new State<K, T>();
 		this.receiving = receiving;
 		this.sending = sending;
@@ -56,8 +61,9 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 	
 	/** Gets a message from the incoming message queue
 	 * @return message
+	 * @throws InterruptedException 
 	 */
-	public Message<U> receive() {
+	public Message<U> receive() throws InterruptedException {
 		return this.receiving.get();
 	}
 	
@@ -66,16 +72,6 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 	 */
 	public void send(Message<U> message) {
 		this.sending.add(message);
-	}
-	
-	/** Waits for messages
-	 * @throws InterruptedException 
-	 */
-	void waitMessages() throws InterruptedException {
-		synchronized (receiving) {
-			// TODO : think about using wait(timeout)
-			this.receiving.wait();
-		}
 	}
 	
 	/** Adds an activity at a given position in the time table

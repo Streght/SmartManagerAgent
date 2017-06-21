@@ -34,9 +34,6 @@
         <activity android:name=".TestListIdActivity" />
 
         <service android:name="com.smartmanageragent.exteriorcomm.CommunicationService"/>
-        <service
-            android:name="com.smartmanageragent.smartagent.AgentService"
-            android:exported="false" />
     </application>
 
 </manifest>

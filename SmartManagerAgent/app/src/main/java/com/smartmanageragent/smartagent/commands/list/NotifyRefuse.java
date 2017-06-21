@@ -14,21 +14,27 @@ import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.message.JSONMessage.Fields;
 import com.smartmanageragent.smartagent.timeTable.Activity;
 
-public class TTRequest<K, T> extends Command<K, T, String> {
+public class NotifyRefuse<K, T> extends Command<K, T, String> {
 
     private String addressee;
     private Activity<T> activity;
+    private Serializable slot;
 
     @SuppressWarnings("unchecked")
-    public TTRequest(Message<String> message, Agent<K, T, String> agent) {
+    public NotifyRefuse(Message<String> message, Agent<K, T, String> agent) {
         super(message, agent);
         String jsonString = (String) message.getContent();
         JSONObject jsonObj = null;
         try {
             jsonObj = new JSONObject(jsonString);
-            this.addressee = jsonObj.getString(Fields.SENDER.toString());
+            // WARNING : message addressee must be the agent to send the result to, not this agent name !!
+            this.addressee = jsonObj.getString(Fields.ADDRESSEES.toString());
+            // WARNING : message sent by the application must contain the activity
             String strAct = jsonObj.getString(Fields.ACTIVITY.toString());
             this.activity = (Activity<T>) Serializer.deserialize(strAct);
+            // WARNING : message sent by the application must contain the slot that has been refused !!
+            String strSlot = jsonObj.getString(Fields.SLOT.toString());
+            this.slot = Serializer.deserialize(strSlot);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -41,14 +47,14 @@ public class TTRequest<K, T> extends Command<K, T, String> {
             // Sender
             jsonMessage.setField(Fields.SENDER, this.agent.getName());
             // Command Type
-            jsonMessage.setField(Fields.COMMAND, TTAnswer.class.getName());
+            jsonMessage.setField(Fields.COMMAND, SlotRefused.class.getName());
             // Addressee
             jsonMessage.setField(Fields.ADDRESSEES, this.addressee);
             // Activity
             jsonMessage.setField(Fields.ACTIVITY, Serializer.serialize((Serializable) this.activity));
-            // Time table
-            jsonMessage.setField(Fields.TIMETABLE, Serializer.serialize((Serializable) this.agent.getTimeTable()));
-            // Sends message to the application
+            // Slot
+            jsonMessage.setField(Fields.SLOT, Serializer.serialize((Serializable) this.slot));
+            // Sends message to the application, which will send the user a notification
             this.getAgent().send(jsonMessage);
         } catch (NotSerializableException e) {
             e.printStackTrace();

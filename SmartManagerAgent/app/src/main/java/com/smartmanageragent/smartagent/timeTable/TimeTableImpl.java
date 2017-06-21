@@ -1,5 +1,6 @@
 package com.smartmanageragent.smartagent.timeTable;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,9 +14,10 @@ import com.smartmanageragent.smartagent.timeTable.slot.SlotImpl;
 
 public class TimeTableImpl implements TimeTable<Date, Float> {
 	
-	private static final String unName = "UNAVAILABLE";
-	private static final int unPriority = 5;
-	private NavigableMap<Date, Activity<Float>> activities;
+	private static final long serialVersionUID = 1L;
+	public static final String unName = "UNAVAILABLE";
+	public static final int unPriority = 5;
+	public NavigableMap<Date, Activity<Float>> activities;
 	
 	public TimeTableImpl() {
 		this.activities = new TreeMap<Date, Activity<Float>>(new DateComparator());
@@ -131,7 +133,8 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		}
 		// If next activity is "UNAVAILABLE" and begins at the same time the given slot ends
 		if (nextActBeg.equals(end) && nextAct.getName().equals(unName)) {
-			end = new Date((long) (nextActBeg.getTime()+nextAct.getLength()));
+			Date nextActEnd = new Date((long) (nextActBeg.getTime()+nextAct.getLength()));
+			end = nextActEnd;
 		}
 		Activity<Float> act = new Activity<Float>((float) (end.getTime()-beg.getTime()), unPriority, unName);
 		this.addActivity(beg, act);
@@ -144,7 +147,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 
 			private Iterator<Entry<Date, Activity<Float>>> iterator;
 
-			private ActivityIterator(NavigableMap<Date, Activity<Float>> activities) {
+			public ActivityIterator(NavigableMap<Date, Activity<Float>> activities) {
 				this.iterator = activities.entrySet().iterator();
 			}
 			
@@ -178,7 +181,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 			
 			// TODO : problem with first and last slot : no first and last reference activity
 			// Easy solution : add 0 length activities at the beginning and at the end !!
-			private FreeTimeIterator(NavigableMap<Date, Activity<Float>> activities) {
+			public FreeTimeIterator(NavigableMap<Date, Activity<Float>> activities) {
 				this.firstIt = activities.entrySet().iterator();
 				this.secondIt = activities.entrySet().iterator();
 				if (firstIt.hasNext())
@@ -209,15 +212,21 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 			}
 			
 		}
-		return new FreeTimeIterator(this.activities);
+		Iterator<Slot<Float>> it = new FreeTimeIterator(this.activities);
+		return it;
 	}
 	
-	private class DateComparator implements Comparator<Date> {
+	
+	
+	public class DateComparator implements Comparator<Date>, Serializable {
+		private static final long serialVersionUID = 1L;
 		@Override
 		public int compare(Date date1, Date date2) {
-			if (date1.before(date2))
+			Date d1 = (Date) date1;
+			Date d2 = (Date) date2;
+			if (d1.before(d2))
 				return -1;
-			if (date1.after(date2))
+			if (d1.after(d2))
 				return 1;
 			return 0;
 		}
@@ -225,13 +234,13 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 	
 	@Override
 	public String toString() {
-		StringBuilder buffer = new StringBuilder();
+		StringBuffer buffer = new StringBuffer();
 		Date t;
 		Activity<Float> a;
 		for(Entry<Date, Activity<Float>> entry: this.activities.entrySet()) {
 			t = entry.getKey();
 			a = entry.getValue();
-			buffer.append("# ").append(t.toString()).append(" => ").append(a).append("\n");
+			buffer.append("# "+t.toString()+" => "+a+"\n");
 		}
 		return buffer.toString();
 	}

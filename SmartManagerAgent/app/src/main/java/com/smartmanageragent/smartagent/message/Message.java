@@ -1,7 +1,6 @@
 package com.smartmanageragent.smartagent.message;
 
-// TODO : use Maxime's fabulous work
-public class Message<T> {
+public abstract class Message<T> {
 	
 	protected T content;
 	
@@ -22,6 +21,11 @@ public class Message<T> {
 	public void setContent(T content) {
 		this.content = content;
 	}
+	
+	/** Name of the command joined in the message
+	 * @return commandName
+	 */
+	public abstract String getCommandName();
 	
 	@Override
 	public String toString() {

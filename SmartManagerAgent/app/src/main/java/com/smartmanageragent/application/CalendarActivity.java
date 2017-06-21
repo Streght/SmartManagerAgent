@@ -22,12 +22,10 @@ import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
-import com.smartmanageragent.smartagent.AgentService;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 
 public class CalendarActivity extends AppCompatActivity {
 

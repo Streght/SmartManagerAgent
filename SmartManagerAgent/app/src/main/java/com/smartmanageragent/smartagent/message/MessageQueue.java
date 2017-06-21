@@ -18,22 +18,22 @@ public class MessageQueue<T> {
 	public synchronized void add(Message<T> m) {
 		this.queue.add(m);
 		// Notifies all the people using the message Queue
-		synchronized (this) {
-			this.notifyAll();
-		}
+		this.notifyAll();
 	}
 	
 	/** Removes the first message from the list
 	 * @return older message, null if none
+	 * @throws InterruptedException
 	 */
-	public synchronized Message<T> get() {
-		if (this.queue.size() > 0)
-			return this.queue.remove();
-		return null;
+	public synchronized Message<T> get() throws InterruptedException {
+		while (this.queue.isEmpty()) {
+			this.wait();
+		}
+		return this.queue.remove();
 	}
 
 	@Override
-	public synchronized String toString() {
+	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		int size = this.queue.size();
 		for (int i=0; i<size; i++) {

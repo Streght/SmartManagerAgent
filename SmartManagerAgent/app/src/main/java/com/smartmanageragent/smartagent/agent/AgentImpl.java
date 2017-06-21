@@ -18,8 +18,8 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 
 	private CommandFactory<Date, Float, T> factory;
 	
-	public AgentImpl(MessageQueue<T> receiving, MessageQueue<T> sending) {
-		super(receiving, sending);
+	public AgentImpl(String name, MessageQueue<T> receiving, MessageQueue<T> sending) {
+		super(name, receiving, sending);
 		this.state.setTimeTable(new TimeTableImpl());
 		// Factory used to create commands
 		this.factory = new CommandFactory<Date, Float, T>();
@@ -75,26 +75,25 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 		return null;
 	}
 	
-	/** Treats messages received
-	 */
-	private void treatMessages() {
-		// TODO : adapt according to Maxime's work
-		Message<T> message = this.receiving.get();
-		while(message != null) {
-			Command<Date, Float, T> command = this.factory.createCommand(message, this.state);
-			this.invoke(command);
-			message = this.receiving.get();
-		}
-	}
-	
 	@Override
 	public void run() {
 		while (true) {
 			try {
-				// Treats all messages
-				this.treatMessages();
-				// Waits for messages (from other agents, user...)
-				this.waitMessages();
+				// Treats incoming messages
+				Message<T> message = this.receiving.get();
+				System.out.println(this.name+" received : "+message);
+				Command<Date, Float, T> command = this.factory.createCommand(message, this);
+				this.invoke(command);
+				/* 
+				 * TODO : use timeout
+				 * To avoid waiting infinitely for a special message, send the agent a canceling message after an amount
+				 * of time to wake it up. You must include a command that will change the internal state of the agent so
+				 * it's not waiting anymore for that special message.
+				 * You should launch that timer IN A COMMAND, following the sample below :
+				 *   Message<U> mess = null;
+				 *   TimeOut<U> to = new TimeOut<U>(this.receiving, mess, timeOut);
+				 *   to.runTimer();
+				 */
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -1,9 +1,12 @@
 package com.smartmanageragent.smartagent.timeTable.slot;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public class SlotImpl implements Slot<Float> {
 
+	private static final long serialVersionUID = 1L;
+	
 	public Date beg;
 	public Date end;
 	
@@ -13,7 +16,7 @@ public class SlotImpl implements Slot<Float> {
 	}
 	
 	@Override
-	public Object getRef() {
+	public Serializable getRef() {
 		return this.beg;
 	}
 	

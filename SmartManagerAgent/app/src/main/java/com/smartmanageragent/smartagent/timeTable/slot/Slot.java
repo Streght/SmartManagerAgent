@@ -1,16 +1,18 @@
 package com.smartmanageragent.smartagent.timeTable.slot;
 
+import java.io.Serializable;
+
 /** A slot of time
  * @param <T>
  */
-public interface Slot<T> extends Comparable<Slot<T>> {
+public interface Slot<T> extends Comparable<Slot<T>>, Serializable {
 	
 	// The method compareTo is used to determine slots relative positions (before/after/during)
 	
 	/** Returns the reference position of the slot
 	 * @return the information allowing the location of the slot in the time table
 	 */
-	public Object getRef();
+	public Serializable getRef();
 	
 	/** Union intersection of this slot with another
 	 * @param s
