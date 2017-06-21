@@ -15,7 +15,9 @@ public class JSONMessage extends Message<String> {
 		ADDRESSEES,
 		COMMAND,
 		TIMETABLE,
-		ACTIVITY
+		ACTIVITY,
+		ID,
+		PASSWORD
 	}
 	
 	/** Creates an empty JSON message

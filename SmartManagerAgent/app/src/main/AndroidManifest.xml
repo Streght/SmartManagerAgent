@@ -33,7 +33,7 @@
             android:label="@string/title_meeting_add_activity"/>
         <activity android:name=".TestListIdActivity" />
 
-        <service android:name="com.smartmanageragent.exteriorCommunication.ServiceCommunication" />
+        <service android:name="com.smartmanageragent.exteriorcomm.CommunicationService"/>
         <service
             android:name="com.smartmanageragent.smartagent.AgentService"
             android:exported="false" />

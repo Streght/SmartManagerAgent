@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorCommunication.ClientThread;
-import com.smartmanageragent.exteriorCommunication.ServiceCommunication;
-import com.smartmanageragent.exteriorCommunication.SingletonRegisterIDIP;
+import com.smartmanageragent.exteriorcomm.ClientThread;
+import com.smartmanageragent.exteriorcomm.CommunicationService;
+import com.smartmanageragent.exteriorcomm.SingletonRegisterIDIP;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class TestListIdActivity extends AppCompatActivity {
 
         textView1 = (TextView) this.findViewById(R.id.textView1);
         button1 = (Button) this.findViewById(R.id.button1);
-        final Intent mServiceIntent = new Intent(this, ServiceCommunication.class);
+        final Intent mServiceIntent = new Intent(this, CommunicationService.class);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override

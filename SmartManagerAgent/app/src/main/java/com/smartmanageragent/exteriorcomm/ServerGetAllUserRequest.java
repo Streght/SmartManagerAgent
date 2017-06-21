@@ -1,9 +1,9 @@
-package com.smartmanageragent.exteriorCommunication;
+package com.smartmanageragent.exteriorcomm;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,11 +11,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
+class ServerGetAllUserRequest extends AsyncTask<String, Void, JSONArray> {
 
 
 
-    public  JSONObject doInBackground(String... urlString) {
+    public  JSONArray doInBackground(String... urlString) {
 
         try {
             HttpURLConnection urlConnection = null;
@@ -41,7 +41,7 @@ public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
             StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line).append("\n");
+                sb.append(line+"\n");
             }
             br.close();
 
@@ -50,7 +50,7 @@ public class ServerGetRequest extends AsyncTask<String, Void, JSONObject> {
             System.out.println("JSON: " + jsonString);
             Log.d("TestComActivity",jsonString);
 
-            return new JSONObject(jsonString);
+            return new JSONArray(jsonString);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

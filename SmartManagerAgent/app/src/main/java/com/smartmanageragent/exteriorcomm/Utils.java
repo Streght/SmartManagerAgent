@@ -1,4 +1,4 @@
-package com.smartmanageragent.exteriorCommunication;
+package com.smartmanageragent.exteriorcomm;
 
 
 import org.json.JSONException;
