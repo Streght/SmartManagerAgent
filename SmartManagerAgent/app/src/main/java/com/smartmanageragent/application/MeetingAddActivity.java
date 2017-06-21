@@ -179,9 +179,9 @@ public class MeetingAddActivity extends AppCompatActivity {
         String[] listAttendees;
         // Handle item selection
         if (item.getItemId() == R.id.validate) {
-            if (!title.getText().toString().equals("") &&
-                    (checkboxAuPlusTot.isChecked() || (!dateDebutPossible.getText().toString().equals("") && !dateFinPossible.getText().toString().equals(""))) &&
-                    (checkAttendeesField(attendees))) {
+            if (!(title.getText().toString().equals("")) &&
+                    (checkboxAuPlusTot.isChecked() || (!(dateDebutPossible.getText().toString().equals("")) && !(dateFinPossible.getText().toString().equals("")))) &&
+                    !(attendees.getText().equals(""))) {
                 listAttendees = parseAttendees(attendees);
 
                 // TODO Add envoi commande.
@@ -192,20 +192,10 @@ public class MeetingAddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Returns true if the participants field has been filled with at least 1 participant
-    public boolean checkAttendeesField(EditText attendees){
-        if (attendees.getText().equals("")) {
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    // Parses any given EditText and splits at every colon ",", returns an array of string
+    // Parses any given EditText and splits at every colon ", ", returns an array of string
     public String[] parseAttendees(EditText attendees){
-        String[] listAttendees = {""};
-        listAttendees = attendees.getText().toString().split(",");
+        String[] listAttendees;
+        listAttendees = attendees.getText().toString().split(", ");
         return listAttendees;
     }
 }

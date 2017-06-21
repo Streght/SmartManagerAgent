@@ -1,5 +1,5 @@
 SmartManagerAgent/*.iml
-/SmartManagerAgent/.gradle
+SmartManagerAgent/.gradle
 SmartManagerAgent/local.properties
 SmartManagerAgent/.idea/workspace.xml
 SmartManagerAgent/.idea/libraries
