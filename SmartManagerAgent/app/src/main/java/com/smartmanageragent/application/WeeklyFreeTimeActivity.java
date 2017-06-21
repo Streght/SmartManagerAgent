@@ -57,7 +57,7 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
         populatesHashmaps();
 
         if (savedInstanceState != null) {
-            //savedInstanceState.get("toto")
+            mapDayToCalendar = (HashMap<String, Calendar>) savedInstanceState.getSerializable("hashmap");
         }
 
 //        // Get a set of the entries
@@ -418,5 +418,6 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
         }
         // TODO Add variables to save
         //savedInstanceState.putLong("meetingDate", meetingDate.getTime());
+        savedInstanceState.putSerializable("hashmap", mapDayToCalendar);
     }
 }

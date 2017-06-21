@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class MeetingAddActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class MeetingAddActivity extends AppCompatActivity {
     private EditText editTextToChange;
     private Calendar calendarToChange;
     private EditText title;
+    private EditText attendees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MeetingAddActivity extends AppCompatActivity {
         dateDebutPossible = (EditText) findViewById(R.id.meeting_date_min);
         dateFinPossible = (EditText) findViewById(R.id.meeting_date_max);
         checkboxAuPlusTot = (CheckBox) findViewById(R.id.checkbox_au_plus_tot);
+        attendees = (EditText) findViewById(R.id.textParticipants);
 
         // Ajoute le champ de remplissage de la date à la liste des elements ecoutes
         // Ainsi quand on clique dessus, cela ouvre un calendrier de choix de date (mois/jour)
@@ -170,18 +173,39 @@ public class MeetingAddActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String[] listAttendees;
         // Handle item selection
         if (item.getItemId() == R.id.validate) {
             if (!title.getText().toString().equals("") &&
-                    (checkboxAuPlusTot.isChecked() || (!dateDebutPossible.getText().toString().equals("") && !dateFinPossible.getText().toString().equals("")))) {
-                // TODO add checking on attendees.
+                    (checkboxAuPlusTot.isChecked() || (!dateDebutPossible.getText().toString().equals("") && !dateFinPossible.getText().toString().equals(""))) &&
+                    (checkAttendeesField(attendees))) {
+                listAttendees = parseAttendees(attendees);
+
                 // TODO Add envoi commande.
 
                 finish();
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Returns true if the participants field has been filled with at least 1 participant
+    public boolean checkAttendeesField(EditText attendees){
+        if (attendees.getText().equals("")) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    // Parses any given EditText and splits at every colon ",", returns an array of string
+    public String[] parseAttendees(EditText attendees){
+        String[] listAttendees = {""};
+        listAttendees = attendees.getText().toString().split(",");
+        return listAttendees;
     }
 }
