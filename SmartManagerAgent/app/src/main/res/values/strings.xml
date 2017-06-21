@@ -25,6 +25,7 @@
     <string name="field_error">Please fill all fields before validate</string>
 
     <!-- WeeklyFreeTimeActivity -->
+    <string name="fill_out_free_time">Please tell me when you have free time during the week :</string>
     <string name="no_meeting">No meeting</string>
     <string name="beginning">Beginning</string>
     <string name="end">End</string>

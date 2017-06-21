@@ -7,6 +7,12 @@
     android:weightSum="8"
     tools:context="com.smartmanageragent.application.WeeklyFreeTimeActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/fill_out_free_time"/>
+
     <LinearLayout
         android:id="@+id/free_time_activity"
         android:layout_width="match_parent"

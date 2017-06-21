@@ -26,6 +26,7 @@
     <string name="field_error">Merci de valider tous les champs avant de valider</string>
 
     <!-- WeeklyFreeTimeActivity -->
+    <string name="fill_out_free_time">Veuillez m\'indiquer vos disponibilités pour la semaine :</string>
     <string name="no_meeting">Pas de RDV</string>
     <string name="beginning">Début</string>
     <string name="end">Fin</string>
