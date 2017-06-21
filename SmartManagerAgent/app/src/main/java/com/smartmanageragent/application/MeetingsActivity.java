@@ -148,22 +148,6 @@ public class MeetingsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_about, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if (item.getItemId() == R.id.about) {
-            Intent AboutPage = new Intent(MeetingsActivity.this, AboutActivity.class);
-            startActivity(AboutPage);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         if ((savedInstanceState.getString("meetingDate") != null) ||
                 (savedInstanceState.getString("timeZone") != null)) {

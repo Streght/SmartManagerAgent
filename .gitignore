@@ -7,3 +7,5 @@
 /SmartAgent/build
 /SmartAgent/captures
 /SmartAgent/.externalNativeBuild
+SmartManagerAgent/.idea/
+SmartManagerAgent/build/

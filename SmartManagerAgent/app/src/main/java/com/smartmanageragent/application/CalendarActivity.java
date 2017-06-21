@@ -1,6 +1,9 @@
 package com.smartmanageragent.application;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,12 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.smartmanageragent.smartagent.AgentService;
-import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
@@ -28,6 +34,7 @@ public class CalendarActivity extends AppCompatActivity {
     private CaldroidFragment caldroidFragment;
     private TimeTable<Date,Float> timeTable;
     private static final String START_AGENT = "com.smartmanageragent.smartagent.agent.Agent.START";
+    private SharedPreferences prefs = null;
 
     private void setCustomResourceForDates() {
         // Code pour mettre en valeur (vert) les jours avec RDV
@@ -45,6 +52,48 @@ public class CalendarActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+
+        // TODO comment when working
+        //prefs.edit().putBoolean("firstrun", true).apply();
+
+        if (prefs.getBoolean("firstrun", true)) {
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
+            alertDialog.setTitle("Username");
+            alertDialog.setMessage("Enter your username");
+
+            final EditText name = new EditText(CalendarActivity.this);
+
+            LinearLayout container = new LinearLayout(CalendarActivity.this);
+            LinearLayout.LayoutParams params = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+            name.setLayoutParams(params);
+            container.addView(name);
+
+            alertDialog.setView(container);
+
+            alertDialog.setPositiveButton("Validate",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String userName = name.getText().toString();
+                    prefs.edit().putString("username", userName).apply();
+
+                    TextView username = (TextView) findViewById(R.id.username);
+                    String s = getResources().getString(R.string.connected) + prefs.getString("username","");
+                    username.setText(s);
+
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.show();
+
+            prefs.edit().putBoolean("firstrun", false).apply();
+        }
+
+        TextView username = (TextView) findViewById(R.id.username);
+        String s = getResources().getString(R.string.connected) + prefs.getString("username","");
+        username.setText(s);
     }
 
     @Override
@@ -55,6 +104,8 @@ public class CalendarActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        prefs = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
 
         // TODO uncomment when agent working.
         /*

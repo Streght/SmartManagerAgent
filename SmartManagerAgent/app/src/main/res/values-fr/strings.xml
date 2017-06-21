@@ -6,6 +6,7 @@
     <!-- CalendarActivity -->
     <string name="title_activity_calendar">Mon calendrier</string>
     <string name="text_time_slot_button">Configurer les plages horaires</string>
+    <string name="connected">Connecté comme&#160;</string>
 
     <!-- MeetingsActivity -->
     <string name="title_activity_meetings">Mes rendez-vous</string>
