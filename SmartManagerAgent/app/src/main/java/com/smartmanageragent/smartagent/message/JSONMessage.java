@@ -1,6 +1,5 @@
 package com.smartmanageragent.smartagent.message;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONMessage extends Message<String> {
@@ -21,7 +20,8 @@ public class JSONMessage extends Message<String> {
         TIMETABLE,
         ACTIVITY,
         SLOT,
-        PASSWORD
+        PASSWORD,
+        ID
     }
 
     /**

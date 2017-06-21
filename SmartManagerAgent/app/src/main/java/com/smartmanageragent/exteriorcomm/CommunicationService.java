@@ -38,38 +38,34 @@ public class CommunicationService extends IntentService {
         String dataString = workIntent.getStringExtra(Intent.EXTRA_TEXT);
         Log.d(TAG, "Début service");
         // Do work here, based on the contents of dataString
-        try {
-            JSONMessage request = new JSONMessage(dataString);
-            if (request.getField(JSONMessage.Fields.ACTIVITY).equals("LOCAL")) {
-                // TODO : Envoyer à l'application
-            } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(postIp)) {
-                postIP2Server(request);
-            } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(getTable)) {
-                updateMap();
-            }
-            else {
-                String addressee = request.getField(JSONMessage.Fields.ADDRESSEES);
-                if (addressee != null) {
-                    String ipSender = SingletonRegisterIDIP.getInstance().getIp(addressee);
-                    /*if (ipSender == null) {
-                        updateMap();
-                        ipSender =  SingletonRegisterIDIP.getInstance().getIp(sender);
-                    }*/
-                    if (ipSender == null) {
-                        Log.d(TAG, "ERREUR : l'id " + addressee+ " n'existe pas");
-                    } else if (!connexion2Client(request)) {
-                        updateUser(request.getField(JSONMessage.Fields.ADDRESSEES));
-                        if (!ipSender.equals(SingletonRegisterIDIP.getInstance().getIp(addressee))) {
-                            // TODO mettre dans la message queue pour réeesayer
-                        } else {
-                            // TODO mettre dans la waiting queue
-                        }
+        JSONMessage request = new JSONMessage(dataString);
+        if (request.getField(JSONMessage.Fields.ACTIVITY).equals("LOCAL")) {
+            // TODO : Envoyer à l'application
+        } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(postIp)) {
+            postIP2Server(request);
+        } else if (request.getField(JSONMessage.Fields.ACTIVITY).equals(getTable)) {
+            updateMap();
+        }
+        else {
+            String addressee = request.getField(JSONMessage.Fields.ADDRESSEES);
+            if (addressee != null) {
+                String ipSender = SingletonRegisterIDIP.getInstance().getIp(addressee);
+                /*if (ipSender == null) {
+                    updateMap();
+                    ipSender =  SingletonRegisterIDIP.getInstance().getIp(sender);
+                }*/
+                if (ipSender == null) {
+                    Log.d(TAG, "ERREUR : l'id " + addressee+ " n'existe pas");
+                } else if (!connexion2Client(request)) {
+                    updateUser(request.getField(JSONMessage.Fields.ADDRESSEES));
+                    if (!ipSender.equals(SingletonRegisterIDIP.getInstance().getIp(addressee))) {
+                        // TODO mettre dans la message queue pour réeesayer
+                    } else {
+                        // TODO mettre dans la waiting queue
                     }
-
                 }
+
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
     }
