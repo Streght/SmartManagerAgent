@@ -142,11 +142,13 @@ public class MeetingsActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        if ((savedInstanceState.getString("meetingDate") != null) ||
+        super.onSaveInstanceState(savedInstanceState);
+
+        /*if ((savedInstanceState.getString("meetingDate") != null) ||
                 (savedInstanceState.getString("timeZone") != null)) {
             savedInstanceState.remove("meetingDate");
             savedInstanceState.remove("timeZone");
-        }
+        }*/
         savedInstanceState.putLong("meetingDate", meetingDate.getTimeInMillis());
         savedInstanceState.putString("timeZone", meetingDate.getTimeZone().getID());
     }

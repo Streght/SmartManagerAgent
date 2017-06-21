@@ -54,15 +54,10 @@ public class TestListIdActivity extends AppCompatActivity {
                 }*/
 
                 JSONMessage jsMessage = new JSONMessage();
-                try {
-                    jsMessage.setField(JSONMessage.Fields.SENDER, "theo");
-                    mServiceIntent.putExtra(Intent.EXTRA_TEXT, jsMessage.toString());
-                    startService(mServiceIntent);
-                    textView1.setText("List Users" + SingletonRegisterIDIP.getInstance().getListId().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                jsMessage.setField(JSONMessage.Fields.SENDER, "theo");
+                mServiceIntent.putExtra(Intent.EXTRA_TEXT, jsMessage.toString());
+                startService(mServiceIntent);
+                textView1.setText("List Users" + SingletonRegisterIDIP.getInstance().getListId().toString());
             }
         });
     }

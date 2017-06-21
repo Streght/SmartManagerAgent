@@ -173,7 +173,6 @@ public class MeetingAddActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String[] listAttendees;

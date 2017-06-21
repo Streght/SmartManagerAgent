@@ -60,18 +60,18 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
             mapDayToCalendar = (HashMap<String, Calendar>) savedInstanceState.getSerializable("hashmap");
         }
 
-//        // Get a set of the entries
-//        Set set = mapDayToEditText.entrySet();
-//
-//        // Get an iterator
-//        Iterator i = set.iterator();
-//
-//        // Display elements
-//        while(i.hasNext()) {
-//            Map.Entry me = (Map.Entry)i.next();
-//            Log.d("tag", me.getKey() + ": ");
-//            Log.d("tag2", me.getValue().toString());
-//        }
+        // Get a set of the entries
+        // Set set = mapDayToEditText.entrySet();
+        //
+        // // Get an iterator
+        // Iterator i = set.iterator();
+        //
+        // // Display elements
+        // while(i.hasNext()) {
+        //    Map.Entry me = (Map.Entry)i.next();
+        //    Log.d("tag", me.getKey() + ": ");
+        //    Log.d("tag2", me.getValue().toString());
+        // }
 
         // Sets all listeners, each element of the hashmap (each EditText) is to be listened to, to detect a click
         for (int i = 0; i < mapDayToEditText.size(); i++) {
@@ -412,12 +412,8 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        // TODO Modify key name
-        if (savedInstanceState.getString("meetingDate") != null) {
-            savedInstanceState.remove("meetingDate");
-        }
-        // TODO Add variables to save
-        //savedInstanceState.putLong("meetingDate", meetingDate.getTime());
+        super.onSaveInstanceState(savedInstanceState);
+
         savedInstanceState.putSerializable("hashmap", mapDayToCalendar);
     }
 }

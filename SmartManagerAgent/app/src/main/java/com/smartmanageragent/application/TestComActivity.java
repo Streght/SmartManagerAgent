@@ -248,7 +248,6 @@ public class TestComActivity extends AppCompatActivity {
     private void clientEnd(){
         clientThread = null;
         //textViewState.setText("clientEnd()");
-
     }
 
 }
