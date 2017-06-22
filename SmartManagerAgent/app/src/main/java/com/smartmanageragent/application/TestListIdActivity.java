@@ -15,8 +15,6 @@ import com.smartmanageragent.exteriorcomm.CommunicationService;
 import com.smartmanageragent.exteriorcomm.SingletonRegisterIDIP;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
-import org.json.JSONException;
-
 public class TestListIdActivity extends AppCompatActivity {
 
     ClientThread clientThread;
