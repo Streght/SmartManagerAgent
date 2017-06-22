@@ -20,6 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,11 +30,16 @@
         <activity
             android:name=".MeetingAddActivity"
             android:label="@string/title_meeting_add_activity" />
-        <activity android:name=".WeeklyFreeTimeActivity"
-            android:label="@string/title_meeting_add_activity"/>
+        <activity
+            android:name=".WeeklyFreeTimeActivity"
+            android:label="@string/title_meeting_add_activity" />
         <activity android:name=".TestListIdActivity" />
 
-        <service android:name="com.smartmanageragent.exteriorcomm.CommunicationService"/>
+        <service android:name="com.smartmanageragent.exteriorcomm.CommunicationService" />
+        <service
+            android:name="com.smartmanageragent.exteriorcomm.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

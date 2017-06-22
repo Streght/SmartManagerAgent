@@ -1,14 +1,17 @@
 package com.smartmanageragent.application;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+import com.smartmanageragent.exteriorcomm.MyService;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
@@ -33,8 +37,10 @@ public class CalendarActivity extends AppCompatActivity {
     private TimeTable<Date,Float> timeTable;
     private static final String START_AGENT = "com.smartmanageragent.smartagent.agent.Agent.START";
     private SharedPreferences prefs = null;
+    private MyService myService;
+    private boolean isBound = false;
 
-    private void setCustomResourceForDates() {
+    /*private void setCustomResourceForDates() {
         // Code pour mettre en valeur (vert) les jours avec RDV
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 7);
@@ -45,7 +51,7 @@ public class CalendarActivity extends AppCompatActivity {
             caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
             caldroidFragment.setTextColorForDate(R.color.caldroid_white, greenDate);
         }
-    }
+    }*/
 
     @Override
     protected void onResume(){
@@ -139,7 +145,7 @@ public class CalendarActivity extends AppCompatActivity {
             caldroidFragment.setArguments(args);
         }
 
-        setCustomResourceForDates();
+        //setCustomResourceForDates();
 
         // Attach to the activity
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
@@ -204,14 +210,62 @@ public class CalendarActivity extends AppCompatActivity {
         tsb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
+                startActivity(intent);*/
+
+                String currentTime = myService.getCurrentTime();
+                Snackbar.make(findViewById(R.id.calendar_layout), currentTime, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
         });
 
+        //Intent intent = new Intent(this, MyService.class);
+        //bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+
+
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("username",prefs.getString("username", ""));
+        startService(intent);
+        bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (isBound) {
+            unbindService(myConnection);
+            isBound = false;
+        }
+    }
+
+    private ServiceConnection myConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            MyService.MyLocalBinder binder = (MyService.MyLocalBinder) service;
+            myService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+    };
+
 
     public void colorMeetingsDays(){
         //TODO uncomment when timetable reference and service working
