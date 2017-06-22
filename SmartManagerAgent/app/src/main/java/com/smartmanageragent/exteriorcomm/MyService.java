@@ -136,11 +136,14 @@ public class MyService extends Service {
         };
         threadSender.start();
 
+        // TODO uncomment when error fixed : java.lang.IllegalMonitorStateException: object not locked by thread before wait()
+        /*
         Thread threadWaitinQueue = new Thread() {
             @Override
             public void run () {
                 try {
                     while (true) {
+                       // TODO Error on this wait()
                         wait(waitingQueue.getWaitingTime());
                         waitingQueue.emptyToMessageQueue();
                     }
@@ -150,6 +153,7 @@ public class MyService extends Service {
             }
         };
         threadWaitinQueue.start();
+        */
 
         return Service.START_REDELIVER_INTENT;
     }

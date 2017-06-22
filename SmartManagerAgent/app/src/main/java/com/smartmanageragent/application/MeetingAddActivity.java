@@ -17,9 +17,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.smartmanageragent.smartagent.message.Serializer;
+import com.smartmanageragent.smartagent.timeTable.TimeTable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -126,6 +130,38 @@ public class MeetingAddActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            String serializedActivity = extras.getString("activity");
+            TimeTable.PosAct<Date, Float> activity = (TimeTable.PosAct<Date, Float>) Serializer.deserialize(serializedActivity);
+
+            title.setText(activity.act.getName());
+
+            String myFormat = "EEE, d MMM yyyy HH:mm";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+
+            dateDebutPossible.setText(sdf.format(activity.pos));
+            float duration = activity.act.getLength();
+            int hourLength = (int) duration / 60;
+            int minutesLength = (int) duration % 60;
+
+            Calendar endingDate = Calendar.getInstance();
+            endingDate.setTime(activity.pos);
+            endingDate.set(endingDate.get(Calendar.YEAR),
+                    endingDate.get(Calendar.MONTH),
+                    endingDate.get(Calendar.DATE),
+                    endingDate.get(Calendar.HOUR_OF_DAY) + hourLength,
+                    endingDate.get(Calendar.MINUTE) + minutesLength);
+
+            dateFinPossible.setText(sdf.format(endingDate));
+
+            hourDuration.setSelection(getIndex(hourDuration, String.valueOf(hourLength)));
+            minutesDuration.setSelection(getIndex(minutesDuration, String.valueOf(hourLength)));
+
+            attendees.setText(android.text.TextUtils.join(", ", activity.act.getAttendees()));
+        }
     }
 
     // On ecoute le calendrier cree dans la methode (onClick), ainsi quand la date sera choisie (OnDateSet),
@@ -222,5 +258,15 @@ public class MeetingAddActivity extends AppCompatActivity {
         String[] listAttendees;
         listAttendees = attendees.getText().toString().split(", ");
         return listAttendees;
+    }
+
+    private int getIndex(Spinner spinner, String myString) {
+        int index = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(myString)) {
+                index = i;
+            }
+        }
+        return index;
     }
 }
