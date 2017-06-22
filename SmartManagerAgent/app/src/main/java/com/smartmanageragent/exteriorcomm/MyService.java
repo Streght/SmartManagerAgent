@@ -64,12 +64,12 @@ public class MyService extends Service {
         String sendSaved = sharedPreferences.getString("send", "");
 
         if (!(receiveSaved.equals(""))) {
-            receive = (MessageQueue<JSONMessage>) Serializer.deserialize(receiveSaved);
+            receive = (MessageQueue<String>) Serializer.deserialize(receiveSaved);
         } else {
             receive = new MessageQueue<>();
         }
         if (!(sendSaved.equals(""))) {
-            send = (MessageQueue<JSONMessage>) Serializer.deserialize(sendSaved);
+            send = (MessageQueue<String>) Serializer.deserialize(sendSaved);
         } else {
             send = new MessageQueue<>();
         }
@@ -176,11 +176,14 @@ public class MyService extends Service {
 
     public TimeTable<Date, Float> getAgentTimeTable() {
         return agent.getTimeTable();
+    }
+
     public class MyLocalBinder extends Binder {
         public MyService getService() {
             return MyService.this;
         }
     }
+
 
     private void fonctionMagique(JSONMessage request) {
         Log.d(TAG, "Début Envoi message");
@@ -279,8 +282,6 @@ public class MyService extends Service {
         boolean success = true;
 
         final Handler handler = new Handler();
-
-
         return success;
     }
 
