@@ -4,6 +4,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.smartmanageragent.application.TestComActivity;
+import com.smartmanageragent.smartagent.message.MessageQueue;
 
 import org.json.JSONObject;
 
@@ -20,12 +21,14 @@ public class ServerThread extends Thread {
     private Socket socket = null;
     private TestComActivity.ClientHandler handler;
     private PrintWriter printWriter;
+    private MessageQueue<String> agentMQ;
     // private final GpioPinDigitalOutput[] pins;
 
-    public ServerThread(Socket socket, TestComActivity.ClientHandler handler/* , GpioPinDigitalOutput[] pins */) {
+    public ServerThread(Socket socket, TestComActivity.ClientHandler handler, MessageQueue<String> mq/* , qGpioPinDigitalOutput[] pins */) {
         super("ServerThread");
         this.socket = socket;
         this.handler = handler;
+        this.agentMQ = mq;
         // this.pins = pins;
     }
 

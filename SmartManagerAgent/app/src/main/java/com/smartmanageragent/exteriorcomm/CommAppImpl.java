@@ -2,8 +2,6 @@ package com.smartmanageragent.exteriorcomm;
 
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
-import org.json.JSONException;
-
 import java.util.Calendar;
 import java.util.List;
 

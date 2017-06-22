@@ -18,6 +18,7 @@ import com.smartmanageragent.exteriorcomm.ClientThread;
 import com.smartmanageragent.exteriorcomm.ServerGetRequest;
 import com.smartmanageragent.exteriorcomm.ServerThread;
 import com.smartmanageragent.exteriorcomm.Utils;
+import com.smartmanageragent.smartagent.message.MessageQueue;
 
 import org.json.JSONObject;
 
@@ -171,7 +172,7 @@ public class TestComActivity extends AppCompatActivity {
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
             while (true) {
-                new ServerThread(serverSocket.accept(), clientHandler).start();
+                new ServerThread(serverSocket.accept(), clientHandler, new MessageQueue<String>()).start();
             }
         } catch (final IOException e) {
             Log.d("TestComActivity","Could not listen on port " + portNumber);
@@ -206,9 +207,7 @@ public class TestComActivity extends AppCompatActivity {
                 default:
                     super.handleMessage(msg);
             }
-
         }
-
     }
 
     private boolean isNetworkAvailable() {

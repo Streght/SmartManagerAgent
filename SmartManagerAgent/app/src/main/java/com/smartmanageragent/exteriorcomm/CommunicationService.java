@@ -29,7 +29,6 @@ public class CommunicationService extends IntentService {
      */
     public CommunicationService() {
         super("CommunicationInter");
-        SingletonRegisterIDIP.getInstance();
     }
 
     @Override
@@ -130,6 +129,7 @@ public class CommunicationService extends IntentService {
 
     private boolean connexion2Client (JSONMessage jsmessage) {
         boolean success = true;
+
 
         return success;
     }
