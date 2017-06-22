@@ -25,6 +25,10 @@
     <string name="date_error_after">La date de fin doit être située après la date de début</string>
     <string name="date_error_before">La date de début doit être située avant la date de fin</string>
     <string name="field_error">Merci de valider tous les champs avant de valider</string>
+    <string name="duree">Durée</string>
+    <string name="hour">Heure</string>
+    <string name="minutes">Minutes</string>
+    <string name="meeting_attendees_hint">John, Jane…</string>
 
     <!-- WeeklyFreeTimeActivity -->
     <string name="fill_out_free_time">Veuillez m\'indiquer vos disponibilités pour la semaine :</string>

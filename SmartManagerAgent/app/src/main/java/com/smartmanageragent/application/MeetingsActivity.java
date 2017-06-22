@@ -75,12 +75,11 @@ public class MeetingsActivity extends AppCompatActivity {
         meetingTest.put("description", "this is not a drill");
         meetingTest.put("attendees", "Pitbull");
         meetings.add(meetingTest);
-
         /******************************/
 
         // TODO uncomment when timetable reference and service working
         /*
-        timeTable = AgentService.getAgentTimeTable();
+        timeTable = myService.getAgentTimeTable();
         Iterator<TimeTable.PosAct<Date, Float>> it = timeTable.activityIterator();
 
         while (it.hasNext()) {
@@ -131,6 +130,7 @@ public class MeetingsActivity extends AppCompatActivity {
 
         if (menuItemIndex == 0) {
             // TODO modify meeting
+
             Intent intent = new Intent(MeetingsActivity.this, MeetingAddActivity.class);
             startActivity(intent);
         } else if (menuItemIndex == 1) {
@@ -144,13 +144,7 @@ public class MeetingsActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        /*if ((savedInstanceState.getString("meetingDate") != null) ||
-                (savedInstanceState.getString("timeZone") != null)) {
-            savedInstanceState.remove("meetingDate");
-            savedInstanceState.remove("timeZone");
-        }*/
         savedInstanceState.putLong("meetingDate", meetingDate.getTimeInMillis());
         savedInstanceState.putString("timeZone", meetingDate.getTimeZone().getID());
     }
-
 }

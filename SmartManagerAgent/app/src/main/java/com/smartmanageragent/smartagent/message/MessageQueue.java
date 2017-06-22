@@ -1,8 +1,9 @@
 package com.smartmanageragent.smartagent.message;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class MessageQueue<T> {
+public class MessageQueue<T> implements Serializable {
 
 	private LinkedList<Message<T>> queue;
 	

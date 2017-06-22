@@ -7,11 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,13 +31,13 @@ import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 public class CalendarActivity extends AppCompatActivity {
 
     private CaldroidFragment caldroidFragment;
-    private TimeTable<Date,Float> timeTable;
-    private static final String START_AGENT = "com.smartmanageragent.smartagent.agent.Agent.START";
-    private SharedPreferences prefs = null;
+    private TimeTable<Date, Float> timeTable;
+    private SharedPreferences sharedPreferences;
     private MyService myService;
     private boolean isBound = false;
 
@@ -54,13 +55,13 @@ public class CalendarActivity extends AppCompatActivity {
     }*/
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
         // TODO comment when working
-        //prefs.edit().putBoolean("firstrun", true).apply();
+        //sharedPreferences.edit().putBoolean("firstrun", true).apply();
 
-        if (prefs.getBoolean("firstrun", true)) {
+        if (sharedPreferences.getBoolean("firstrun", true)) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
             alertDialog.setTitle("Username");
@@ -69,7 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
             final EditText name = new EditText(CalendarActivity.this);
 
             LinearLayout container = new LinearLayout(CalendarActivity.this);
-            LinearLayout.LayoutParams params = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
             params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
             name.setLayoutParams(params);
@@ -77,27 +78,35 @@ public class CalendarActivity extends AppCompatActivity {
 
             alertDialog.setView(container);
 
-            alertDialog.setPositiveButton("Validate",new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton("Validate", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
 
                     String userName = name.getText().toString();
-                    prefs.edit().putString("username", userName).apply();
+                    sharedPreferences.edit().putString("username", userName).apply();
 
                     TextView username = (TextView) findViewById(R.id.username);
-                    String s = getResources().getString(R.string.connected) + prefs.getString("username","");
+                    String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
                     username.setText(s);
+
+                    // TODO uncomment when agent working.
+                    //colorMeetingsDays();
 
                     dialog.dismiss();
                 }
             });
             alertDialog.show();
 
-            prefs.edit().putBoolean("firstrun", false).apply();
+            sharedPreferences.edit().putBoolean("firstrun", false).apply();
         }
 
         TextView username = (TextView) findViewById(R.id.username);
-        String s = getResources().getString(R.string.connected) + prefs.getString("username","");
+        String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
         username.setText(s);
+
+        // TODO uncomment when agent working.
+        /*
+        colorMeetingsDays();
+        */
     }
 
     @Override
@@ -109,16 +118,7 @@ public class CalendarActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        prefs = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
-
-        // TODO uncomment when agent working.
-        /*
-        Intent intentService = new Intent(this, AgentService.class);
-        intentService.setAction(START_AGENT);
-        startService(intentService);
-
-        colorMeetingsDays();
-        */
+        sharedPreferences = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
 
         //final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
@@ -210,23 +210,17 @@ public class CalendarActivity extends AppCompatActivity {
         tsb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
+                startActivity(intent);
 
-                String currentTime = myService.getCurrentTime();
+                /*String currentTime = myService.getCurrentTime();
                 Snackbar.make(findViewById(R.id.calendar_layout), currentTime, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
         });
 
         //Intent intent = new Intent(this, MyService.class);
         //bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
-
-
-
     }
 
     @Override
@@ -234,7 +228,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onStart();
         // Bind to LocalService
         Intent intent = new Intent(this, MyService.class);
-        intent.putExtra("username",prefs.getString("username", ""));
+        intent.putExtra("username", sharedPreferences.getString("username", ""));
         startService(intent);
         bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
     }
@@ -266,18 +260,16 @@ public class CalendarActivity extends AppCompatActivity {
         }
     };
 
+    public void colorMeetingsDays() {
 
-    public void colorMeetingsDays(){
-        //TODO uncomment when timetable reference and service working
-        /*
-        timeTable = AgentService.getAgentTimeTable();
+        timeTable = myService.getAgentTimeTable();
         Iterator<TimeTable.PosAct<Date, Float>> it = timeTable.activityIterator();
 
-        while (it.hasNext()){
+        while (it.hasNext()) {
             ColorDrawable green = new ColorDrawable(ContextCompat.getColor(CalendarActivity.this, R.color.GreenDark));
             caldroidFragment.setBackgroundDrawableForDate(green, it.next().pos);
             caldroidFragment.setTextColorForDate(R.color.caldroid_white, it.next().pos);
-        }*/
+        }
     }
 
     @Override
@@ -293,6 +285,7 @@ public class CalendarActivity extends AppCompatActivity {
             Intent AboutPage = new Intent(CalendarActivity.this, AboutActivity.class);
             startActivity(AboutPage);
         } else if (item.getItemId() == R.id.refresh) {
+
             // TODO uncomment when agent working.
             //colorMeetingsDays();
             return true;

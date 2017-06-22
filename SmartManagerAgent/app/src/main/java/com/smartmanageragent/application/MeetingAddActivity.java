@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +34,8 @@ public class MeetingAddActivity extends AppCompatActivity {
     private Calendar calendarToChange;
     private EditText title;
     private EditText attendees;
+    private Spinner hourDuration;
+    private Spinner minutesDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,26 @@ public class MeetingAddActivity extends AppCompatActivity {
         dateFinPossible = (EditText) findViewById(R.id.meeting_date_max);
         checkboxAuPlusTot = (CheckBox) findViewById(R.id.checkbox_au_plus_tot);
         attendees = (EditText) findViewById(R.id.textParticipants);
+        hourDuration = (Spinner) findViewById(R.id.spinnerHour);
+        minutesDuration = (Spinner) findViewById(R.id.spinnerMinutes);
+
+        List<Integer> spinnerArrayHour = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            spinnerArrayHour.add(i);
+        }
+        ArrayAdapter<Integer> adapterHour = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, spinnerArrayHour);
+        adapterHour.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hourDuration.setAdapter(adapterHour);
+
+        List<Integer> spinnerArrayMinutes = new ArrayList<>();
+        for (int i = 1; i < 60; i++) {
+            spinnerArrayMinutes.add(i);
+        }
+        ArrayAdapter<Integer> adapterMinutes = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, spinnerArrayMinutes);
+        adapterMinutes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minutesDuration.setAdapter(adapterMinutes);
 
         // Ajoute le champ de remplissage de la date à la liste des elements ecoutes
         // Ainsi quand on clique dessus, cela ouvre un calendrier de choix de date (mois/jour)
@@ -182,6 +207,7 @@ public class MeetingAddActivity extends AppCompatActivity {
                     (checkboxAuPlusTot.isChecked() || (!(dateDebutPossible.getText().toString().equals("")) && !(dateFinPossible.getText().toString().equals("")))) &&
                     !(attendees.getText().equals(""))) {
                 listAttendees = parseAttendees(attendees);
+                float duration = (int) hourDuration.getSelectedItem() * 60 + (int) minutesDuration.getSelectedItem();
 
                 // TODO Add envoi commande.
 
@@ -192,7 +218,7 @@ public class MeetingAddActivity extends AppCompatActivity {
     }
 
     // Parses any given EditText and splits at every colon ", ", returns an array of string
-    public String[] parseAttendees(EditText attendees){
+    public String[] parseAttendees(EditText attendees) {
         String[] listAttendees;
         listAttendees = attendees.getText().toString().split(", ");
         return listAttendees;
