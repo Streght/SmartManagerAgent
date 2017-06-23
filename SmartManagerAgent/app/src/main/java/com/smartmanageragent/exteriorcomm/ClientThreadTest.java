@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientThread extends Thread{
+public class ClientThreadTest extends Thread{
 
     private String dstAddress;
     private int dstPort;
@@ -25,13 +25,15 @@ public class ClientThread extends Thread{
     private PrintWriter printWriter;
     private BufferedReader bufferedReader;
 
-    public ClientThread(String addr, int port, TestComActivity.ClientHandler handler) {
+    public ClientThreadTest(String addr, int port, TestComActivity.ClientHandler handler) {
         super();
         Log.d("TestComActivity","new client");
         dstAddress = addr;
         dstPort = port;
         this.handler = handler;
     }
+
+
 
     public void setRunning(boolean running){
         this.running = running;

@@ -10,14 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorcomm.ClientThread;
+import com.smartmanageragent.exteriorcomm.ClientThreadTest;
 import com.smartmanageragent.exteriorcomm.CommunicationService;
 import com.smartmanageragent.exteriorcomm.SingletonRegisterIDIP;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
 public class TestListIdActivity extends AppCompatActivity {
 
-    ClientThread clientThread;
+    ClientThreadTest clientThreadTest;
     TextView textView1;
     Button button1;
 
@@ -72,7 +72,7 @@ public class TestListIdActivity extends AppCompatActivity {
 
 
     private void clientEnd(){
-        clientThread = null;
+        clientThreadTest = null;
         //textViewState.setText("clientEnd()");
 
     }

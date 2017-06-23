@@ -1,9 +1,8 @@
 package com.smartmanageragent.exteriorcomm;
 
-import android.os.Message;
 import android.util.Log;
 
-import com.smartmanageragent.application.TestComActivity;
+import com.smartmanageragent.smartagent.message.JSONMessage;
 import com.smartmanageragent.smartagent.message.MessageQueue;
 
 import org.json.JSONObject;
@@ -12,24 +11,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 
 public class ServerThread extends Thread {
-    private Socket socket = null;
-    private TestComActivity.ClientHandler handler;
+    private Socket socket;
     private PrintWriter printWriter;
     private MessageQueue<String> agentMQ;
-    // private final GpioPinDigitalOutput[] pins;
+    private String TAG = "ServeurLocal";
 
-    public ServerThread(Socket socket, TestComActivity.ClientHandler handler, MessageQueue<String> mq/* , qGpioPinDigitalOutput[] pins */) {
-        super("ServerThread");
+    public ServerThread(Socket socket, MessageQueue<String> mq) {
+        super("ServerLocal");
         this.socket = socket;
-        this.handler = handler;
         this.agentMQ = mq;
-        // this.pins = pins;
     }
 
 
@@ -46,38 +41,30 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
 
-        Log.d("TestComActivity","New client on server");
+        Log.d(TAG,"New client on server");
 
         try {
-           /* (PrintWriter
-        } printWriter = new PrintWriter(this.socket.getOutputStream(), true);
+            Log.d(TAG,"Server try to read client msg");
 
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(this.socket.getInputStream()));) {*/
-            Log.d("TestComActivity","Server try to read client msg");
             String inputLine;
-
-            OutputStream outputStream = socket.getOutputStream();
-            printWriter = new PrintWriter(outputStream, true);
-
             InputStream inputStream = socket.getInputStream();
             InputStreamReader inputStreamReader =
                     new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String stringJsMessage = "";
 
-            final String outputLine;
-            printWriter.println("Hello from server");
             while ((inputLine = bufferedReader.readLine()) != null) {
-                Log.d("TestComActivity","Client msg: " + inputLine);
-                handler.sendMessage(
-                        Message.obtain(handler,
-                                TestComActivity.ClientHandler.UPDATE_MSG, inputLine));
-                printWriter.println(inputLine); // echo back to sender
+                Log.d(TAG,"Client msg: " + inputLine);
+                stringJsMessage += inputLine;
             }
-            Log.d("TestComActivity","Close server socket");
+
+            JSONMessage jsMessage= new JSONMessage(stringJsMessage);
+            agentMQ.add(jsMessage);
+            Log.d(TAG,"Close server socket");
+
             this.socket.close();
         } catch (final IOException e) {
-            Log.d("TestComActivity","Error in server: " + e.toString());
+            Log.d(TAG,"Error in server: " + e.toString());
             e.printStackTrace();
         }
     }
