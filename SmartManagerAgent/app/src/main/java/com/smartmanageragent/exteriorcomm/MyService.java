@@ -1,5 +1,6 @@
 package com.smartmanageragent.exteriorcomm;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.smartmanageragent.smartagent.agent.Agent;
@@ -288,7 +291,11 @@ public class MyService extends Service {
     }
 
     private void notifLucas() {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.btn_star).setContentTitle("Notif Lucas").setContentText("Wesh Alors !");
 
+        int monID = 007;
+        NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        monManager.notify(monID, mBuilder.build());
     }
 
     private void notifNico() {
