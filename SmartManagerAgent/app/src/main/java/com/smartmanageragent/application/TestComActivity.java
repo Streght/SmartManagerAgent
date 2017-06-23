@@ -14,9 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorcomm.ClientThread;
+import com.smartmanageragent.exteriorcomm.ClientThreadTest;
 import com.smartmanageragent.exteriorcomm.ServerGetRequest;
-import com.smartmanageragent.exteriorcomm.ServerThread;
+import com.smartmanageragent.exteriorcomm.ServerThreadTest;
 import com.smartmanageragent.exteriorcomm.Utils;
 import com.smartmanageragent.smartagent.message.MessageQueue;
 
@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 public class TestComActivity extends AppCompatActivity {
 
     ClientHandler clientHandler;
-    ClientThread clientThread;
+    ClientThreadTest clientThreadTest;
     TextView textView1;
     TextView textView2;
     TextView textView3;
@@ -102,8 +102,6 @@ public class TestComActivity extends AppCompatActivity {
         });
         t.start();
 
-        //createServer();
-
         Log.d("TestComActivity","Client handler");
 
         // Creation of the client thread
@@ -114,13 +112,13 @@ public class TestComActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
 
-                if(clientThread == null) {
+                if(clientThreadTest == null) {
                     //Connection on port 8000 and address 192.168.139.1
-                    clientThread = new ClientThread(
+                    clientThreadTest = new ClientThreadTest(
                             /*"192.168.137.1"*/ editText1.getText().toString(),
                             8000,
                             clientHandler);
-                    clientThread.start();
+                    clientThreadTest.start();
                 }
 
                 handler.postDelayed(this, delay);
@@ -140,8 +138,8 @@ public class TestComActivity extends AppCompatActivity {
             public void onClick(View v) {
                 class Sess extends AsyncTask<String, Integer, Void> {
                     protected Void doInBackground(String... lines) {
-                        if(clientThread != null)
-                            clientThread.txMsg(lines[0]);
+                        if(clientThreadTest != null)
+                            clientThreadTest.txMsg(lines[0]);
                         return null;
                     }
                 }
@@ -160,7 +158,6 @@ public class TestComActivity extends AppCompatActivity {
                 new Sess().execute(jsonObject.toString());*/
             }
         });
-
     }
 
     protected void createServer() {
@@ -172,7 +169,7 @@ public class TestComActivity extends AppCompatActivity {
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
 
             while (true) {
-                new ServerThread(serverSocket.accept(), clientHandler, new MessageQueue<String>()).start();
+                new ServerThreadTest(serverSocket.accept(), clientHandler, new MessageQueue<String>()).start();
             }
         } catch (final IOException e) {
             Log.d("TestComActivity","Could not listen on port " + portNumber);
@@ -224,11 +221,11 @@ public class TestComActivity extends AppCompatActivity {
                 public void onClick(View arg0) {
 
                     //Connection on port 8000 and address 192.168.139.1
-                    clientThread = new ClientThread(
+                    clientThreadTest = new ClientThreadTest(
                             "192.168.0.101",
                             8000,
                             clientHandler);
-                    clientThread.start();
+                    clientThreadTest.start();
                 }
             };
 
@@ -245,7 +242,7 @@ public class TestComActivity extends AppCompatActivity {
     }
 
     private void clientEnd(){
-        clientThread = null;
+        clientThreadTest = null;
         //textViewState.setText("clientEnd()");
     }
 

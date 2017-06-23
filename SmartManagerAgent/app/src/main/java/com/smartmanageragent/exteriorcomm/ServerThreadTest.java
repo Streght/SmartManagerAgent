@@ -17,15 +17,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 
-public class ServerThread extends Thread {
+public class ServerThreadTest extends Thread {
     private Socket socket = null;
     private TestComActivity.ClientHandler handler;
     private PrintWriter printWriter;
     private MessageQueue<String> agentMQ;
     // private final GpioPinDigitalOutput[] pins;
 
-    public ServerThread(Socket socket, TestComActivity.ClientHandler handler, MessageQueue<String> mq/* , qGpioPinDigitalOutput[] pins */) {
-        super("ServerThread");
+    public ServerThreadTest(Socket socket, TestComActivity.ClientHandler handler, MessageQueue<String> mq/* , qGpioPinDigitalOutput[] pins */) {
+        super("ServerThreadTest");
         this.socket = socket;
         this.handler = handler;
         this.agentMQ = mq;
