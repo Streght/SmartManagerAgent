@@ -63,6 +63,10 @@ public class MyService extends Service {
         return receive;
     }
 
+    public static MessageQueue<String> getSend() {
+        return send;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void onCreate() {
