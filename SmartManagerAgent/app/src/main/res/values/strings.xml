@@ -57,9 +57,10 @@
 
     <!-- CommunicationService -->
     <string name="notif_txt">You have a pending meeting to validate</string>
+    <string name="accepted">Your meeting has been accepted</string>
 
     <!-- About -->
-    <string name="about_txt">We are 6 French students from the Université du Québec à Chicoutimi...</string>
+    <string name="about_txt">We are 6 French students from the Université du Québec à Chicoutimi…</string>
     <string name="license1">SmartManagerAgent License</string>
     <string name="license2">Caldroid License</string>
     <string name="license_txt1">MIT License
@@ -85,7 +86,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</string>
     <string name="license_txt2">Available for use under the MIT License
 
-Copyright (c) 2013 by Roomorama Inc.
+Copyright © 2013 by Roomorama Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

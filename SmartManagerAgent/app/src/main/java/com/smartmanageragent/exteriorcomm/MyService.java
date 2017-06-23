@@ -205,17 +205,6 @@ public class MyService extends Service {
         }
     }
 
-    private void notifLucas() {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.btn_star).setContentTitle("Notif Lucas").setContentText("Wesh Alors !");
-        int monID = 007;
-        NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        monManager.notify(monID, mBuilder.build());
-    }
-
-    private void notifNico() {
-
-    }
-
     // Créer le serveur
     protected void createServer() {
         Log.d(TAG, "Port: " + portNumber);
@@ -233,7 +222,19 @@ public class MyService extends Service {
     private void fonctionMagique(JSONMessage request) {
         Log.d(TAG, "Début Envoi message");
         if (request.getField(JSONMessage.Fields.ADDRESSEES).equals("LOCAL")) {
+            // TODO set conditions
             if (request.getField(JSONMessage.Fields.COMMAND).equals("")) {
+
+                Activity<Float> activity = (Activity<Float>) Serializer.deserialize(request.getField(JSONMessage.Fields.ACTIVITY));
+
+                NotificationCompat.Builder mBuilder =
+                        (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                                .setSmallIcon(R.drawable.ic_meeting_accepted)
+                                .setContentTitle(getResources().getString(R.string.accepted))
+                                .setContentText(activity.getName());
+                int monID = 1;
+                NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                monManager.notify(monID, mBuilder.build());
 
             } else if (request.getField(JSONMessage.Fields.COMMAND).equals("")) {
 

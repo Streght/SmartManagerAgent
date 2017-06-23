@@ -56,4 +56,5 @@
 
     <!-- CommunicationService -->
     <string name="notif_txt">Vous avez un rendez-vous à valider</string>
+    <string name="accepted">Votre rendez-vous a été validé</string>
 </resources>
