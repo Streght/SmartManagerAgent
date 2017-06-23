@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,9 +30,13 @@ import com.roomorama.caldroid.CaldroidListener;
 import com.smartmanageragent.exteriorcomm.MyService;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class CalendarActivity extends AppCompatActivity {
 
@@ -64,8 +69,8 @@ public class CalendarActivity extends AppCompatActivity {
         if (sharedPreferences.getBoolean("firstrun", true)) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
-            alertDialog.setTitle("Username");
-            alertDialog.setMessage("Enter your username");
+            alertDialog.setTitle(getResources().getString(R.string.username));
+            alertDialog.setMessage(getResources().getString(R.string.enter_username));
 
             final EditText name = new EditText(CalendarActivity.this);
 
@@ -78,20 +83,25 @@ public class CalendarActivity extends AppCompatActivity {
 
             alertDialog.setView(container);
 
-            alertDialog.setPositiveButton("Validate", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton(getResources().getString(R.string.validate_name), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
 
                     String userName = name.getText().toString();
-                    sharedPreferences.edit().putString("username", userName).apply();
+                    if (!(userName.equals(""))) {
+                        sharedPreferences.edit().putString("username", userName).apply();
 
-                    TextView username = (TextView) findViewById(R.id.username);
-                    String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
-                    username.setText(s);
+                        TextView username = (TextView) findViewById(R.id.username);
+                        String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
+                        username.setText(s);
 
-                    // TODO uncomment when agent working.
-                    //colorMeetingsDays();
+                        // TODO uncomment when agent working.
+                        //colorMeetingsDays();
 
-                    dialog.dismiss();
+                        dialog.dismiss();
+                    } else {
+                        Snackbar.make(findViewById(R.id.calendar_layout), getResources().getString(R.string.error_name), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
                 }
             });
             alertDialog.show();
@@ -117,6 +127,64 @@ public class CalendarActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras.getBoolean("notification", false)) {
+
+            String name = extras.getString("name");
+            String attendees = extras.getString("attendees");
+
+            Calendar meetingBeg = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneBeginning", null)));
+            meetingBeg.setTimeInMillis(getIntent().getExtras().getLong("meetingBeginning", -1));
+
+            Calendar meetingEnd = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneEnding", null)));
+            meetingEnd.setTimeInMillis(getIntent().getExtras().getLong("meetingEnding", -1));
+
+            String myFormatDay = "EEE, d MMM yyyy HH:mm";
+            SimpleDateFormat sdfDay = new SimpleDateFormat(myFormatDay, Locale.getDefault());
+
+            String myFormatTime = "HH:mm";
+            SimpleDateFormat sdfTime = new SimpleDateFormat(myFormatTime, Locale.getDefault());
+
+            String day = sdfDay.format(meetingBeg);
+            String hourBeg = sdfTime.format(meetingBeg);
+            String hourEnd = sdfTime.format(meetingEnd);
+
+            String msgTxt = name + "\n"+
+                    day +getResources().getString(R.string.from)+ hourBeg + getResources().getString(R.string.to) + hourEnd + "\n"+
+                    getResources().getString(R.string.with) + attendees;
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
+            alertDialog.setTitle(getResources().getString(R.string.notif_txt));
+            alertDialog.setMessage(msgTxt);
+
+
+            LinearLayout container = new LinearLayout(CalendarActivity.this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+            alertDialog.setView(container);
+
+            alertDialog.setPositiveButton(getResources().getString(R.string.validate_name), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // TODO Accept meeting
+                    dialog.dismiss();
+                }
+            });
+
+            alertDialog.setNegativeButton(getResources().getString(R.string.refuse), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // TODO Refuse meeting
+                    dialog.dismiss();
+                }
+            });
+
+            alertDialog.show();
+        }
 
         sharedPreferences = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
 

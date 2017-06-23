@@ -23,8 +23,8 @@ public class NotifyAccept<K, T> extends Command<K, T, String> {
 
     public NotifyAccept(Message<String> message, Agent<K, T, String> agent) {
         super(message, agent);
-        String jsonString = (String) message.getContent();
-        JSONObject jsonObj = null;
+        String jsonString = message.getContent();
+        JSONObject jsonObj;
         try {
             jsonObj = new JSONObject(jsonString);
             // WARNING : message addressee must be the agent to send the result to, not this agent name !!
@@ -53,9 +53,9 @@ public class NotifyAccept<K, T> extends Command<K, T, String> {
             // Addressee
             jsonMessage.setField(Fields.ADDRESSEES, this.addressee);
             // Activity
-            jsonMessage.setField(Fields.ACTIVITY, Serializer.serialize((Serializable) this.activity));
+            jsonMessage.setField(Fields.ACTIVITY, Serializer.serialize(this.activity));
             // Slot
-            jsonMessage.setField(Fields.SLOT, Serializer.serialize((Serializable) this.slot));
+            jsonMessage.setField(Fields.SLOT, Serializer.serialize(this.slot));
             // Sends message to the application, which will send the user a notification
             this.getAgent().send(jsonMessage);
         } catch (NotSerializableException e) {

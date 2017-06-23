@@ -6,6 +6,14 @@
     <string name="title_calendar_activity">My calendar</string>
     <string name="text_time_slot_button">Configure time slots</string>
     <string name="connected">Connected as&#160;</string>
+    <string name="username">Username</string>
+    <string name="enter_username">Enter your username</string>
+    <string name="validate_name">Validate</string>
+    <string name="refuse">Refuse</string>
+    <string name="error_name">Please enter a valide username</string>
+    <string name="from">&#160;from&#160;</string>
+    <string name="to">&#160;to&#160;</string>
+    <string name="with">With&#160;</string>
 
     <!-- MeetingsActivity -->
     <string name="title_meetings_activity">My meetings</string>
@@ -46,6 +54,9 @@
     <string name="about">About us</string>
     <string name="refresh_display">Refresh display</string>
     <string name="validate">Validate</string>
+
+    <!-- CommunicationService -->
+    <string name="notif_txt">You have a pending meeting to validate</string>
 
     <!-- About -->
     <string name="about_txt">We are 6 French students from the Université du Québec à Chicoutimi...</string>

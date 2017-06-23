@@ -6,10 +6,11 @@ import com.smartmanageragent.smartagent.message.Message;
 public abstract class Command<K, T, U> {
 	
 	protected Agent<K, T, U> agent;
-	
-	/** Default constructor
+
+	/**
+	 *
 	 * @param message
-	 * @param state
+	 * @param agent
 	 */
 	public Command(Message<U> message, Agent<K, T, U> agent) {
 		this.agent = agent;

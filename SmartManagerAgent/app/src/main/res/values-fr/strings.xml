@@ -7,6 +7,14 @@
     <string name="title_activity_calendar">Mon calendrier</string>
     <string name="text_time_slot_button">Configurer les plages horaires</string>
     <string name="connected">Connecté comme&#160;</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="enter_username">Entrez votre nom d\'utilisateur</string>
+    <string name="validate_name">Valider</string>
+    <string name="refuse">Refuser</string>
+    <string name="error_name">Merci de rentrer un nom d\'utilisateur valide</string>
+    <string name="from">&#160;de&#160;</string>
+    <string name="to">&#160;à&#160;</string>
+    <string name="with">Avec&#160;</string>
 
     <!-- MeetingsActivity -->
     <string name="title_activity_meetings">Mes rendez-vous</string>
@@ -45,4 +53,7 @@
 
     <!-- Menu -->
     <string name="about">A propos</string>
+
+    <!-- CommunicationService -->
+    <string name="notif_txt">Vous avez un rendez-vous à valider</string>
 </resources>

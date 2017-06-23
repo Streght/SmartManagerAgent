@@ -1,5 +1,7 @@
 package com.smartmanageragent.exteriorcomm;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +11,11 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.smartmanageragent.application.CalendarActivity;
+import com.smartmanageragent.application.R;
 import com.smartmanageragent.smartagent.agent.Agent;
 import com.smartmanageragent.smartagent.agent.AgentImpl;
 import com.smartmanageragent.smartagent.message.JSONMessage;
@@ -20,6 +25,7 @@ import com.smartmanageragent.smartagent.message.WaitingQueue;
 import com.smartmanageragent.smartagent.timeTable.Activity;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
 
 import java.io.NotSerializableException;
 
@@ -30,6 +36,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -188,10 +195,68 @@ public class MyService extends Service {
         }
     }
 
-
     private void fonctionMagique(JSONMessage request) {
         Log.d(TAG, "Début Envoi message");
         if (request.getField(JSONMessage.Fields.ACTIVITY).equals("LOCAL")) {
+            if (request.getField(JSONMessage.Fields.COMMAND).equals("")) {
+
+            } else if (request.getField(JSONMessage.Fields.COMMAND).equals("")) {
+
+                Activity<Float> activity = (Activity<Float>) Serializer.deserialize(request.getField(JSONMessage.Fields.ACTIVITY));
+                Slot<Float> slot = (Slot<Float>) Serializer.deserialize(request.getField(JSONMessage.Fields.SLOT));
+
+                String name = activity.getName();
+
+                Date beg = (Date) slot.getRef();
+                Calendar beginning = Calendar.getInstance();
+                beginning.setTime(beg);
+
+                float duration = activity.getLength();
+                int hourLength = (int) duration / 60;
+                int minutesLength = (int) duration % 60;
+
+                Calendar ending = Calendar.getInstance();
+                ending.setTime(beg);
+                ending.set(ending.get(Calendar.YEAR),
+                        ending.get(Calendar.MONTH),
+                        ending.get(Calendar.DATE),
+                        ending.get(Calendar.HOUR_OF_DAY) + hourLength,
+                        ending.get(Calendar.MINUTE) + minutesLength);
+
+                String attendees = android.text.TextUtils.join(", ", activity.getAttendees());
+
+                NotificationCompat.Builder mBuilder =
+                        (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                                .setSmallIcon(R.drawable.ic_meeting_accepted)
+                                .setContentTitle(getResources().getString(R.string.notif_txt))
+                                .setContentText(name);
+
+                Intent resultIntent = new Intent(this, CalendarActivity.class);
+                resultIntent.putExtra("notification", true);
+                resultIntent.putExtra("name",name);
+                resultIntent.putExtra("attendees",attendees);
+                resultIntent.putExtra("meetingBeginning", beginning.getTimeInMillis());
+                resultIntent.putExtra("timeZoneBeginning", beginning.getTimeZone().getID());
+                resultIntent.putExtra("meetingEnding", ending.getTimeInMillis());
+                resultIntent.putExtra("timeZoneEnding", ending.getTimeZone().getID());
+
+                PendingIntent resultPendingIntent =
+                        PendingIntent.getActivity(
+                                this,
+                                0,
+                                resultIntent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+
+                mBuilder.setContentIntent(resultPendingIntent);
+
+                int mNotificationId = 1;
+                NotificationManager mNotifyMgr =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+
+            }
             // TODO : La notification à NICOLAS !!
         } else if (request.getField(JSONMessage.Fields.COMMAND).equals(postIp)) {
             postIP2Server(request);
@@ -199,7 +264,7 @@ public class MyService extends Service {
             updateMap();
         } else {
             String addresseeListString = request.getField(JSONMessage.Fields.ADDRESSEES);
-            List<String> addresseeList = new ArrayList<String>(Arrays.asList(addresseeListString.split(",")));
+            List<String> addresseeList = new ArrayList<>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
                     String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad);
@@ -279,7 +344,7 @@ public class MyService extends Service {
         final Handler handler = new Handler();
         return success;
     }
-    
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -292,6 +357,7 @@ public class MyService extends Service {
     }
 
     private void notifNico() {
+
 
     }
 }

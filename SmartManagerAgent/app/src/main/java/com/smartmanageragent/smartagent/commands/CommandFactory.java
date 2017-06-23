@@ -6,11 +6,12 @@ import com.smartmanageragent.smartagent.message.Message;
 public class CommandFactory<K, T, U> {
 
 	public CommandFactory() {}
-	
-	/** Creates a command from a message, using a "command" attribute
+
+	/**
+	 *
 	 * @param mess
-	 * @param state
-	 * @return command
+	 * @param agent
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public Command<K, T, U> createCommand(Message<U> mess, Agent<K, T, U> agent) {
