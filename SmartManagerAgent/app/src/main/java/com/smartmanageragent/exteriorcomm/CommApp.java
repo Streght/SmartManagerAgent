@@ -3,26 +3,25 @@ package com.smartmanageragent.exteriorcomm;
 import com.smartmanageragent.smartagent.commands.list.AddActivity;
 import com.smartmanageragent.smartagent.commands.list.RemoveActivity;
 import com.smartmanageragent.smartagent.message.JSONMessage;
+import com.smartmanageragent.smartagent.timeTable.Activity;
+import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.util.Calendar;
 import java.util.List;
 
 
+public class CommApp {
 
-public class CommAppImpl implements InterfaceCommApp {
-
-
-    @Override
-    public JSONMessage createMeeting(String titre, Calendar dateDebut, Calendar dateFin, String participant) {
+    public static JSONMessage createMeeting(String titre, Calendar dateDebut, Calendar dateFin, String participant) {
         JSONMessage jsMessage = new JSONMessage();
         jsMessage.setField(JSONMessage.Fields.SENDER, "LOCAL");
         jsMessage.setField(JSONMessage.Fields.ADDRESSEES, participant);
+
         jsMessage.setField(JSONMessage.Fields.COMMAND, AddActivity.class.getName()); // TODO je ne sais pas le nom de la commande
         return jsMessage;
     }
 
-    @Override
-    public JSONMessage deleteMeeting() {
+    public static JSONMessage deleteMeeting() {
         JSONMessage jsMessage = new JSONMessage();
         jsMessage.setField(JSONMessage.Fields.SENDER, "LOCAL");
         jsMessage.setField(JSONMessage.Fields.COMMAND, RemoveActivity.class.getName()); // TODO je ne sais pas le nom de la commande
@@ -30,16 +29,14 @@ public class CommAppImpl implements InterfaceCommApp {
     }
 
     // Commande pas encore implémentée
-    @Override
-    public JSONMessage modifyMeeting() {
+    public static JSONMessage modifyMeeting() {
         JSONMessage jsMessage = new JSONMessage();
         jsMessage.setField(JSONMessage.Fields.SENDER, "LOCAL");
         jsMessage.setField(JSONMessage.Fields.COMMAND, "JeSAISpAS"); // TODO je ne sais pas le nom de la commande
         return jsMessage;
     }
 
-    @Override
-    public JSONMessage availability() {
+    public static JSONMessage availability() {
         JSONMessage jsMessage = new JSONMessage();
         jsMessage.setField(JSONMessage.Fields.SENDER, "LOCAL");
         jsMessage.setField(JSONMessage.Fields.COMMAND, "JeSAISpAS"); // TODO je ne sais pas le nom de la commande
@@ -47,24 +44,21 @@ public class CommAppImpl implements InterfaceCommApp {
         return jsMessage;
     }
 
-    @Override
-    public List<String> getListId() {
+    public static List<String> getListId() {
         return SingletonRegisterIDIP.getInstance().getListId();
     }
 
-    @Override
-    public JSONMessage postIp(String id, String password) {
+    public static JSONMessage postIp(String id, String password) {
         JSONMessage request = new JSONMessage();
-        request.setField(JSONMessage.Fields.COMMAND, MyService.postIp);
+        request.setField(JSONMessage.Fields.COMMAND, CommunicationService.postIp);
         request.setField(JSONMessage.Fields.ID, id);
         request.setField(JSONMessage.Fields.PASSWORD, password);
         return request;
     }
 
-    @Override
-    public JSONMessage updateTable() {
+    public static JSONMessage updateTable() {
         JSONMessage request = new JSONMessage();
-        request.setField(JSONMessage.Fields.COMMAND, MyService.updateMap);
+        request.setField(JSONMessage.Fields.COMMAND, CommunicationService.updateMap);
         return request;
     }
 }

@@ -1,8 +1,6 @@
 package com.smartmanageragent.application;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +13,6 @@ import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +27,7 @@ import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
-import com.smartmanageragent.exteriorcomm.MyService;
+import com.smartmanageragent.exteriorcomm.CommunicationService;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
 import java.text.SimpleDateFormat;
@@ -43,10 +40,11 @@ import java.util.TimeZone;
 
 public class CalendarActivity extends AppCompatActivity {
 
+    public static String user;
     private CaldroidFragment caldroidFragment;
     private TimeTable<Date, Float> timeTable;
     private SharedPreferences sharedPreferences;
-    private MyService myService;
+    private CommunicationService communicationService;
     private boolean isBound = false;
 
     /*private void setCustomResourceForDates() {
@@ -61,6 +59,201 @@ public class CalendarActivity extends AppCompatActivity {
             caldroidFragment.setTextColorForDate(R.color.caldroid_white, greenDate);
         }
     }*/
+    private ServiceConnection myConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            CommunicationService.MyLocalBinder binder = (CommunicationService.MyLocalBinder) service;
+            communicationService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_calendar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            if (extras.getBoolean("notification", false)) {
+
+                String name = extras.getString("name");
+                String attendees = extras.getString("attendees");
+
+                Calendar meetingBeg = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneBeginning", null)));
+                meetingBeg.setTimeInMillis(getIntent().getExtras().getLong("meetingBeginning", -1));
+
+                Calendar meetingEnd = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneEnding", null)));
+                meetingEnd.setTimeInMillis(getIntent().getExtras().getLong("meetingEnding", -1));
+
+                String myFormatDay = "EEE, d MMM yyyy HH:mm";
+                SimpleDateFormat sdfDay = new SimpleDateFormat(myFormatDay, Locale.getDefault());
+
+                String myFormatTime = "HH:mm";
+                SimpleDateFormat sdfTime = new SimpleDateFormat(myFormatTime, Locale.getDefault());
+
+                String day = sdfDay.format(meetingBeg);
+                String hourBeg = sdfTime.format(meetingBeg);
+                String hourEnd = sdfTime.format(meetingEnd);
+
+                String msgTxt = name + "\n" +
+                        day + getResources().getString(R.string.from) + hourBeg + getResources().getString(R.string.to) + hourEnd + "\n" +
+                        getResources().getString(R.string.with) + attendees;
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
+                alertDialog.setTitle(getResources().getString(R.string.notif_txt));
+                alertDialog.setMessage(msgTxt);
+
+
+                LinearLayout container = new LinearLayout(CalendarActivity.this);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+
+                alertDialog.setView(container);
+
+                alertDialog.setPositiveButton(getResources().getString(R.string.validate_name), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // TODO Accept meeting
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog.setNegativeButton(getResources().getString(R.string.refuse), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // TODO Refuse meeting
+                        dialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
+            }
+        }
+
+        sharedPreferences = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
+
+        //final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+        // Setup caldroid fragment
+        caldroidFragment = new CaldroidFragment();
+
+        // If Activity is created after rotation
+        if (savedInstanceState != null) {
+            caldroidFragment.restoreStatesFromKey(savedInstanceState,
+                    "CALDROID_SAVED_STATE");
+        }
+        // If activity is created from fresh
+        else {
+            Bundle args = new Bundle();
+            Calendar cal = Calendar.getInstance();
+            args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+            args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+            args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+            args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+
+            // Uncomment this to customize startDayOfWeek
+            args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
+
+            caldroidFragment.setArguments(args);
+        }
+
+        //setCustomResourceForDates();
+
+        // Attach to the activity
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.calendar_layout, caldroidFragment);
+        t.commit();
+
+        // Setup listener
+        final CaldroidListener listener = new CaldroidListener() {
+
+            @Override
+            public void onSelectDate(Date date, View view) {
+                Intent intent = new Intent(CalendarActivity.this, MeetingsActivity.class);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                intent.putExtra("meetingDate", cal.getTimeInMillis());
+                intent.putExtra("timeZone", cal.getTimeZone().getID());
+                startActivity(intent);
+                /*Toast.makeText(getApplicationContext(), formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
+
+            }
+
+            @Override
+            public void onChangeMonth(int month, int year) {
+               /* String text = "month: " + month + " year: " + year;
+                Toast.makeText(getApplicationContext(), text,
+                        Toast.LENGTH_SHORT).show();*/
+            }
+
+
+            @Override
+            public void onLongClickDate(Date date, View view) {
+                /*Toast.makeText(getApplicationContext(),
+                        "Long click " + formatter.format(date),
+                        Toast.LENGTH_SHORT).show();*/
+            }
+
+            @Override
+            public void onCaldroidViewCreated() {
+                if (caldroidFragment.getLeftArrowButton() != null) {
+                    /*Toast.makeText(getApplicationContext(),
+                            "Caldroid view is created", Toast.LENGTH_SHORT)
+                            .show();*/
+                }
+            }
+        };
+
+        // Setup Caldroid
+        caldroidFragment.setCaldroidListener(listener);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_meeting_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this, MeetingAddActivity.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
+
+        Button tsb = (Button) findViewById(R.id.time_slot_button);
+        tsb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
+                startActivity(intent);
+
+                /*String currentTime = communicationService.getCurrentTime();
+                Snackbar.make(findViewById(R.id.calendar_layout), currentTime, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+
+    }
 
     @Override
     protected void onResume() {
@@ -120,190 +313,10 @@ public class CalendarActivity extends AppCompatActivity {
         /*
         colorMeetingsDays();
         */
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_calendar);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        Bundle extras = getIntent().getExtras();
-
-        if (extras.getBoolean("notification", false)) {
-
-            String name = extras.getString("name");
-            String attendees = extras.getString("attendees");
-
-            Calendar meetingBeg = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneBeginning", null)));
-            meetingBeg.setTimeInMillis(getIntent().getExtras().getLong("meetingBeginning", -1));
-
-            Calendar meetingEnd = new GregorianCalendar(TimeZone.getTimeZone(getIntent().getExtras().getString("timeZoneEnding", null)));
-            meetingEnd.setTimeInMillis(getIntent().getExtras().getLong("meetingEnding", -1));
-
-            String myFormatDay = "EEE, d MMM yyyy HH:mm";
-            SimpleDateFormat sdfDay = new SimpleDateFormat(myFormatDay, Locale.getDefault());
-
-            String myFormatTime = "HH:mm";
-            SimpleDateFormat sdfTime = new SimpleDateFormat(myFormatTime, Locale.getDefault());
-
-            String day = sdfDay.format(meetingBeg);
-            String hourBeg = sdfTime.format(meetingBeg);
-            String hourEnd = sdfTime.format(meetingEnd);
-
-            String msgTxt = name + "\n"+
-                    day +getResources().getString(R.string.from)+ hourBeg + getResources().getString(R.string.to) + hourEnd + "\n"+
-                    getResources().getString(R.string.with) + attendees;
-
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
-            alertDialog.setTitle(getResources().getString(R.string.notif_txt));
-            alertDialog.setMessage(msgTxt);
-
-
-            LinearLayout container = new LinearLayout(CalendarActivity.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-
-            alertDialog.setView(container);
-
-            alertDialog.setPositiveButton(getResources().getString(R.string.validate_name), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                    // TODO Accept meeting
-                    dialog.dismiss();
-                }
-            });
-
-            alertDialog.setNegativeButton(getResources().getString(R.string.refuse), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                    // TODO Refuse meeting
-                    dialog.dismiss();
-                }
-            });
-
-            alertDialog.show();
-        }
-
-        sharedPreferences = getSharedPreferences("com.smartmanageragent.application", MODE_PRIVATE);
-
-        //final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-
-        // Setup caldroid fragment
-        caldroidFragment = new CaldroidFragment();
-
-        // If Activity is created after rotation
-        if (savedInstanceState != null) {
-            caldroidFragment.restoreStatesFromKey(savedInstanceState,
-                    "CALDROID_SAVED_STATE");
-        }
-        // If activity is created from fresh
-        else {
-            Bundle args = new Bundle();
-            Calendar cal = Calendar.getInstance();
-            args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-            args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-            args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-            args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-
-            // Uncomment this to customize startDayOfWeek
-            args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
-
-            caldroidFragment.setArguments(args);
-        }
-
-        //setCustomResourceForDates();
-
-        // Attach to the activity
-        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.calendar_layout, caldroidFragment);
-        t.commit();
-
-        // Setup listener
-        final CaldroidListener listener = new CaldroidListener() {
-
-            @Override
-            public void onSelectDate(Date date, View view) {
-                Intent intent = new Intent(CalendarActivity.this, MeetingsActivity.class);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(date);
-                intent.putExtra("meetingDate", cal.getTimeInMillis());
-                intent.putExtra("timeZone", cal.getTimeZone().getID());
-                startActivity(intent);
-                /*Toast.makeText(getApplicationContext(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();*/
-
-            }
-
-            @Override
-            public void onChangeMonth(int month, int year) {
-               /* String text = "month: " + month + " year: " + year;
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();*/
-               notifLucas();
-
-            }
-
-
-            @Override
-            public void onLongClickDate(Date date, View view) {
-                /*Toast.makeText(getApplicationContext(),
-                        "Long click " + formatter.format(date),
-                        Toast.LENGTH_SHORT).show();*/
-            }
-
-            @Override
-            public void onCaldroidViewCreated() {
-                if (caldroidFragment.getLeftArrowButton() != null) {
-                    /*Toast.makeText(getApplicationContext(),
-                            "Caldroid view is created", Toast.LENGTH_SHORT)
-                            .show();*/
-                }
-            }
-        };
-
-
-        // Setup Caldroid
-        caldroidFragment.setCaldroidListener(listener);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_meeting_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CalendarActivity.this, MeetingAddActivity.class);
-                startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
-
-        Button tsb = (Button) findViewById(R.id.time_slot_button);
-        tsb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CalendarActivity.this, WeeklyFreeTimeActivity.class);
-                startActivity(intent);
-
-                /*String currentTime = myService.getCurrentTime();
-                Snackbar.make(findViewById(R.id.calendar_layout), currentTime, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-            }
-        });
-
-        //Intent intent = new Intent(this, MyService.class);
-        //bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Bind to LocalService
-        Intent intent = new Intent(this, MyService.class);
-        intent.putExtra("username", sharedPreferences.getString("username", ""));
+        user = sharedPreferences.getString("username", "");
+        Intent intent = new Intent(this, CommunicationService.class);
+        //intent.putExtra("username", sharedPreferences.getString("username", ""));
         startService(intent);
         bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
     }
@@ -318,26 +331,9 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
-    private ServiceConnection myConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            MyService.MyLocalBinder binder = (MyService.MyLocalBinder) service;
-            myService = binder.getService();
-            isBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            isBound = false;
-        }
-    };
-
     public void colorMeetingsDays() {
 
-        timeTable = myService.getAgentTimeTable();
+        timeTable = communicationService.getAgentTimeTable();
         Iterator<TimeTable.PosAct<Date, Float>> it = timeTable.activityIterator();
 
         while (it.hasNext()) {
@@ -375,22 +371,6 @@ public class CalendarActivity extends AppCompatActivity {
         if (caldroidFragment != null) {
             caldroidFragment.saveStatesToKey(savedInstanceState, "CALDROID_SAVED_STATE");
         }
-    }
-
-    private void notifLucas() {
-        // Creates the object that builds the notification
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.btn_star).setContentTitle("Notif Lucas").setContentText("Wesh Alors !");
-
-        // Defines the activity to be started when the user click on the notification
-        Intent resultIntent = new Intent(this, CalendarActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(resultPendingIntent);
-
-        // Issue the notification with a Notification manager, and a unique ID
-        int monID = 007;
-        NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        monManager.notify(monID, mBuilder.build());
     }
 
 }

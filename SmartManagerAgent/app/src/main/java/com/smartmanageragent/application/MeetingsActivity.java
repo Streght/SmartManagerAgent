@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,18 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.smartmanageragent.exteriorcomm.MyService;
-import com.smartmanageragent.smartagent.message.Serializer;
+import com.smartmanageragent.exteriorcomm.CommunicationService;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
-import java.io.NotSerializableException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,7 +38,7 @@ public class MeetingsActivity extends AppCompatActivity {
     private SimpleAdapter adapterMeetingListView = null;
     private ListView meetingListView;
     private TimeTable<Date, Float> timeTable;
-    private MyService myService;
+    private CommunicationService myService;
     private boolean isBound = false;
 
     @Override
@@ -120,7 +116,7 @@ public class MeetingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Bind to LocalService
-        Intent intent = new Intent(this, MyService.class);
+        Intent intent = new Intent(this, CommunicationService.class);
         bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -145,7 +141,7 @@ public class MeetingsActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            MyService.MyLocalBinder binder = (MyService.MyLocalBinder) service;
+            CommunicationService.MyLocalBinder binder = (CommunicationService.MyLocalBinder) service;
             myService = binder.getService();
             isBound = true;
         }

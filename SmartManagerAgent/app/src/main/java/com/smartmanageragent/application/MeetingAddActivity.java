@@ -2,7 +2,11 @@ package com.smartmanageragent.application;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +21,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.smartmanageragent.exteriorcomm.CommApp;
+import com.smartmanageragent.exteriorcomm.CommunicationService;
+import com.smartmanageragent.smartagent.message.JSONMessage;
 import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 
@@ -40,6 +47,8 @@ public class MeetingAddActivity extends AppCompatActivity {
     private EditText attendees;
     private Spinner hourDuration;
     private Spinner minutesDuration;
+    private CommunicationService communicationService;
+    private boolean isBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,6 +173,41 @@ public class MeetingAddActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, CommunicationService.class);
+        bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (isBound) {
+            unbindService(myConnection);
+            isBound = false;
+        }
+    }
+
+    private ServiceConnection myConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            CommunicationService.MyLocalBinder binder = (CommunicationService.MyLocalBinder) service;
+            communicationService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+    };
+
     // On ecoute le calendrier cree dans la methode (onClick), ainsi quand la date sera choisie (OnDateSet),
     // on va pouvoir sauvegarder la date choisie dans la variable "calendrierDebutPossible" et ouvrir directement
     // une autre fenetre, pour permettre de choisir l'heure
@@ -236,7 +280,7 @@ public class MeetingAddActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String[] listAttendees;
+        List<String> listAttendees;
         // Handle item selection
         if (item.getItemId() == R.id.validate) {
             if (!(title.getText().toString().equals("")) &&
@@ -247,6 +291,10 @@ public class MeetingAddActivity extends AppCompatActivity {
 
                 // TODO Add envoi commande.
 
+                JSONMessage cm = CommApp.createMeeting(title.getText().toString(), calendarDebutPossible, calendarFinPossible, listAttendees.toString());
+                communicationService.getReceive().add(cm);
+
+
                 finish();
             }
         }
@@ -254,10 +302,17 @@ public class MeetingAddActivity extends AppCompatActivity {
     }
 
     // Parses any given EditText and splits at every colon ", ", returns an array of string
-    public String[] parseAttendees(EditText attendees) {
+    public List<String> parseAttendees(EditText attendees) {
         String[] listAttendees;
         listAttendees = attendees.getText().toString().split(", ");
-        return listAttendees;
+
+        List<String> als = new ArrayList<>();
+        for (String s : listAttendees
+                ) {
+            als.add(s);
+        }
+
+        return als;
     }
 
     private int getIndex(Spinner spinner, String myString) {

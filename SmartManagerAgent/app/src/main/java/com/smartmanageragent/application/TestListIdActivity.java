@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.smartmanageragent.exteriorcomm.ClientThreadTest;
-import com.smartmanageragent.exteriorcomm.CommunicationService;
 import com.smartmanageragent.exteriorcomm.SingletonRegisterIDIP;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
@@ -28,7 +27,7 @@ public class TestListIdActivity extends AppCompatActivity {
 
         textView1 = (TextView) this.findViewById(R.id.textView1);
         button1 = (Button) this.findViewById(R.id.button1);
-        final Intent mServiceIntent = new Intent(this, CommunicationService.class);
+        /*final Intent mServiceIntent = new Intent(this, CommunicationService.class);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +47,7 @@ public class TestListIdActivity extends AppCompatActivity {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                }*/
+                }
 
                 JSONMessage jsMessage = new JSONMessage();
                 jsMessage.setField(JSONMessage.Fields.SENDER, "theo");
@@ -56,7 +55,7 @@ public class TestListIdActivity extends AppCompatActivity {
                 startService(mServiceIntent);
                 textView1.setText("List Users" + SingletonRegisterIDIP.getInstance().getListId().toString());
             }
-        });
+        });*/
     }
 
 

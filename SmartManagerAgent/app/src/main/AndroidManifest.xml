@@ -35,9 +35,8 @@
             android:label="@string/title_meeting_add_activity" />
         <activity android:name=".TestListIdActivity" />
 
-        <service android:name="com.smartmanageragent.exteriorcomm.CommunicationService" />
         <service
-            android:name="com.smartmanageragent.exteriorcomm.MyService"
+            android:name="com.smartmanageragent.exteriorcomm.CommunicationService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
