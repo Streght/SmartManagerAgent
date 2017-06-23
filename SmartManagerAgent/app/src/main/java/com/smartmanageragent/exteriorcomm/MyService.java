@@ -50,7 +50,7 @@ public class MyService extends Service {
 
     private final IBinder myBinder = new MyLocalBinder();
     public static String postIp = "POSTIP";
-    public static String getMap = "GETMAP";
+    public static String updateMap = "UPDATEMAP";
     private static String serverName = "http://calendar-matcher.spieldy.com/index.php";
     private static int portNumber = 8000;
     private static MessageQueue<String> receive;
@@ -296,7 +296,7 @@ public class MyService extends Service {
             // TODO : La notification à NICOLAS !!
         } else if (request.getField(JSONMessage.Fields.COMMAND).equals(postIp)) {
             postIP2Server(request);
-        } else if (request.getField(JSONMessage.Fields.COMMAND).equals(getMap)) {
+        } else if (request.getField(JSONMessage.Fields.COMMAND).equals(updateMap)) {
             updateMap();
         }
         else {

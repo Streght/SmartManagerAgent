@@ -1,5 +1,7 @@
 package com.smartmanageragent.exteriorcomm;
 
+import com.smartmanageragent.smartagent.message.JSONMessage;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,20 +12,27 @@ import java.util.List;
 public interface InterfaceCommApp {
 
     // communication Application --> Agent
-    abstract void createMeeting(String titre, Calendar dateDebut, Calendar dateFin, String participant);
 
-    abstract void deleteMeeting();
+    // Renvoie le JSONMessage a placer dans la MessageQueue receive de l'agent pour creer un meeting
+    abstract JSONMessage createMeeting(String titre, Calendar dateDebut, Calendar dateFin, String participant);
 
-    abstract void modifyMeeting();
+    // Renvoie le JSONMessage a placer dans la MessageQueue receive de l'agent pour supprimer un meeting
+    abstract JSONMessage deleteMeeting();
 
-    abstract void availability();
+    // Renvoie le JSONMessage a placer dans la MessageQueue receive de l'agent pour modifier un meeting
+    abstract JSONMessage modifyMeeting();
+
+    // Renvoie le JSONMessage a placer dans la MessageQueue receive de l'agent pour signaler sa disponibilite
+    abstract JSONMessage availability();
 
     ////////////////////////////////////////////////////////////////////////////////
 
     // communication Application --> serveur
+    // Recupère la liste des utilisateurs enregistres sur le serveur internet
     abstract List<String> getListId();
 
-    abstract void postIp(String id, String password);
+    // demande au client de s'enregistrer auprès du serveur
+    abstract JSONMessage postIp(String id, String password);
 
-    abstract void updateTable();
+    abstract JSONMessage updateTable();
 }
