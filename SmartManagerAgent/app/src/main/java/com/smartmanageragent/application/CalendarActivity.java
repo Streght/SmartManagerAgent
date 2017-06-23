@@ -1,6 +1,8 @@
 package com.smartmanageragent.application;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -173,7 +176,10 @@ public class CalendarActivity extends AppCompatActivity {
                /* String text = "month: " + month + " year: " + year;
                 Toast.makeText(getApplicationContext(), text,
                         Toast.LENGTH_SHORT).show();*/
+               notifLucas();
+
             }
+
 
             @Override
             public void onLongClickDate(Date date, View view) {
@@ -191,6 +197,7 @@ public class CalendarActivity extends AppCompatActivity {
                 }
             }
         };
+
 
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
@@ -300,6 +307,22 @@ public class CalendarActivity extends AppCompatActivity {
         if (caldroidFragment != null) {
             caldroidFragment.saveStatesToKey(savedInstanceState, "CALDROID_SAVED_STATE");
         }
+    }
+
+    private void notifLucas() {
+        // Creates the object that builds the notification
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.btn_star).setContentTitle("Notif Lucas").setContentText("Wesh Alors !");
+
+        // Defines the activity to be started when the user click on the notification
+        Intent resultIntent = new Intent(this, CalendarActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        // Issue the notification with a Notification manager, and a unique ID
+        int monID = 007;
+        NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        monManager.notify(monID, mBuilder.build());
     }
 
 }

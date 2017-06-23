@@ -1,5 +1,6 @@
 package com.smartmanageragent.exteriorcomm;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.smartmanageragent.smartagent.agent.Agent;
@@ -22,6 +25,7 @@ import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
 
 import java.io.NotSerializableException;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -124,12 +128,11 @@ public class MyService extends Service {
             @Override
             public void run() {
                 try {
-                while(true) {
-                    JSONMessage message2Send = (JSONMessage) send.get();
-                    fonctionMagique(message2Send);
-                }
-                }
-                catch (InterruptedException e) {
+                    while (true) {
+                        JSONMessage message2Send = (JSONMessage) send.get();
+                        fonctionMagique(message2Send);
+                    }
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -197,13 +200,12 @@ public class MyService extends Service {
             postIP2Server(request);
         } else if (request.getField(JSONMessage.Fields.COMMAND).equals(getMap)) {
             updateMap();
-        }
-        else {
+        } else {
             String addresseeListString = request.getField(JSONMessage.Fields.ADDRESSEES);
             List<String> addresseeList = new ArrayList<String>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
-                for (String ad: addresseeList) {
-                    String ipAd= SingletonRegisterIDIP.getInstance().getIp(ad);
+                for (String ad : addresseeList) {
+                    String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad);
                     JSONMessage newRequest = request;
                     newRequest.setField(JSONMessage.Fields.ADDRESSEES, ad);
                     if (ipAd == null) {
@@ -224,43 +226,37 @@ public class MyService extends Service {
 
     }
 
-    private void updateMap () {
+    private void updateMap() {
         if (isNetworkAvailable()) {
             Log.d(TAG, "update MAP");
             ServerGetAllUserRequest serverGetRequest = new ServerGetAllUserRequest();
-            serverGetRequest.execute(serverName+"?all_user=1");
+            serverGetRequest.execute(serverName + "?all_user=1");
             try {
                 JSONArray jsonArray = serverGetRequest.get();
                 Log.d(TAG, jsonArray.toString());
                 SingletonRegisterIDIP.getInstance().updateAll(jsonArray);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void updateUserOnMap (String username) {
+    private void updateUserOnMap(String username) {
         if (isNetworkAvailable()) {
             Log.d(TAG, "update user: " + username);
             ServerGetRequest serverGetRequest = new ServerGetRequest();
-            serverGetRequest.execute(serverName+"?username="+username);
+            serverGetRequest.execute(serverName + "?username=" + username);
             try {
                 JSONObject jsonObject = serverGetRequest.get();
                 Log.d(TAG, jsonObject.toString());
-                SingletonRegisterIDIP.getInstance().updateUser(jsonObject.getString("username"), jsonObject.getString("ip") );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+                SingletonRegisterIDIP.getInstance().updateUser(jsonObject.getString("username"), jsonObject.getString("ip"));
+            } catch (InterruptedException | JSONException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void postIP2Server (JSONMessage message) {
+    private void postIP2Server(JSONMessage message) {
         if (isNetworkAvailable()) {
             JSONObject jsonObject = new JSONObject();
             try {
@@ -273,27 +269,36 @@ public class MyService extends Service {
             Log.d(TAG, "POST IP2Server request");
             ServerPostRequest serverPostRequest = new ServerPostRequest();
             try {
-                serverPostRequest.execute(serverName+"?all_user=1", Utils.createQueryStringForParameters(jsonObject));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
+                serverPostRequest.execute(serverName + "?all_user=1", Utils.createQueryStringForParameters(jsonObject));
+            } catch (JSONException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private boolean connexion2Client (JSONMessage jsmessage, String ipAd) {
+    private boolean connexion2Client(JSONMessage jsmessage, String ipAd) {
         boolean success = true;
 
         final Handler handler = new Handler();
         return success;
     }
-
-
+    
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private void notifLucas() {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(android.R.drawable.btn_star).setContentTitle("Notif Lucas").setContentText("Wesh Alors !");
+
+        int monID = 007;
+        NotificationManager monManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        monManager.notify(monID, mBuilder.build());
+    }
+
+    private void notifNico() {
+
     }
 }
