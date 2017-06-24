@@ -22,8 +22,7 @@ public class CommApp {
         jsMessage.setField(JSONMessage.Fields.ACTIVITY, Serializer.serialize(activity));
         jsMessage.setField(JSONMessage.Fields.SENDER, name);
         jsMessage.setField(JSONMessage.Fields.ADDRESSEES, participant);
-
-        jsMessage.setField(JSONMessage.Fields.COMMAND, AddActivity.class.getName()); // TODO je ne sais pas le nom de la commande
+        jsMessage.setField(JSONMessage.Fields.COMMAND, AddActivity.class.getName());
         return jsMessage;
     }
 
