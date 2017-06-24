@@ -38,7 +38,7 @@
     <string name="meeting_attendees_hint">Pierre, Marie…</string>
 
     <!-- WeeklyFreeTimeActivity -->
-    <string name="fill_out_free_time">Please tell me when you have free time during the week :</string>
+    <string name="fill_out_free_time">Please tell us when you have free time during the week</string>
     <string name="no_meeting">No meeting</string>
     <string name="beginning">Beginning</string>
     <string name="end">End</string>
@@ -54,6 +54,7 @@
     <string name="about">About us</string>
     <string name="refresh_display">Refresh display</string>
     <string name="validate">Validate</string>
+    <string name="warning">Disabled features of this screen have yet to be implemented</string>
 
     <!-- CommunicationService -->
     <string name="notif_txt">You have a pending meeting to validate</string>

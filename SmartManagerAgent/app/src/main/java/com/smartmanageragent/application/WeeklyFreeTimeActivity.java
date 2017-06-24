@@ -46,6 +46,10 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly_free_time);
 
+        Snackbar.make(findViewById(R.id.free_time_activity), R.string.warning,
+                Snackbar.LENGTH_LONG)
+                .show();
+
         lundiCoche = (CheckBox) findViewById(R.id.LundiCheckbox);
         mardiCoche = (CheckBox) findViewById(R.id.MardiCheckbox);
         mercrediCoche = (CheckBox) findViewById(R.id.MercrediCheckbox);
@@ -390,22 +394,23 @@ public class WeeklyFreeTimeActivity extends AppCompatActivity {
         // Handle item selection
         if (item.getItemId() == R.id.validate) {
 
-            if ((lundiCoche.isChecked() || (!mapDayToEditText.get("LundiMatin").getText().toString().equals("")) && (!mapDayToEditText.get("LundiSoir").getText().toString().equals(""))) &&
+            // TODO uncomment when possible to add free time slots.
+            /*if ((lundiCoche.isChecked() || (!mapDayToEditText.get("LundiMatin").getText().toString().equals("")) && (!mapDayToEditText.get("LundiSoir").getText().toString().equals(""))) &&
                     (mardiCoche.isChecked() || (!mapDayToEditText.get("MardiMatin").getText().toString().equals("")) && (!mapDayToEditText.get("MardiSoir").getText().toString().equals(""))) &&
                     (mercrediCoche.isChecked() || (!mapDayToEditText.get("MercrediMatin").getText().toString().equals("")) && (!mapDayToEditText.get("MercrediSoir").getText().toString().equals(""))) &&
                     (jeudiCoche.isChecked() || (!mapDayToEditText.get("JeudiMatin").getText().toString().equals("")) && (!mapDayToEditText.get("JeudiSoir").getText().toString().equals(""))) &&
                     (vendrediCoche.isChecked() || (!mapDayToEditText.get("VendrediMatin").getText().toString().equals("")) && (!mapDayToEditText.get("VendrediSoir").getText().toString().equals(""))) &&
                     (samediCoche.isChecked() || (!mapDayToEditText.get("SamediMatin").getText().toString().equals("")) && (!mapDayToEditText.get("SamediSoir").getText().toString().equals(""))) &&
-                    (dimancheCoche.isChecked() || (!mapDayToEditText.get("DimancheMatin").getText().toString().equals("")) && (!mapDayToEditText.get("DimancheSoir").getText().toString().equals("")))) {
+                    (dimancheCoche.isChecked() || (!mapDayToEditText.get("DimancheMatin").getText().toString().equals("")) && (!mapDayToEditText.get("DimancheSoir").getText().toString().equals("")))) {*/
 
                 // TODO Add envoi commande.
 
                 finish();
-            } else {
+            /*} else {
                 Snackbar.make(findViewById(R.id.free_time_activity), R.string.field_error,
                         Snackbar.LENGTH_LONG)
                         .show();
-            }
+            }*/
         }
         return super.onOptionsItemSelected(item);
     }

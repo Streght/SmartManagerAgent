@@ -39,7 +39,7 @@
     <string name="meeting_attendees_hint">John, Jane…</string>
 
     <!-- WeeklyFreeTimeActivity -->
-    <string name="fill_out_free_time">Veuillez m\'indiquer vos disponibilités pour la semaine :</string>
+    <string name="fill_out_free_time">Veuillez nous indiquer vos disponibilités pour la semaine :</string>
     <string name="no_meeting">Pas de RDV</string>
     <string name="beginning">Début</string>
     <string name="end">Fin</string>
@@ -53,6 +53,7 @@
 
     <!-- Menu -->
     <string name="about">A propos</string>
+    <string name="warning">Les fonctionnalités à implémenter sont désactivés sur l\'écran suivant</string>
 
     <!-- CommunicationService -->
     <string name="notif_txt">Vous avez un rendez-vous à valider</string>

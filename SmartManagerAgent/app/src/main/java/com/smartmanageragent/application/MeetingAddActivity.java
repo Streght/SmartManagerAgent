@@ -30,6 +30,7 @@ import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +56,10 @@ public class MeetingAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_meeting_add);
+
+        Snackbar.make(findViewById(R.id.meeting_add_activity), R.string.warning,
+                Snackbar.LENGTH_LONG)
+                .show();
 
         title = (EditText) findViewById(R.id.meeting_title);
         dateDebutPossible = (EditText) findViewById(R.id.meeting_date_min);
@@ -284,18 +289,20 @@ public class MeetingAddActivity extends AppCompatActivity {
         // Handle item selection
         if (item.getItemId() == R.id.validate) {
             if (!(title.getText().toString().equals("")) &&
-                    (checkboxAuPlusTot.isChecked() || (!(dateDebutPossible.getText().toString().equals("")) && !(dateFinPossible.getText().toString().equals("")))) &&
-                    !(attendees.getText().equals(""))) {
+                    /*(checkboxAuPlusTot.isChecked() || (!(dateDebutPossible.getText().toString().equals("")) && !(dateFinPossible.getText().toString().equals("")))) &&*/
+                    !(attendees.getText().toString().equals(""))) {
                 listAttendees = parseAttendees(attendees);
                 float duration = (int) hourDuration.getSelectedItem() * 60 + (int) minutesDuration.getSelectedItem();
 
                 // TODO Add envoi commande.
-
                 JSONMessage cm = CommApp.createMeeting(title.getText().toString(), calendarDebutPossible, calendarFinPossible, listAttendees.toString());
                 communicationService.getReceive().add(cm);
 
-
                 finish();
+            } else {
+                Snackbar.make(findViewById(R.id.free_time_activity), R.string.field_error,
+                        Snackbar.LENGTH_LONG)
+                        .show();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -307,10 +314,7 @@ public class MeetingAddActivity extends AppCompatActivity {
         listAttendees = attendees.getText().toString().split(", ");
 
         List<String> als = new ArrayList<>();
-        for (String s : listAttendees
-                ) {
-            als.add(s);
-        }
+        Collections.addAll(als, listAttendees);
 
         return als;
     }
