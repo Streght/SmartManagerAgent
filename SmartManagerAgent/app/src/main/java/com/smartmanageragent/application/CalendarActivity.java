@@ -47,10 +47,10 @@ public class CalendarActivity extends AppCompatActivity {
     private CommunicationService communicationService;
     private boolean isBound = false;
 
-    /*private void setCustomResourceForDates() {
+    private void setCustomResourceForDates() {
         // Code pour mettre en valeur (vert) les jours avec RDV
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 7);
+        cal.add(Calendar.DATE, 2);
         Date greenDate = cal.getTime();
 
         if (caldroidFragment != null) {
@@ -58,7 +58,7 @@ public class CalendarActivity extends AppCompatActivity {
             caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
             caldroidFragment.setTextColorForDate(R.color.caldroid_white, greenDate);
         }
-    }*/
+    }
     private ServiceConnection myConnection = new ServiceConnection() {
 
         @Override
@@ -246,6 +246,8 @@ public class CalendarActivity extends AppCompatActivity {
                         .setAction("Action", null).show();*/
             }
         });
+
+        setCustomResourceForDates();
     }
 
     @Override
@@ -265,6 +267,7 @@ public class CalendarActivity extends AppCompatActivity {
         if (sharedPreferences.getBoolean("firstrun", true)) {
 
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CalendarActivity.this);
+            alertDialog.setCancelable(false);
             alertDialog.setTitle(getResources().getString(R.string.username));
             alertDialog.setMessage(getResources().getString(R.string.enter_username));
 
