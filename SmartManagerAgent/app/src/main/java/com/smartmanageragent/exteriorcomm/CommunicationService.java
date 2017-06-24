@@ -314,13 +314,14 @@ public class CommunicationService extends Service {
                     if (ipAd == null) {
                         Log.d(TAG, "ERREUR : l'id " + ad + " n'existe pas");
                     } else if (!connexion2Client(newRequest, ipAd)) {
+                        // TODO : plus de map Id Ip
                         /* updateUserOnMap(request.getField(JSONMessage.Fields.ADDRESSEES));
                         if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
                             // mettre dans la message queue pour réeesayer
                             this.send.add(newRequest);
                         } else { */
-                            // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
-                            this.waitingQueue.add(newRequest);
+                        // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
+                        this.waitingQueue.add(newRequest);
                         // }
                     }
                 }
