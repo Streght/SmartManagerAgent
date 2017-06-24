@@ -295,8 +295,12 @@ public class MeetingAddActivity extends AppCompatActivity {
                 float duration = (int) hourDuration.getSelectedItem() * 60 + (int) minutesDuration.getSelectedItem();
 
                 // TODO Add envoi commande.
-                JSONMessage cm = CommApp.createMeeting(title.getText().toString(), calendarDebutPossible, calendarFinPossible, listAttendees.toString());
-                communicationService.getReceive().add(cm);
+                try {
+                    JSONMessage meeting = CommApp.createMeeting(communicationService.getName(), title.getText().toString(), calendarDebutPossible, calendarFinPossible, duration, listAttendees.toString());
+                    communicationService.getReceive().add(meeting);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 finish();
             } else {

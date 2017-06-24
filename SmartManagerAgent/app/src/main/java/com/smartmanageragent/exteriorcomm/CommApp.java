@@ -3,18 +3,24 @@ package com.smartmanageragent.exteriorcomm;
 import com.smartmanageragent.smartagent.commands.list.AddActivity;
 import com.smartmanageragent.smartagent.commands.list.RemoveActivity;
 import com.smartmanageragent.smartagent.message.JSONMessage;
+import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.Activity;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
+import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
 
+import java.io.NotSerializableException;
 import java.util.Calendar;
 import java.util.List;
 
 
 public class CommApp {
 
-    public static JSONMessage createMeeting(String titre, Calendar dateDebut, Calendar dateFin, String participant) {
+    public static JSONMessage createMeeting(String name, String titre, Calendar dateDebut, Calendar dateFin, float length, String participant) throws NotSerializableException {
         JSONMessage jsMessage = new JSONMessage();
-        jsMessage.setField(JSONMessage.Fields.SENDER, "LOCAL");
+
+        Activity<Float> activity = new Activity<>(length, TimeTableImpl.unPriority, titre);
+        jsMessage.setField(JSONMessage.Fields.ACTIVITY, Serializer.serialize(activity));
+        jsMessage.setField(JSONMessage.Fields.SENDER, name);
         jsMessage.setField(JSONMessage.Fields.ADDRESSEES, participant);
 
         jsMessage.setField(JSONMessage.Fields.COMMAND, AddActivity.class.getName()); // TODO je ne sais pas le nom de la commande

@@ -40,12 +40,16 @@ import java.util.TimeZone;
 
 public class CalendarActivity extends AppCompatActivity {
 
-    public static String user;
+    private static String user;
     private CaldroidFragment caldroidFragment;
     private TimeTable<Date, Float> timeTable;
     private SharedPreferences sharedPreferences;
     private CommunicationService communicationService;
     private boolean isBound = false;
+
+    public static String getUser() {
+        return user;
+    }
 
     private void setCustomResourceForDates() {
         // Code pour mettre en valeur (vert) les jours avec RDV
