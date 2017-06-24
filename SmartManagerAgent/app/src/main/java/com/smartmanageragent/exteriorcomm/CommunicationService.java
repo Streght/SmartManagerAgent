@@ -78,6 +78,8 @@ public class CommunicationService extends Service {
         super.onCreate();
 
         sharedPreferences = getSharedPreferences("com.smartmanageragent.exteriorcomm", MODE_PRIVATE);
+        // TODO Uncomment if need to clean name.
+        //sharedPreferences.edit().clear().apply();
 
         String agentname = sharedPreferences.getString("agentname", "");
         String receiveSaved = sharedPreferences.getString("receive", "");
@@ -333,11 +335,11 @@ public class CommunicationService extends Service {
                             updateUserOnMap(ad); // On update la map
                             if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
                                 // mettre dans la message queue pour réeesayer
-                                this.send.add(newRequest);
+                                send.add(newRequest);
                             }
                         } else {
                             // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
-                            this.waitingQueue.add(newRequest);
+                            waitingQueue.add(newRequest);
                         }
                     }
                 }
@@ -417,8 +419,7 @@ public class CommunicationService extends Service {
     private boolean connexion2Client(JSONMessage jsmessage, String ipAd) {
         Handler clientHandler = new Handler();
         ClientConnection clientConnection = new ClientConnection(ipAd, portNumber, clientHandler, jsmessage);
-        boolean success = clientConnection.connection();
-        return success;
+        return clientConnection.connection();
     }
 
     private boolean isNetworkAvailable() {

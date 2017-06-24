@@ -15,13 +15,19 @@ import java.util.List;
 
 public class CommApp {
 
-    public static JSONMessage createMeeting(String name, String titre, Calendar dateDebut, Calendar dateFin, float length, String participant) throws NotSerializableException {
+    public static JSONMessage createMeeting(String name, String titre, Calendar dateDebut, Calendar dateFin, float length, List<String> participant) throws NotSerializableException {
         JSONMessage jsMessage = new JSONMessage();
 
         Activity<Float> activity = new Activity<>(length, TimeTableImpl.unPriority, titre);
+
+        for (String s: participant
+             ) {
+            activity.addAttendee(s);
+        }
+
         jsMessage.setField(JSONMessage.Fields.ACTIVITY, Serializer.serialize(activity));
         jsMessage.setField(JSONMessage.Fields.SENDER, name);
-        jsMessage.setField(JSONMessage.Fields.ADDRESSEES, participant);
+        jsMessage.setField(JSONMessage.Fields.ADDRESSEES, participant.toString());
         jsMessage.setField(JSONMessage.Fields.COMMAND, AddActivity.class.getName());
         return jsMessage;
     }

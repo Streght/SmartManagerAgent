@@ -11,13 +11,8 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-/**
- * Created by Nicolas on 15/06/2017.
- */
 
-public class ServerPostRequest  extends AsyncTask<String, Void, Void> {
-
-
+class ServerPostRequest  extends AsyncTask<String, Void, Void> {
 
     public  Void doInBackground(String... urlString) {
 
@@ -63,10 +58,6 @@ public class ServerPostRequest  extends AsyncTask<String, Void, Void> {
             }
 
 
-        } catch (MalformedURLException e) {
-            // handle invalid URL
-        } catch (SocketTimeoutException e) {
-            // hadle timeout
         } catch (IOException e) {
             // handle I/0
         } finally {

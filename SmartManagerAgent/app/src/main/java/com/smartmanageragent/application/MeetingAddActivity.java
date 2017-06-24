@@ -296,7 +296,7 @@ public class MeetingAddActivity extends AppCompatActivity {
 
                 // TODO Add envoi commande.
                 try {
-                    JSONMessage meeting = CommApp.createMeeting(communicationService.getName(), title.getText().toString(), calendarDebutPossible, calendarFinPossible, duration, listAttendees.toString());
+                    JSONMessage meeting = CommApp.createMeeting(communicationService.getName(), title.getText().toString(), calendarDebutPossible, calendarFinPossible, duration, listAttendees);
                     communicationService.getReceive().add(meeting);
                 } catch (Exception e) {
                     e.printStackTrace();

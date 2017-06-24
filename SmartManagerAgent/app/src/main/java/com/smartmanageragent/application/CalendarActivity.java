@@ -300,6 +300,12 @@ public class CalendarActivity extends AppCompatActivity {
                         // TODO uncomment when agent working.
                         //colorMeetingsDays();
 
+                        user = sharedPreferences.getString("username", "");
+                        Intent intent = new Intent(CalendarActivity.this, CommunicationService.class);
+                        //intent.putExtra("username", sharedPreferences.getString("username", ""));
+                        startService(intent);
+                        bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
+
                         dialog.dismiss();
                     } else {
                         Snackbar.make(findViewById(R.id.calendar_layout), getResources().getString(R.string.error_name), Snackbar.LENGTH_LONG)
@@ -310,22 +316,22 @@ public class CalendarActivity extends AppCompatActivity {
             alertDialog.show();
 
             sharedPreferences.edit().putBoolean("firstrun", false).apply();
+        } else{
+            TextView username = (TextView) findViewById(R.id.username);
+            String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
+            username.setText(s);
+
+            // TODO uncomment when agent working.
+            /*
+            colorMeetingsDays();
+            */
+
+            user = sharedPreferences.getString("username", "");
+            Intent intent = new Intent(this, CommunicationService.class);
+            //intent.putExtra("username", sharedPreferences.getString("username", ""));
+            startService(intent);
+            bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
         }
-
-        TextView username = (TextView) findViewById(R.id.username);
-        String s = getResources().getString(R.string.connected) + sharedPreferences.getString("username", "");
-        username.setText(s);
-
-        // TODO uncomment when agent working.
-        /*
-        colorMeetingsDays();
-        */
-
-        user = sharedPreferences.getString("username", "");
-        Intent intent = new Intent(this, CommunicationService.class);
-        //intent.putExtra("username", sharedPreferences.getString("username", ""));
-        startService(intent);
-        bindService(intent, myConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
