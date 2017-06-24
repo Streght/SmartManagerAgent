@@ -60,6 +60,10 @@ public class CommunicationService extends Service {
     private SharedPreferences sharedPreferences = null;
     private String name = "";
 
+    public String getName() {
+        return name;
+    }
+
     public MessageQueue<String> getReceive() {
         return receive;
     }
@@ -82,7 +86,7 @@ public class CommunicationService extends Service {
         if (!(agentname.equals(""))) {
             name = agentname;
         } else {
-            name = CalendarActivity.user;
+            name = CalendarActivity.getUser();
         }
         if (!(receiveSaved.equals(""))) {
             receive = (MessageQueue<String>) Serializer.deserialize(receiveSaved);
@@ -188,6 +192,10 @@ public class CommunicationService extends Service {
 
     @Override
     public IBinder onBind(Intent arg0) {
+
+        JSONMessage registration = CommApp.postIp(agent.getName(), "toor");
+        send.add(registration);
+
         return myBinder;
     }
 
