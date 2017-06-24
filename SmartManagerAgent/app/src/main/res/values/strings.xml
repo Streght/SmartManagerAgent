@@ -35,7 +35,7 @@
     <string name="duree">Duration</string>
     <string name="hour">Hour</string>
     <string name="minutes">Minutes</string>
-    <string name="meeting_attendees_hint">Pierre, Marie…</string>
+    <string name="meeting_attendees_hint">John, Jane…</string>
 
     <!-- WeeklyFreeTimeActivity -->
     <string name="fill_out_free_time">Please tell us when you have free time during the week</string>

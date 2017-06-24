@@ -17,7 +17,8 @@
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_calendar_activity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +39,7 @@
         <service
             android:name="com.smartmanageragent.exteriorcomm.CommunicationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -4,9 +4,9 @@
     <string name="app_name">Smart Manager Agent</string>
 
     <!-- CalendarActivity -->
-    <string name="title_activity_calendar">Mon calendrier</string>
+    <string name="title_calendar_activity">Mon calendrier</string>
     <string name="text_time_slot_button">Configurer les plages horaires</string>
-    <string name="connected">Connecté comme&#160;</string>
+    <string name="connected">Connecté en tant que&#160;</string>
     <string name="username">Nom d\'utilisateur</string>
     <string name="enter_username">Entrez votre nom d\'utilisateur</string>
     <string name="validate_name">Valider</string>
@@ -17,7 +17,7 @@
     <string name="with">Avec&#160;</string>
 
     <!-- MeetingsActivity -->
-    <string name="title_activity_meetings">Mes rendez-vous</string>
+    <string name="title_meetings_activity">Mes rendez-vous</string>
     <string name="modify">Modifier</string>
     <string name="delete">Supprimer</string>
     <string name="time_separator">&#160;à&#160;</string>
@@ -36,7 +36,7 @@
     <string name="duree">Durée</string>
     <string name="hour">Heure</string>
     <string name="minutes">Minutes</string>
-    <string name="meeting_attendees_hint">John, Jane…</string>
+    <string name="meeting_attendees_hint">Pierre, Marie…</string>
 
     <!-- WeeklyFreeTimeActivity -->
     <string name="fill_out_free_time">Veuillez nous indiquer vos disponibilités pour la semaine :</string>
