@@ -177,7 +177,7 @@ public class CommunicationService extends Service {
             }
         }, waitingQueue.getWaitingTime());
 
-        // updateMap(); // TODO : plus besoin de la map
+        SingletonRegisterIDIP.getInstance(); // On initialise la map
     }
 
     @SuppressWarnings("unchecked")
@@ -307,22 +307,30 @@ public class CommunicationService extends Service {
             List<String> addresseeList = new ArrayList<>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
-                    // String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad); // Old method with map
-                    String ipAd = getIpUser(ad);
+                    boolean flagServerContacted = false;
+                    String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad); // On regarde si on a deja contacte notre petit(e) copain(e)
                     JSONMessage newRequest = request;
                     newRequest.setField(JSONMessage.Fields.ADDRESSEES, ad);
-                    if (ipAd == null) {
-                        Log.d(TAG, "ERREUR : l'id " + ad + " n'existe pas");
-                    } else if (!connexion2Client(newRequest, ipAd)) {
-                        // TODO : plus de map Id Ip
-                        /* updateUserOnMap(request.getField(JSONMessage.Fields.ADDRESSEES));
-                        if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
-                            // mettre dans la message queue pour réeesayer
-                            this.send.add(newRequest);
-                        } else { */
-                        // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
-                        this.waitingQueue.add(newRequest);
-                        // }
+                    if (ipAd == null) { // Le user n'avait pas déjà été contacté et n'est donc pas enregistre dans la map
+                        ipAd = getIpUser(ad); // On demande au serveur
+                        flagServerContacted = true;
+                        if (ipAd == null) {
+                            Log.d(TAG, "ERREUR : l'id " + ad + " n'existe pas");
+                        } else {
+                            SingletonRegisterIDIP.getInstance().updateUser(ad, ipAd); // Ajout de notre nouveau copain(e) a la map
+                        }
+                    }
+                    if (!connexion2Client(newRequest, ipAd)) { // Si la connexion entre clients a echoue
+                        if (!flagServerContacted) { // Si l'ip n'a pas ete recuperee sur le serveur
+                            updateUserOnMap(ad); // On update la map
+                            if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
+                                // mettre dans la message queue pour réeesayer
+                                this.send.add(newRequest);
+                            }
+                        } else {
+                            // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
+                            this.waitingQueue.add(newRequest);
+                        }
                     }
                 }
             }
@@ -330,6 +338,7 @@ public class CommunicationService extends Service {
 
     }
 
+    // Inutile
     private void updateMap() {
         if (isNetworkAvailable()) {
             Log.d(TAG, "update MAP");
