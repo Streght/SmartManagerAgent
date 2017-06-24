@@ -177,7 +177,7 @@ public class CommunicationService extends Service {
             }
         }, waitingQueue.getWaitingTime());
 
-        updateMap();
+        // updateMap(); // TODO : plus besoin de la map
     }
 
     @SuppressWarnings("unchecked")
@@ -298,30 +298,30 @@ public class CommunicationService extends Service {
 
 
             }
-            // TODO : La notification à NICOLAS !!
         } else if (request.getField(JSONMessage.Fields.COMMAND).equals(postIp)) {
             postIP2Server(request);
-        } else if (request.getField(JSONMessage.Fields.COMMAND).equals(updateMap)) {
+        } else if (request.getField(JSONMessage.Fields.COMMAND).equals(updateMap)) { // Normalement plus utilisé.
             updateMap();
         } else {
             String addresseeListString = request.getField(JSONMessage.Fields.ADDRESSEES);
             List<String> addresseeList = new ArrayList<>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
-                    String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad);
+                    // String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad); // Old method with map
+                    String ipAd = getIpUser(ad);
                     JSONMessage newRequest = request;
                     newRequest.setField(JSONMessage.Fields.ADDRESSEES, ad);
                     if (ipAd == null) {
                         Log.d(TAG, "ERREUR : l'id " + ad + " n'existe pas");
                     } else if (!connexion2Client(newRequest, ipAd)) {
-                        updateUserOnMap(request.getField(JSONMessage.Fields.ADDRESSEES));
+                        /* updateUserOnMap(request.getField(JSONMessage.Fields.ADDRESSEES));
                         if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
                             // mettre dans la message queue pour réeesayer
                             this.send.add(newRequest);
-                        } else {
+                        } else { */
                             // mettre dans la waiting queue pour attendre avant de réessayer de le renvoyer
                             this.waitingQueue.add(newRequest);
-                        }
+                        // }
                     }
                 }
             }
@@ -342,6 +342,23 @@ public class CommunicationService extends Service {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String getIpUser(String username) {
+        String ip = null;
+        if (isNetworkAvailable()) {
+            Log.d(TAG, "update user: " + username);
+            ServerGetRequest serverGetRequest = new ServerGetRequest();
+            serverGetRequest.execute(serverName + "?username=" + username);
+            try {
+                JSONObject jsonObject = serverGetRequest.get();
+                Log.d(TAG, jsonObject.toString());
+                ip = jsonObject.getString("ip");
+            } catch (InterruptedException | JSONException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        return ip;
     }
 
     private void updateUserOnMap(String username) {
