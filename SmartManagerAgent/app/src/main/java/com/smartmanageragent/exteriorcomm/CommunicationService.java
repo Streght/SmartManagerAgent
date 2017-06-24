@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -314,6 +315,7 @@ public class CommunicationService extends Service {
             updateMap();
         } else {
             String addresseeListString = request.getField(JSONMessage.Fields.ADDRESSEES);
+            addresseeListString = addresseeListString.substring(1, addresseeListString.length()-1);
             List<String> addresseeList = new ArrayList<>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
@@ -417,6 +419,7 @@ public class CommunicationService extends Service {
     }
 
     private boolean connexion2Client(JSONMessage jsmessage, String ipAd) {
+        Looper.prepare();
         Handler clientHandler = new Handler();
         ClientConnection clientConnection = new ClientConnection(ipAd, portNumber, clientHandler, jsmessage);
         return clientConnection.connection();
