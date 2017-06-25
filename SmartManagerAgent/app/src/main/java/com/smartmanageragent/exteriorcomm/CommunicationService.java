@@ -162,7 +162,7 @@ public class CommunicationService extends Service {
                 try {
                     while (true) {
                         JSONMessage message2Send = (JSONMessage) send.get();
-                        fonctionMagique(message2Send);
+                        requestHandler(message2Send);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -185,7 +185,7 @@ public class CommunicationService extends Service {
             }
         }, waitingQueue.getWaitingTime());
 
-        SingletonRegisterIDIP.getInstance(); // On initialise la map
+        SingletonMapIDIP.getInstance(); // On initialise la map
     }
 
     @SuppressWarnings("unchecked")
@@ -236,7 +236,7 @@ public class CommunicationService extends Service {
     }
 
     // Traite les requêtes envoyées par l'agent local
-    private void fonctionMagique(JSONMessage request) {
+    private void requestHandler(JSONMessage request) {
         Log.d(TAG, "Début Envoi message");
         if (request.getField(JSONMessage.Fields.ADDRESSEES).equals("LOCAL")) {
             // TODO set conditions
@@ -323,7 +323,7 @@ public class CommunicationService extends Service {
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
                     boolean flagServerContacted = false;
-                    String ipAd = SingletonRegisterIDIP.getInstance().getIp(ad); // On regarde si on a deja contacte notre petit(e) copain(e)
+                    String ipAd = SingletonMapIDIP.getInstance().getIp(ad); // On regarde si on a deja contacte notre petit(e) copain(e)
                     JSONMessage newRequest = request;
                     newRequest.setField(JSONMessage.Fields.ADDRESSEES, ad);
                     if (ipAd == null) { // Le user n'avait pas déjà été contacté et n'est donc pas enregistre dans la map
@@ -332,13 +332,13 @@ public class CommunicationService extends Service {
                         if (ipAd == null) {
                             Log.d(TAG, "ERREUR : l'id " + ad + " n'existe pas");
                         } else {
-                            SingletonRegisterIDIP.getInstance().updateUser(ad, ipAd); // Ajout de notre nouveau copain(e) a la map
+                            SingletonMapIDIP.getInstance().updateUser(ad, ipAd); // Ajout de notre nouveau copain(e) a la map
                         }
                     }
                     if (!connexion2Client(newRequest, ipAd)) { // Si la connexion entre clients a echoue
                         if (!flagServerContacted) { // Si l'ip n'a pas ete recuperee sur le serveur
                             updateUserOnMap(ad); // On update la map
-                            if (!ipAd.equals(SingletonRegisterIDIP.getInstance().getIp(ad))) {
+                            if (!ipAd.equals(SingletonMapIDIP.getInstance().getIp(ad))) {
                                 // mettre dans la message queue pour réeesayer
                                 send.add(newRequest);
                             }
@@ -362,7 +362,7 @@ public class CommunicationService extends Service {
             try {
                 JSONArray jsonArray = serverGetRequest.get();
                 Log.d(TAG, jsonArray.toString());
-                SingletonRegisterIDIP.getInstance().updateAll(jsonArray);
+                SingletonMapIDIP.getInstance().updateAll(jsonArray);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -394,7 +394,7 @@ public class CommunicationService extends Service {
             try {
                 JSONObject jsonObject = serverGetRequest.get();
                 Log.d(TAG, jsonObject.toString());
-                SingletonRegisterIDIP.getInstance().updateUser(jsonObject.getString("username"), jsonObject.getString("ip"));
+                SingletonMapIDIP.getInstance().updateUser(jsonObject.getString("username"), jsonObject.getString("ip"));
             } catch (InterruptedException | JSONException | ExecutionException e) {
                 e.printStackTrace();
             }

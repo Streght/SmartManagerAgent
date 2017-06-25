@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AboutActivity" />
-        <activity android:name=".TestComActivity" />
+        <activity android:name="com.smartmanageragent.exteriorcomm.testconnections.TestComActivity" />
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_calendar_activity"
@@ -33,7 +33,7 @@
         <activity
             android:name=".WeeklyFreeTimeActivity"
             android:label="@string/title_meeting_add_activity" />
-        <activity android:name=".TestListIdActivity" />
+        <activity android:name="com.smartmanageragent.exteriorcomm.testconnections.TestListIdActivity" />
 
         <service
             android:name="com.smartmanageragent.exteriorcomm.CommunicationService"

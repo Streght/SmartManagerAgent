@@ -1,9 +1,7 @@
-package com.smartmanageragent.exteriorcomm;
+package com.smartmanageragent.exteriorcomm.testconnections;
 
 import android.os.Message;
 import android.util.Log;
-
-import com.smartmanageragent.application.TestComActivity;
 
 import org.json.JSONObject;
 

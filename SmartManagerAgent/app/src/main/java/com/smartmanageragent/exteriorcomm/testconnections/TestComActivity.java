@@ -1,4 +1,4 @@
-package com.smartmanageragent.application;
+package com.smartmanageragent.exteriorcomm.testconnections;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorcomm.ClientThreadTest;
+import com.smartmanageragent.application.R;
 import com.smartmanageragent.exteriorcomm.ServerGetRequest;
-import com.smartmanageragent.exteriorcomm.ServerThreadTest;
 import com.smartmanageragent.exteriorcomm.Utils;
 import com.smartmanageragent.smartagent.message.MessageQueue;
 

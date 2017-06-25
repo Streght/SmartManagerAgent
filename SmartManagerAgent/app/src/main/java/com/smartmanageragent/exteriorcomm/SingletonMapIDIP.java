@@ -6,24 +6,23 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class SingletonRegisterIDIP {
+public class SingletonMapIDIP {
 
-    private static SingletonRegisterIDIP instance;
+    private static SingletonMapIDIP instance;
     private ConcurrentHashMap<String, String> mapIdIp;
 
-    public static synchronized SingletonRegisterIDIP getInstance()
+    public static synchronized SingletonMapIDIP getInstance()
     {
         if (instance == null)
-        { 	instance = new SingletonRegisterIDIP();
+        { 	instance = new SingletonMapIDIP();
         }
         return instance;
     }
 
-    private SingletonRegisterIDIP() {
+    private SingletonMapIDIP() {
         mapIdIp = new ConcurrentHashMap<String, String>();
     }
 

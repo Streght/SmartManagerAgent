@@ -5,7 +5,6 @@ import com.smartmanageragent.smartagent.commands.list.RemoveActivity;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.Activity;
-import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
 
 import java.io.NotSerializableException;
@@ -56,7 +55,7 @@ public class CommApp {
     }
 
     public static List<String> getListId() {
-        return SingletonRegisterIDIP.getInstance().getListId();
+        return SingletonMapIDIP.getInstance().getListId();
     }
 
     public static JSONMessage postIp(String id, String password) {
