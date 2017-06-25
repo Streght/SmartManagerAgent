@@ -1,4 +1,4 @@
-package com.smartmanageragent.application;
+package com.smartmanageragent.exteriorcomm.testconnections;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.smartmanageragent.exteriorcomm.ClientThreadTest;
+import com.smartmanageragent.application.R;
 import com.smartmanageragent.exteriorcomm.CommunicationService;
-import com.smartmanageragent.exteriorcomm.SingletonRegisterIDIP;
+import com.smartmanageragent.exteriorcomm.SingletonMapIDIP;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 
 public class TestListIdActivity extends AppCompatActivity {
@@ -40,7 +40,7 @@ public class TestListIdActivity extends AppCompatActivity {
                 JSONMessage jsMessage = new JSONMessage();
                 jsMessage.setField(JSONMessage.Fields.COMMAND, CommunicationService.updateMap);
 
-                textView1.setText("List Users" + SingletonRegisterIDIP.getInstance().getListId().toString());
+                textView1.setText("List Users" + SingletonMapIDIP.getInstance().getListId().toString());
             }
         });
     }
