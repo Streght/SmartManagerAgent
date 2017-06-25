@@ -251,7 +251,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        setCustomResourceForDates();
+        //setCustomResourceForDates();
     }
 
     @Override
