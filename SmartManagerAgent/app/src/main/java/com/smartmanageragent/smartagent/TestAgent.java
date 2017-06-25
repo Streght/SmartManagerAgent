@@ -1,13 +1,9 @@
 package com.smartmanageragent.smartagent;
 
-import java.io.NotSerializableException;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.smartmanageragent.smartagent.agent.Agent;
 import com.smartmanageragent.smartagent.agent.AgentImpl;
-import com.smartmanageragent.smartagent.commands.list.AddActivity;
-import com.smartmanageragent.smartagent.commands.list.NotifyAccept;
+import com.smartmanageragent.smartagent.commands.addActivity.AcceptSlot;
+import com.smartmanageragent.smartagent.commands.addActivity.AddActivity;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 import com.smartmanageragent.smartagent.message.JSONMessage.Fields;
 import com.smartmanageragent.smartagent.message.MessageQueue;
@@ -15,6 +11,10 @@ import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.Activity;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
+
+import java.io.NotSerializableException;
+import java.io.Serializable;
+import java.util.Date;
 
 public class TestAgent {
 
@@ -132,7 +132,7 @@ public class TestAgent {
 		String strAct = m4.getField(Fields.ACTIVITY);
 		Object activity = Serializer.deserialize(strAct);
 		m6.setField(Fields.ACTIVITY, Serializer.serialize((Serializable) activity));
-		m6.setField(Fields.COMMAND, NotifyAccept.class.getName());
+		m6.setField(Fields.COMMAND, AcceptSlot.class.getName());
 		// NotifyAccept
 		receiveA2.add(m6);
 		receiveA3.add(m6);

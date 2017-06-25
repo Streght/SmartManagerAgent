@@ -1,14 +1,14 @@
 package com.smartmanageragent.smartagent;
 
+
+import com.smartmanageragent.smartagent.timeTable.Activity;
+import com.smartmanageragent.smartagent.timeTable.TimeTable;
+import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
+import com.smartmanageragent.smartagent.timeTable.slot.SlotImpl;
+
 import java.util.Date;
 import java.util.Iterator;
-
-import timeTable.Activity;
-import timeTable.TimeTable;
-import timeTable.TimeTable.PosAct;
-import timeTable.TimeTableImpl;
-import timeTable.slot.Slot;
-import timeTable.slot.SlotImpl;
 
 public class Test_Iterators_Slots {
 
@@ -45,9 +45,9 @@ public class Test_Iterators_Slots {
 	
 	private static void testTT(TimeTable<Date, Float> tt) {
 		// Activity iterator test
-		Iterator<PosAct<Date, Float>> actIt = tt.activityIterator();
+		Iterator<TimeTable.PosAct<Date, Float>> actIt = tt.activityIterator();
 		while(actIt.hasNext()) {
-			PosAct<Date, Float> act = actIt.next();
+			TimeTable.PosAct<Date, Float> act = actIt.next();
 			System.out.println(act);
 		}
 		// Free time iterator test

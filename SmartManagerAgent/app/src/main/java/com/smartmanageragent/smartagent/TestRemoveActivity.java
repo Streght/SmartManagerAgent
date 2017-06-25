@@ -1,12 +1,13 @@
 package com.smartmanageragent.smartagent;
 
+
+import com.smartmanageragent.smartagent.agent.Agent;
+import com.smartmanageragent.smartagent.agent.AgentImpl;
+import com.smartmanageragent.smartagent.message.MessageQueue;
+import com.smartmanageragent.smartagent.timeTable.Activity;
+
 import java.io.NotSerializableException;
 import java.util.Date;
-
-import agent.Agent;
-import agent.AgentImpl;
-import message.MessageQueue;
-import timeTable.Activity;
 
 public class TestRemoveActivity {
 

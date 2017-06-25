@@ -1,18 +1,19 @@
 package com.smartmanageragent.smartagent;
 
+
+import com.smartmanageragent.smartagent.agent.Agent;
+import com.smartmanageragent.smartagent.agent.AgentImpl;
+import com.smartmanageragent.smartagent.commands.addActivity.AcceptSlot;
+import com.smartmanageragent.smartagent.commands.addActivity.AddActivity;
+import com.smartmanageragent.smartagent.message.JSONMessage;
+import com.smartmanageragent.smartagent.message.JSONMessage.Fields;
+import com.smartmanageragent.smartagent.message.MessageQueue;
+import com.smartmanageragent.smartagent.message.Serializer;
+import com.smartmanageragent.smartagent.timeTable.Activity;
+
 import java.io.NotSerializableException;
 import java.io.Serializable;
 import java.util.Date;
-
-import agent.Agent;
-import agent.AgentImpl;
-import commands.addActivity.AddActivity;
-import commands.addActivity.AcceptSlot;
-import message.JSONMessage;
-import message.JSONMessage.Fields;
-import message.MessageQueue;
-import message.Serializer;
-import timeTable.Activity;
 
 public class TestAddActivity {
 

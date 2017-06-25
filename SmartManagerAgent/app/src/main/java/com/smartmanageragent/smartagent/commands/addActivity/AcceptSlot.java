@@ -1,21 +1,22 @@
 package com.smartmanageragent.smartagent.commands.addActivity;
 
-import java.io.NotSerializableException;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.smartmanageragent.smartagent.agent.Agent;
+import com.smartmanageragent.smartagent.agent.State;
+import com.smartmanageragent.smartagent.agent.TimeOut;
+import com.smartmanageragent.smartagent.commands.Command;
+import com.smartmanageragent.smartagent.message.JSONMessage;
+import com.smartmanageragent.smartagent.message.JSONMessage.Fields;
+import com.smartmanageragent.smartagent.message.Message;
+import com.smartmanageragent.smartagent.message.Serializer;
+import com.smartmanageragent.smartagent.timeTable.Activity;
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
 
 import org.json.JSONObject;
 
-import agent.Agent;
-import agent.State;
-import agent.TimeOut;
-import commands.Command;
-import message.JSONMessage;
-import message.Message;
-import message.Serializer;
-import message.JSONMessage.Fields;
-import timeTable.Activity;
-import timeTable.slot.Slot;
+import java.io.NotSerializableException;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class AcceptSlot<K, T> extends Command<K, T, String> {

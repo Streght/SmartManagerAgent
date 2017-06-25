@@ -1,12 +1,13 @@
 package com.smartmanageragent.smartagent;
 
-import java.util.Date;
 
-import commands.Command;
-import commands.CommandFactory;
-import commands.addActivity.AcceptSlot;
-import message.JSONMessage;
-import message.JSONMessage.Fields;
+import com.smartmanageragent.smartagent.commands.Command;
+import com.smartmanageragent.smartagent.commands.CommandFactory;
+import com.smartmanageragent.smartagent.commands.addActivity.AcceptSlot;
+import com.smartmanageragent.smartagent.message.JSONMessage;
+import com.smartmanageragent.smartagent.message.JSONMessage.Fields;
+
+import java.util.Date;
 
 public class TestFactory {
 
