@@ -1,5 +1,6 @@
 package com.smartmanageragent.smartagent.application;
 
+
 import com.smartmanageragent.smartagent.commands.Command;
 import com.smartmanageragent.smartagent.commands.Invocator;
 import com.smartmanageragent.smartagent.message.MessageQueue;

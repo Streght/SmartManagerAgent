@@ -24,26 +24,26 @@ public class SlotImpl implements Slot<Float> {
 	public Slot<Float> intersection(Slot<Float> s) {
 		SlotImpl slot = (SlotImpl) s;
 		SlotImpl res = null;
-		// If this begins before slot2, and ends after slot2 beginning
+		// If this begins before slot, and ends after slot beginning
 		if (this.beg.compareTo(slot.beg) <=0 && this.end.compareTo(slot.beg) >= 0) {
 			Date b = slot.beg;
 			Date e;
-			// If this ends before slot2 ends
+			// If this ends before slot ends
 			if (this.end.compareTo(slot.end) <=0) {
 				e = this.end;
-			// If this ends after slot2 ends
+			// If this ends after slot ends
 			} else {
 				e = slot.end;
 			}
 			res = new SlotImpl(b, e);
-		// If this begins after slot2, and before slot2 ends
-		} else if (this.beg.compareTo(slot.beg) >=0 && this.beg.compareTo(slot.end) <=0) {
+		// If this begins after slot, and before slot ends
+		} else if (this.beg.compareTo(slot.beg) >=0 && this.beg.compareTo(slot.end) <= 0) {
 			Date b = this.beg;
 			Date e;
-			// If slot2 ends before this ends
-			if (this.end.compareTo(slot.end) <=0) {
+			// If slot ends before this ends
+			if (this.end.compareTo(slot.end) >= 0) {
 				e = slot.end;
-			// If slot2 ends after this ends
+			// If slot ends after this ends
 			} else {
 				e = this.end;
 			}

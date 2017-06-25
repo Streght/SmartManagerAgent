@@ -1,16 +1,17 @@
 package com.smartmanageragent.smartagent.timeTable;
 
+
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
+import com.smartmanageragent.smartagent.timeTable.slot.SlotImpl;
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
-
-import com.smartmanageragent.smartagent.timeTable.slot.Slot;
-import com.smartmanageragent.smartagent.timeTable.slot.SlotImpl;
 
 public class TimeTableImpl implements TimeTable<Date, Float> {
 	
@@ -23,11 +24,12 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		this.activities = new TreeMap<Date, Activity<Float>>(new DateComparator());
 	}
 
-	// TODO : create TimeTable from JSON object (Google Calendar API)
-	//public TimeTableImpl() {}
-	
-	// TODO : create JSON object from TimeTable (Google Calendar API)
-	//public toJSON() {}
+	public TimeTableImpl(Date beg, Date end) {
+		this();
+		Activity<Float> act = new Activity<Float>((float) 1, TimeTableImpl.unPriority, TimeTableImpl.unName);
+		this.addActivity(new Date(beg.getTime()-1), act);
+		this.addActivity(end, act);
+	}
 
 	/** Initializes a time table with a list of free slots, ordered
 	 * @param freeSlots
@@ -38,7 +40,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		int nbSlots = freeSlots.size();
 		Date beg = today, end;
 		Float length;
-		Activity<Float> act = new Activity<Float>((float) 0, unPriority, unName);
+		Activity<Float> act = new Activity<Float>((float) 1, unPriority, unName);
 		for (int i=0; i<nbSlots; i++) {
 			end = freeSlots.get(i).beg;
 			length = (float) (end.getTime() - beg.getTime());
@@ -81,7 +83,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		if (prevAct!=null) {
 			prevActBeg = sl.beg;
 		} else {
-			Entry<Date, Activity<Float>> prevActEntry = this.activities.lowerEntry((Date) sl.beg);
+			Map.Entry<Date, Activity<Float>> prevActEntry = this.activities.lowerEntry((Date) sl.beg);
 			prevAct = prevActEntry.getValue();
 			if (prevAct == null || prevAct.getName()!=unName) {
 				return false;
@@ -116,14 +118,14 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		if (prevAct != null) {
 			prevActBeg = sl.beg;
 		} else {
-			Entry<Date, Activity<Float>> prevActEntry = this.activities.lowerEntry(sl.beg);
+			Map.Entry<Date, Activity<Float>> prevActEntry = this.activities.lowerEntry(sl.beg);
 			if (prevActEntry==null) {
 				return false;
 			}
 			prevAct = prevActEntry.getValue();
 			prevActBeg = prevActEntry.getKey();
 		}
-		Entry<Date, Activity<Float>> nextActEntry = this.activities.higherEntry(sl.beg);
+		Map.Entry<Date, Activity<Float>> nextActEntry = this.activities.higherEntry(sl.beg);
 		Activity<Float> nextAct = nextActEntry.getValue();
 		prevActEnd = new Date((long) (prevActBeg.getTime()+prevAct.getLength()));
 		nextActBeg = nextActEntry.getKey();
@@ -145,7 +147,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 	public Iterator<PosAct<Date, Float>> activityIterator() {
 		class ActivityIterator implements Iterator<PosAct<Date, Float>> {
 
-			private Iterator<Entry<Date, Activity<Float>>> iterator;
+			private Iterator<Map.Entry<Date, Activity<Float>>> iterator;
 
 			public ActivityIterator(NavigableMap<Date, Activity<Float>> activities) {
 				this.iterator = activities.entrySet().iterator();
@@ -158,7 +160,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 
 			@Override
 			public PosAct<Date, Float> next() {
-				Entry<Date, Activity<Float>> entry = this.iterator.next();
+				Map.Entry<Date, Activity<Float>> entry = this.iterator.next();
 				return new PosAct<Date, Float>(entry.getKey(), entry.getValue());
 			}
 			
@@ -176,8 +178,8 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 	public Iterator<Slot<Float>> freeTimeIterator() {
 		class FreeTimeIterator implements Iterator<Slot<Float>> {
 
-			private Iterator<Entry<Date, Activity<Float>>> firstIt;
-			private Iterator<Entry<Date, Activity<Float>>> secondIt;
+			private Iterator<Map.Entry<Date, Activity<Float>>> firstIt;
+			private Iterator<Map.Entry<Date, Activity<Float>>> secondIt;
 			
 			// TODO : problem with first and last slot : no first and last reference activity
 			// Easy solution : add 0 length activities at the beginning and at the end !!
@@ -195,7 +197,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 
 			@Override
 			public Slot<Float> next() {
-				Entry<Date, Activity<Float>> entry = secondIt.next();
+				Map.Entry<Date, Activity<Float>> entry = secondIt.next();
 				Activity<Float> act = entry.getValue();
 				Date beg = new Date((long) (entry.getKey().getTime() + (Float) act.getLength()));
 				Date end = firstIt.next().getKey();
@@ -237,7 +239,7 @@ public class TimeTableImpl implements TimeTable<Date, Float> {
 		StringBuffer buffer = new StringBuffer();
 		Date t;
 		Activity<Float> a;
-		for(Entry<Date, Activity<Float>> entry: this.activities.entrySet()) {
+		for(Map.Entry<Date, Activity<Float>> entry: this.activities.entrySet()) {
 			t = entry.getKey();
 			a = entry.getValue();
 			buffer.append("# "+t.toString()+" => "+a+"\n");

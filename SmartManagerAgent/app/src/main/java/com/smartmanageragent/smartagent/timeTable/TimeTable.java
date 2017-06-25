@@ -1,10 +1,10 @@
 package com.smartmanageragent.smartagent.timeTable;
 
+
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
+
 import java.io.Serializable;
 import java.util.Iterator;
-
-import com.smartmanageragent.smartagent.message.Serializer;
-import com.smartmanageragent.smartagent.timeTable.slot.Slot;
 
 public interface TimeTable<K, T> extends Serializable {
 
@@ -58,7 +58,7 @@ public interface TimeTable<K, T> extends Serializable {
 	/** An activity and its current position
 	 * @param <T>
 	 */
-	public class PosAct<K, T> implements Serializable {
+	public class PosAct<K, T> {
 		public K pos;
 		public Activity<T> act;
 		public PosAct(K pos, Activity<T> act) {

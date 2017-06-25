@@ -1,7 +1,8 @@
 package com.smartmanageragent.exteriorcomm;
 
-import com.smartmanageragent.smartagent.commands.list.AddActivity;
-import com.smartmanageragent.smartagent.commands.list.RemoveActivity;
+
+import com.smartmanageragent.smartagent.commands.addActivity.AddActivity;
+import com.smartmanageragent.smartagent.commands.removeActivity.RemoveActivity;
 import com.smartmanageragent.smartagent.message.JSONMessage;
 import com.smartmanageragent.smartagent.message.Serializer;
 import com.smartmanageragent.smartagent.timeTable.Activity;
@@ -10,7 +11,6 @@ import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
 import java.io.NotSerializableException;
 import java.util.Calendar;
 import java.util.List;
-
 
 public class CommApp {
 

@@ -1,10 +1,11 @@
 package com.smartmanageragent.smartagent.agent;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.smartmanageragent.smartagent.message.Message;
 import com.smartmanageragent.smartagent.message.MessageQueue;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /** Sends a message after a given waiting time
  * @param <T>

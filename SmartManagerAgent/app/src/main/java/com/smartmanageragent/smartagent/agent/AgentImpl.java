@@ -1,12 +1,7 @@
 package com.smartmanageragent.smartagent.agent;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import com.smartmanageragent.smartagent.commands.Command;
-import com.smartmanageragent.smartagent.commands.CommandFactory;
 import com.smartmanageragent.smartagent.message.Message;
 import com.smartmanageragent.smartagent.message.MessageQueue;
 import com.smartmanageragent.smartagent.timeTable.Activity;
@@ -14,15 +9,33 @@ import com.smartmanageragent.smartagent.timeTable.TimeTable;
 import com.smartmanageragent.smartagent.timeTable.TimeTableImpl;
 import com.smartmanageragent.smartagent.timeTable.slot.Slot;
 
-public class AgentImpl<T> extends Agent<Date, Float, T> {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-	private CommandFactory<Date, Float, T> factory;
+public class AgentImpl<T> extends Agent<Date, Float, T> {
 	
+	/**
+	 * @param name
+	 * @param receiving
+	 * @param sending
+	 */
 	public AgentImpl(String name, MessageQueue<T> receiving, MessageQueue<T> sending) {
 		super(name, receiving, sending);
 		this.state.setTimeTable(new TimeTableImpl());
-		// Factory used to create commands
-		this.factory = new CommandFactory<Date, Float, T>();
+	}
+	
+	/**
+	 * @param name
+	 * @param receiving
+	 * @param sending
+	 * @param beg
+	 * @param end
+	 */
+	public AgentImpl(String name, MessageQueue<T> receiving, MessageQueue<T> sending, Date beg, Date end) {
+		super(name, receiving, sending);
+		this.state.setTimeTable(new TimeTableImpl(beg, end));
 	}
 	
 	/** Finds room for an activity in a list of timetables
@@ -30,8 +43,8 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 	 * @return the position of the activity, null if no place found
 	 */
 	@Override
-	public Object findSlot(List<TimeTable<Date, Float>> timeTables, Activity<Float> act) {
-		Object found = null;
+	public Slot<Float> findSlot(List<TimeTable<Date, Float>> timeTables, Activity<Float> act) {
+		Slot<Float> found = null;
 		Slot<Float> curSlot;
 		Iterator<Slot<Float>> it = this.state.timeTable.freeTimeIterator();
 		while(it.hasNext() && found==null) {
@@ -47,10 +60,10 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 	 * @param act
 	 * @return recFInd
 	 */
-	private Date recFind(List<TimeTable<Date, Float>> timeTables, Slot<Float> slot, Activity<Float> act) {
+	private Slot<Float> recFind(List<TimeTable<Date, Float>> timeTables, Slot<Float> slot, Activity<Float> act) {
 		int nbTables = timeTables.size();
 		if (nbTables==0) {
-			return (Date) slot.getRef();
+			return slot;
 		} else {
 			TimeTable<Date, Float> tt = timeTables.get(0);
 			// Iterating until corresponding slots found (or not)
@@ -59,8 +72,10 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 			int comp = -1;
 			while(it.hasNext() && comp<=0) {
 				curSlot = it.next();
-				comp = slot.compareTo(curSlot);
-				// If the two slots are crossing 
+				if (curSlot == null)
+					return null;
+				comp = curSlot.compareTo(slot);
+				// If the two slots are crossing
 				if (comp==0) {
 					inter = slot.intersection(curSlot);
 					if (inter!=null && inter.fits(act.getLength())) {
@@ -102,7 +117,7 @@ public class AgentImpl<T> extends Agent<Date, Float, T> {
 
 	@Override
 	public String toString() {
-		return "Name: "+this.name+"\n"+this.state.timeTable.toString();
+		return this.name+"\n"+this.state.toString();
 	}
 
 }

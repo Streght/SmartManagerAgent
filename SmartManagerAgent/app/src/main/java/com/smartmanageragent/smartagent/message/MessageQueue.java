@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public class MessageQueue<T> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private LinkedList<Message<T>> queue;
 	
 	/** Synchronized message queue

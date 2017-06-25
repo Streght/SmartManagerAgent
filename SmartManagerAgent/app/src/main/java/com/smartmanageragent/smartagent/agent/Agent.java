@@ -1,13 +1,17 @@
 package com.smartmanageragent.smartagent.agent;
 
-import java.util.List;
 
 import com.smartmanageragent.smartagent.commands.Command;
+import com.smartmanageragent.smartagent.commands.CommandFactory;
 import com.smartmanageragent.smartagent.commands.Invocator;
 import com.smartmanageragent.smartagent.message.Message;
 import com.smartmanageragent.smartagent.message.MessageQueue;
 import com.smartmanageragent.smartagent.timeTable.Activity;
 import com.smartmanageragent.smartagent.timeTable.TimeTable;
+import com.smartmanageragent.smartagent.timeTable.slot.Slot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Using abstract class : template method
 public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
@@ -22,13 +26,15 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 	// Messages queues
 	protected MessageQueue<U> receiving;
 	protected MessageQueue<U> sending;
-	
+	// Command factory
+	protected CommandFactory<K, T, U> factory;
 	
 	public Agent(String name, MessageQueue<U> receiving, MessageQueue<U> sending) {
 		this.name = name;
 		this.state = new State<K, T>();
 		this.receiving = receiving;
 		this.sending = sending;
+		this.factory = new CommandFactory<K, T, U>();
 	}
 	
 	/**
@@ -59,6 +65,41 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 		return this.state.timeTable;
 	}
 	
+	/**
+	 * @param timeTable
+	 */
+	public void setTimeTable(TimeTable<K, T> timeTable) {
+		this.state.timeTable = timeTable;
+	}
+	
+	/**
+	 * @return receiving
+	 */
+	public MessageQueue<U> getReceiving() {
+		return this.receiving;
+	}
+
+	/**
+	 * @param receiving
+	 */
+	public void setReceiving(MessageQueue<U> receiving) {
+		this.receiving = receiving;
+	}
+
+	/**
+	 * @return sending
+	 */
+	public MessageQueue<U> getSending() {
+		return this.sending;
+	}
+
+	/**
+	 * @param sending
+	 */
+	public void setSending(MessageQueue<U> sending) {
+		this.sending = sending;
+	}
+	
 	/** Gets a message from the incoming message queue
 	 * @return message
 	 * @throws InterruptedException 
@@ -66,7 +107,7 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 	public Message<U> receive() throws InterruptedException {
 		return this.receiving.get();
 	}
-	
+
 	/** Adds a message to the outgoing message queue
 	 * @param message
 	 */
@@ -91,11 +132,21 @@ public abstract class Agent<K, T, U> implements Invocator<K, T, U>, Runnable {
 		return this.state.timeTable.removeActivity(pos);
 	}
 	
+	/** Returns the attendees list of an activity, this agent excepted
+	 * @param act
+	 * @return otherAttendees
+	 */
+	public List<String> otherAttendees(Activity<T> act) {
+		List<String> otherAttendees = new ArrayList<String>(act.getAttendees());
+		otherAttendees.remove(this.name);
+		return otherAttendees;
+	}
+	
 	/** Finds room for an activity in a list of timetables
 	 * @param timeTables
 	 * @return the position of the activity, null if no place found
 	 */
-	public abstract Object findSlot(List<TimeTable<K, T>> timeTables, Activity<T> act);
+	public abstract Slot<T> findSlot(List<TimeTable<K, T>> timeTables, Activity<T> act);
 	
 	@Override
 	public boolean invoke(Command<K, T, U> command) {

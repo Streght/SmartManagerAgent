@@ -1,5 +1,6 @@
 package com.smartmanageragent.smartagent.message;
 
+
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -9,7 +10,6 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 
 public class Serializer {
 
