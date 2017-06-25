@@ -60,6 +60,7 @@ public class CommunicationService extends Service {
     private final IBinder myBinder = new MyLocalBinder();
     private SharedPreferences sharedPreferences = null;
     private String name = "";
+    private boolean flagLooperCreated = false;
 
     public String getName() {
         return name;
@@ -315,7 +316,9 @@ public class CommunicationService extends Service {
             updateMap();
         } else {
             String addresseeListString = request.getField(JSONMessage.Fields.ADDRESSEES);
+            if (addresseeListString.charAt(0) == '[') {
             addresseeListString = addresseeListString.substring(1, addresseeListString.length()-1);
+            }
             List<String> addresseeList = new ArrayList<>(Arrays.asList(addresseeListString.split(",")));
             if (addresseeList != null) {
                 for (String ad : addresseeList) {
@@ -419,9 +422,11 @@ public class CommunicationService extends Service {
     }
 
     private boolean connexion2Client(JSONMessage jsmessage, String ipAd) {
-        Looper.prepare();
-        Handler clientHandler = new Handler();
-        ClientConnection clientConnection = new ClientConnection(ipAd, portNumber, clientHandler, jsmessage);
+        if (!flagLooperCreated) {
+            Looper.prepare();
+            flagLooperCreated =true;
+        }
+        ClientConnection clientConnection = new ClientConnection(ipAd, portNumber, jsmessage);
         return clientConnection.connection();
     }
 
