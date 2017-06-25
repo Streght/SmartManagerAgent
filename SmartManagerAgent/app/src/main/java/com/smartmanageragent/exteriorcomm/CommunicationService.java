@@ -81,7 +81,7 @@ public class CommunicationService extends Service {
 
         sharedPreferences = getSharedPreferences("com.smartmanageragent.exteriorcomm", MODE_PRIVATE);
         // TODO Uncomment if need to clean name.
-        //sharedPreferences.edit().clear().apply();
+        sharedPreferences.edit().clear().apply();
 
         String agentname = sharedPreferences.getString("agentname", "");
         String receiveSaved = sharedPreferences.getString("receive", "");
