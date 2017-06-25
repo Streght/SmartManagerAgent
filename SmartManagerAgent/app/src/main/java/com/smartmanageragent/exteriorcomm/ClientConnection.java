@@ -23,12 +23,12 @@ public class ClientConnection {
     private JSONMessage jsM2send;
     private String TAG = "Client2OtherPhone";
 
-    public ClientConnection(String addr, int port, Handler handler, JSONMessage jsMessage) {
+    public ClientConnection(String addr, int port, JSONMessage jsMessage) {
         super();
         Log.d(TAG,"new client");
         dstAddress = addr;
         dstPort = port;
-        this.handler = handler;
+        this.handler = new Handler();
         this.jsM2send = jsMessage;
     }
 
